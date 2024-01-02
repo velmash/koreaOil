@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyAjopXLwBPldD8Or6xbQj_pGPiAaftWRGg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>516255832144</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.complete.KoreaOil</string>
+	<key>PROJECT_ID</key>
+	<string>koreaoil</string>
+	<key>STORAGE_BUCKET</key>
+	<string>koreaoil.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:516255832144:ios:8164043c9f2dee08205955</string>
+	<key>ADMOB_APP_ID</key>
+	<string>ca-app-pub-4670694619553812~1947133769</string>
+</dict>
+</plist>

@@ -1,0 +1,39 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'KoreaOil' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for KoreaOil
+  pod 'SnapKit'
+  pod 'Then'
+  pod 'Alamofire'
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  pod 'RxGesture'
+  pod 'ReactorKit'
+  pod 'NMapsMap'
+  pod 'FirebaseAnalytics'
+  pod 'Google-Mobile-Ads-SDK'
+ 
+  post_install do |installer|
+      installer.generated_projects.each do |project|
+          project.targets.each do |target|
+              target.build_configurations.each do |config|
+                  config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '16.0'
+              end
+          end
+      end
+  end
+
+  target 'KoreaOilTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'KoreaOilUITests' do
+    # Pods for testing
+  end
+
+end
