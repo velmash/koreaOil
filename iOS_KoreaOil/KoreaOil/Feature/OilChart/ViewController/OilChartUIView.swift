@@ -30,14 +30,17 @@ struct OilChartUIView: View {
                     viewModel.setOilBtnSelected(.premium)
                 }
                 .buttonStyle(OilTypeButtonStyle(isSelected: viewModel.selectedOilType == OilType.premium.rawValue))
+                
                 Button(OilType.disel.rawValue) {
                     viewModel.setOilBtnSelected(.disel)
                 }
                 .buttonStyle(OilTypeButtonStyle(isSelected: viewModel.selectedOilType == OilType.disel.rawValue))
+                
                 Button(OilType.gas.rawValue) {
                     viewModel.setOilBtnSelected(.gas)
                 }
                 .buttonStyle(OilTypeButtonStyle(isSelected: viewModel.selectedOilType == OilType.gas.rawValue))
+                
                 Button(OilType.kerosene.rawValue) {
                     viewModel.setOilBtnSelected(.kerosene)
                 }
@@ -52,6 +55,7 @@ struct OilChartUIView: View {
                     )
                 }
             }
+            .chartYScale(domain: viewModel.minMaxPrices)
             .frame(height: 250)
             .padding()
             

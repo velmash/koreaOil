@@ -12,6 +12,7 @@ import Alamofire
 class OilChartViewModel: ObservableObject {
     @Published var selectedOilType: String = ""
     @Published var oilPricesData = [OilPricesInfo]()
+    @Published var minMaxPrices: [Double] = [1000, 2000]
     
     private let defaults = UserDefaults.standard
     private var cancellables = Set<AnyCancellable>()
@@ -42,8 +43,10 @@ class OilChartViewModel: ObservableObject {
                     break
                 }
             } receiveValue: { [weak self] pricesInfoList in
-                self?.oilPricesData = pricesInfoList
+                guard let self = self else { return }
                 
+                self.minMaxPrices = self.findMinMaxPrice(in: pricesInfoList)
+                self.oilPricesData = pricesInfoList
             }
             .store(in: &cancellables)
     }
@@ -53,5 +56,14 @@ class OilChartViewModel: ObservableObject {
         defaults.set(type.rawValue, forKey: UDOilType)
         
         getChartsDatas()
+    }
+    
+    private func findMinMaxPrice(in oilPrices: [OilPricesInfo]) -> [Double] {
+        guard !oilPrices.isEmpty else { return [] }
+
+        let prices = oilPrices.map { $0.price }
+        guard let minPrice = prices.min(), let maxPrice = prices.max() else { return [] }
+        
+        return [minPrice - 0.1, maxPrice + 0.1]
     }
 }
