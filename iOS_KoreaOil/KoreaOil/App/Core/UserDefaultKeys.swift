@@ -17,6 +17,16 @@ enum OilType: String, CaseIterable {
     case kerosene = "등유"
     case premium = "고급휘발유"
     case gas = "LPG"
+    
+    var resType: String {
+        switch self {
+        case .gasolin: "B027"
+        case .disel: "D047"
+        case .kerosene: "C004"
+        case .premium: "B034"
+        case .gas: "K015"
+        }
+    }
 }
 
 enum RangeType: String, CaseIterable {

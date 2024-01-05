@@ -19,5 +19,17 @@ extension String {
         
         return nil
     }
+    
+    func convertChartsDate() -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        
+        if let date = dateFormatter.date(from: self) {
+            dateFormatter.dateFormat = "MM.d"
+            return dateFormatter.string(from: date)
+        }
+        
+        return nil
+    }
 }
 
