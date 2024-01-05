@@ -10,17 +10,25 @@ import Combine
 import Alamofire
 
 class OilChartViewModel: ObservableObject {
+    @Published var selectedOilType: String = ""
+    
     @Published var premiumPriceData = [OilPricesInfo]()
     @Published var gasolinPriceData = [OilPricesInfo]()
     @Published var diselPriceData = [OilPricesInfo]()
     @Published var gasPriceData = [OilPricesInfo]()
     @Published var kerosenePriceData = [OilPricesInfo]()
     
-    var cancellables = Set<AnyCancellable>()
+    private let defaults = UserDefaults.standard
+    private var cancellables = Set<AnyCancellable>()
+    private let useCase = OilChartSceneUseCase()
     
-    let useCase = OilChartSceneUseCase()
-    
-    init() { }
+    init() {
+        if let oilType = defaults.string(forKey: UDOilType) {
+            self.selectedOilType = oilType
+        } else {
+            self.selectedOilType = OilType.gasolin.rawValue
+        }
+    }
     
     func getChartsDatas() {
         var param = Parameters()
@@ -41,6 +49,11 @@ class OilChartViewModel: ObservableObject {
                 self?.classifyAndStorePrices(pricesInfoList: pricesInfoList)
             }
             .store(in: &cancellables)
+    }
+    
+    func setOilBtnSelected(_ type: OilType) {
+        self.selectedOilType = type.rawValue
+        defaults.set(type.rawValue, forKey: UDOilType)
     }
     
     private func classifyAndStorePrices(pricesInfoList: [OilPricesInfo]) {

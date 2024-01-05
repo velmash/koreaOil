@@ -21,8 +21,8 @@ class SettingViewController: BaseViewController<SettingView> {
     var settingItems = SettingType.allCases
     var sheetItems = [String]()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         self.contentView.vc = self
         
@@ -58,6 +58,9 @@ class SettingViewController: BaseViewController<SettingView> {
         
         bottomSheetTableView?.dataSource = self
         bottomSheetTableView?.delegate = self
+        
+        settingTableView?.reloadData()
+        bottomSheetTableView?.reloadData()
     }
     
     private func reloadTables() {
