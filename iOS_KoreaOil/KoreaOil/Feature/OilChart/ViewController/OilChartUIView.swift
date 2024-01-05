@@ -45,47 +45,14 @@ struct OilChartUIView: View {
             }
             
             Chart {
-                ForEach(Array(viewModel.premiumPriceData.enumerated()), id: \.element) { index, data in
+                ForEach(Array(viewModel.oilPricesData.enumerated()), id: \.element) { index, data in
                     LineMark(
                         x: .value("날짜", data.date.convertChartsDate() ?? ""),
                         y: .value("가격", Double(data.price))
                     )
-                    .foregroundStyle(by: .value("Cate1", "고급휘발유"))
-                }
-                
-                ForEach(Array(viewModel.gasolinPriceData.enumerated()), id: \.element) { index, data in
-                    LineMark(
-                        x: .value("날짜", data.date.convertChartsDate() ?? ""),
-                        y: .value("가격", Double(data.price))
-                    )
-                    .foregroundStyle(by: .value("Cate1", "휘발유"))
-                }
-                
-                ForEach(Array(viewModel.diselPriceData.enumerated()), id: \.element) { index, data in
-                    LineMark(
-                        x: .value("날짜", data.date.convertChartsDate() ?? ""),
-                        y: .value("가격", Double(data.price))
-                    )
-                    .foregroundStyle(by: .value("Cate1", "경유"))
-                }
-                
-                ForEach(Array(viewModel.gasPriceData.enumerated()), id: \.element) { index, data in
-                    LineMark(
-                        x: .value("날짜", data.date.convertChartsDate() ?? ""),
-                        y: .value("가격", Double(data.price))
-                    )
-                    .foregroundStyle(by: .value("Cate1", "가스"))
-                }
-                
-                ForEach(Array(viewModel.kerosenePriceData.enumerated()), id: \.element) { index, data in
-                    LineMark(
-                        x: .value("날짜", data.date.convertChartsDate() ?? ""),
-                        y: .value("가격", Double(data.price))
-                    )
-                    .foregroundStyle(by: .value("Cate1", "등유"))
                 }
             }
-            .frame(height: 300)
+            .frame(height: 250)
             .padding()
             
             Spacer()

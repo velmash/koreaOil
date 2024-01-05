@@ -11,12 +11,7 @@ import Alamofire
 
 class OilChartViewModel: ObservableObject {
     @Published var selectedOilType: String = ""
-    
-    @Published var premiumPriceData = [OilPricesInfo]()
-    @Published var gasolinPriceData = [OilPricesInfo]()
-    @Published var diselPriceData = [OilPricesInfo]()
-    @Published var gasPriceData = [OilPricesInfo]()
-    @Published var kerosenePriceData = [OilPricesInfo]()
+    @Published var oilPricesData = [OilPricesInfo]()
     
     private let defaults = UserDefaults.standard
     private var cancellables = Set<AnyCancellable>()
@@ -34,6 +29,7 @@ class OilChartViewModel: ObservableObject {
         var param = Parameters()
         param["code"] = ApiKey().free
         param["out"] = "json"
+        param["prodcd"] = OilType(rawValue: selectedOilType)!.resType
         
         useCase.getOilPricesOfWeek(param)
             .asPublisher()
@@ -46,7 +42,8 @@ class OilChartViewModel: ObservableObject {
                     break
                 }
             } receiveValue: { [weak self] pricesInfoList in
-                self?.classifyAndStorePrices(pricesInfoList: pricesInfoList)
+                self?.oilPricesData = pricesInfoList
+                
             }
             .store(in: &cancellables)
     }
@@ -54,24 +51,7 @@ class OilChartViewModel: ObservableObject {
     func setOilBtnSelected(_ type: OilType) {
         self.selectedOilType = type.rawValue
         defaults.set(type.rawValue, forKey: UDOilType)
-    }
-    
-    private func classifyAndStorePrices(pricesInfoList: [OilPricesInfo]) {
-        for priceInfo in pricesInfoList {
-            guard let oilType = priceInfo.oilType else { continue }
-            
-            switch oilType {
-            case .premium:
-                self.premiumPriceData.append(priceInfo)
-            case .gasolin:
-                self.gasolinPriceData.append(priceInfo)
-            case .disel:
-                self.diselPriceData.append(priceInfo)
-            case .gas:
-                self.gasPriceData.append(priceInfo)
-            case .kerosene:
-                self.kerosenePriceData.append(priceInfo)
-            }
-        }
+        
+        getChartsDatas()
     }
 }
