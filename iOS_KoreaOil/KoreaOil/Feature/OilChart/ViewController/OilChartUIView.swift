@@ -7,13 +7,14 @@
 
 import SwiftUI
 import Charts
+import GoogleMobileAds
+import Then
 
 struct OilChartUIView: View {
     @ObservedObject var viewModel = OilChartViewModel()
     
     var body: some View {
         VStack {
-            
             Text("지난 7일간 유가 추이")
                 .font(.system(size: 24))
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -29,10 +30,14 @@ struct OilChartUIView: View {
                     .foregroundStyle(by: .value("Cate1", "휘발유"))
                 }
             }
-            .frame(height: 300) // 차트의 높이를 조정
-            .padding() // 주변에 패딩 추가
+            .frame(height: 300)
+            .padding()
             
-            Spacer() // 하단 여백
+            Spacer()
+            // 배너 광고 뷰 추가
+            BannerAdView()
+                .frame(width: UIScreen.main.bounds.width, height: 50)
+                
         }
         .onAppear {
             viewModel.getParam()
@@ -42,4 +47,19 @@ struct OilChartUIView: View {
 
 #Preview {
     OilChartUIView()
+}
+
+struct BannerAdView: UIViewRepresentable {
+    func makeUIView(context: Context) -> GADBannerView {
+        GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = [ "01cdf8405031d3f88cdb758e32340add" ]
+        
+        let banner = GADBannerView(adSize: GADAdSizeBanner).then {
+            $0.adUnitID = "ca-app-pub-3940256099942544/2934735716" //Test ID
+            $0.load(GADRequest())
+        }
+        
+        return banner
+    }
+
+    func updateUIView(_ uiView: GADBannerView, context: Context) { }
 }
