@@ -7,63 +7,88 @@
 
 import SwiftUI
 import Charts
-import GoogleMobileAds
-import Then
 
 struct OilChartUIView: View {
     @ObservedObject var viewModel = OilChartViewModel()
     
     var body: some View {
-        VStack {
-            Text("지난 7일간 유가 추이")
-                .font(.system(size: 24))
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding([.top, .bottom, .leading], 15)
-            
-            HStack {
-                Button(OilType.gasolin.rawValue) {
-                    viewModel.setOilBtnSelected(.gasolin)
-                }
-                .buttonStyle(OilTypeButtonStyle(isSelected: viewModel.selectedOilType == OilType.gasolin.rawValue))
+        ScrollView {
+            VStack {
+                Text("지난 7일간 유가 추이")
+                    .font(.system(size: 24))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding([.top, .leading], 15)
                 
-                Button(OilType.premium.rawValue) {
-                    viewModel.setOilBtnSelected(.premium)
+                HStack {
+                    Button(OilType.gasolin.rawValue) {
+                        viewModel.setOilBtnSelected(.gasolin)
+                    }
+                    .buttonStyle(OilTypeButtonStyle(isSelected: viewModel.selectedOilType == OilType.gasolin.rawValue))
+                    
+                    Button(OilType.premium.rawValue) {
+                        viewModel.setOilBtnSelected(.premium)
+                    }
+                    .buttonStyle(OilTypeButtonStyle(isSelected: viewModel.selectedOilType == OilType.premium.rawValue))
+                    
+                    Button(OilType.disel.rawValue) {
+                        viewModel.setOilBtnSelected(.disel)
+                    }
+                    .buttonStyle(OilTypeButtonStyle(isSelected: viewModel.selectedOilType == OilType.disel.rawValue))
+                    
+                    Button(OilType.gas.rawValue) {
+                        viewModel.setOilBtnSelected(.gas)
+                    }
+                    .buttonStyle(OilTypeButtonStyle(isSelected: viewModel.selectedOilType == OilType.gas.rawValue))
+                    
+                    Button(OilType.kerosene.rawValue) {
+                        viewModel.setOilBtnSelected(.kerosene)
+                    }
+                    .buttonStyle(OilTypeButtonStyle(isSelected: viewModel.selectedOilType == OilType.kerosene.rawValue))
                 }
-                .buttonStyle(OilTypeButtonStyle(isSelected: viewModel.selectedOilType == OilType.premium.rawValue))
                 
-                Button(OilType.disel.rawValue) {
-                    viewModel.setOilBtnSelected(.disel)
+                Chart {
+                    ForEach(Array(viewModel.oilPricesData.enumerated()), id: \.element) { index, data in
+                        LineMark(
+                            x: .value("날짜", data.date.convertChartsDate() ?? ""),
+                            y: .value("가격", Double(data.price))
+                        )
+                    }
                 }
-                .buttonStyle(OilTypeButtonStyle(isSelected: viewModel.selectedOilType == OilType.disel.rawValue))
+                .chartYScale(domain: viewModel.minMaxPrices)
+                .frame(height: 250)
+                .padding()
                 
-                Button(OilType.gas.rawValue) {
-                    viewModel.setOilBtnSelected(.gas)
-                }
-                .buttonStyle(OilTypeButtonStyle(isSelected: viewModel.selectedOilType == OilType.gas.rawValue))
-                
-                Button(OilType.kerosene.rawValue) {
-                    viewModel.setOilBtnSelected(.kerosene)
-                }
-                .buttonStyle(OilTypeButtonStyle(isSelected: viewModel.selectedOilType == OilType.kerosene.rawValue))
-            }
-            
-            Chart {
-                ForEach(Array(viewModel.oilPricesData.enumerated()), id: \.element) { index, data in
-                    LineMark(
-                        x: .value("날짜", data.date.convertChartsDate() ?? ""),
-                        y: .value("가격", Double(data.price))
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.white)
+                    .frame(height: 50)
+                    .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
+                    .overlay(
+                        Text("//TODO: 광고 넣기")
+                            .font(.system(size: 18))
                     )
+                    .padding([.leading, .trailing], 15)
+                
+                Text("상세")
+                    .font(.system(size: 22))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding([.leading, .top], 15)
+                
+                ForEach(viewModel.oilPricesData, id: \.self) { item in
+                    HStack {
+                        Text("· \(item.date.convertDate()!)")
+                            .font(.system(size: 15))
+                        Spacer()
+                        Text("₩\(String(format: "%.2f", item.price))")
+                            .font(.system(size: 15))
+                    }
+                    .padding([.leading, .trailing], 15)
+                    .frame(maxWidth: .infinity, idealHeight: 30, alignment: .leading)
                 }
             }
-            .chartYScale(domain: viewModel.minMaxPrices)
-            .frame(height: 250)
-            .padding()
-            
-            Spacer()
-            
-            BannerAdView()
-                .frame(width: UIScreen.main.bounds.width, height: 50)
-                
+            .padding([.bottom], 10)
         }
         .onAppear {
             viewModel.getChartsDatas()
@@ -73,19 +98,4 @@ struct OilChartUIView: View {
 
 #Preview {
     OilChartUIView()
-}
-
-struct BannerAdView: UIViewRepresentable {
-    func makeUIView(context: Context) -> GADBannerView {
-        GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = [ "01cdf8405031d3f88cdb758e32340add" ]
-        
-        let banner = GADBannerView(adSize: GADAdSizeBanner).then {
-            $0.adUnitID = "ca-app-pub-3940256099942544/2934735716" //Test ID
-            $0.load(GADRequest())
-        }
-        
-        return banner
-    }
-
-    func updateUIView(_ uiView: GADBannerView, context: Context) { }
 }
