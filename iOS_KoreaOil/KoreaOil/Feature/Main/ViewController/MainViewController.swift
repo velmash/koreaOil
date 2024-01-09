@@ -52,6 +52,7 @@ class MainViewController: BaseViewController<MainView> {
                 owner.contentView.searchBar.resignFirstResponder()
             }
             .disposed(by: bag)
+        
     }
 
 }

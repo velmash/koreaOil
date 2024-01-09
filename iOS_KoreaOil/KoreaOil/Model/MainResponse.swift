@@ -7,34 +7,38 @@
 
 import Foundation
 
-struct AvgAllPriceResponse: Codable {
-    var result: Result
+struct AroundGasStationResponse: Codable {
+    var result: GasStaionResult
 
     enum CodingKeys: String, CodingKey {
         case result = "RESULT"
     }
 }
 
-struct Result: Codable {
-    var oil: [AvgAllPrice]
+struct GasStaionResult: Codable {
+    var oil: [AroundGasStation]
 
     enum CodingKeys: String, CodingKey {
         case oil = "OIL"
     }
 }
 
-struct AvgAllPrice: Codable, Hashable {
-    var tradeDt: String
-    var prodcd: String
-    var prodnm: String
-    var price: String
-    var diff: String
+struct AroundGasStation: Codable, Hashable {
+    var stationId: String
+    var brand: String
+    var brandName: String
+    var price: Double
+    var distance: Double
+    var lon: Double
+    var lat: Double
 
     enum CodingKeys: String, CodingKey {
-        case tradeDt = "TRADE_DT"
-        case prodcd = "PRODCD"
-        case prodnm = "PRODNM"
+        case stationId = "UNI_ID"
+        case brand = "POLL_DIV_CD"
+        case brandName = "OS_NM"
         case price = "PRICE"
-        case diff = "DIFF"
+        case distance = "DISTANCE"
+        case lon = "GIS_X_COOR"
+        case lat = "GIS_Y_COOR"
     }
 }

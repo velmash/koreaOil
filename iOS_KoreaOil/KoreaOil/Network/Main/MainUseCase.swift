@@ -10,18 +10,12 @@ import RxSwift
 import Alamofire
 
 enum MainSceneURL: OpinetAPIPath {
-    case avgAllPrice = "/avgAllPrice.do"
+    case aroundGasStation = "/aroundAll.do"
 }
 
 class MainSceneUseCase {
-    func getAvgAllPrice(_ param: Parameters) -> Observable<Response<AvgAllPriceResponse>> {
-        return NetworkService().opinetAPIFetchable(opinetPath: MainSceneURL.avgAllPrice.rawValue, method: .get, param: param)
+    func getAroundGasStation(_ param: Parameters) -> Observable<Response<AroundGasStationResponse>> {
+        return NetworkService().opinetAPIFetchable(opinetPath: MainSceneURL.aroundGasStation.rawValue, method: .get, param: param)
     }
-    
-//    private func requestWithApiKey(_ param: Parameters, _ path: String) -> Observable<Response<[AvgAllPrice]>> {
-//        var mutableParam = param
-//        mutableParam["code"] = ApiKey().free
-//        return NetworkService().opinetAPIFetchable(opinetPath: path, method: .get, param: mutableParam)
-//    }
 }
 
