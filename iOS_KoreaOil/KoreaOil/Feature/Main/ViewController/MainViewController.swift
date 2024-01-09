@@ -37,8 +37,7 @@ class MainViewController: BaseViewController<MainView> {
                 let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude))
                 let marker = NMFMarker()
                 marker.position = NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
-                marker.iconImage = NMFOverlayImage(image: UIImage(systemName: "person.circle.fill")!)
-                marker.iconTintColor = .gray
+                marker.iconImage = NMFOverlayImage(image: self!.convertViewToImage(view: MyLocationView()))
                 
                 mapView?.moveCamera(cameraUpdate)
                 marker.mapView = mapView

@@ -25,5 +25,12 @@ class BaseViewController<ContentView: UIView>: UIViewController, UIGestureRecogn
     }
     
     func bindViewModel() { }
+    
+    func convertViewToImage(view: UIView) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
+        return renderer.image { ctx in
+            view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+        }
+    }
 }
 
