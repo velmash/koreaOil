@@ -13,6 +13,7 @@ import CoreLocation
 import iNaviMaps
 
 class MainViewModel: NSObject, ViewModelType {
+    let defaults = UserDefaults.standard
     var coordinator: Coordinator
     var locationManager: CLLocationManager!
     
@@ -51,14 +52,16 @@ class MainViewModel: NSObject, ViewModelType {
     
     func getStationInfo() {
         let katecPoint = self.wgsToKatec(point: currentLatLonSubject.value)
-        
+        let prodcd = OilType.allCases.first(where: { $0.rawValue == defaults.string(forKey: UDOilType) })?.resType ?? "B027"
+        let radius = RangeType.allCases.first(where: { $0.rawValue == defaults.string(forKey: UDRangeType) })?.reqType ?? 0
         var param = Parameters()
+        print("testdd", radius)
         param["code"] = ApiKey().free
         param["out"] = "json"
         param["x"] = "\(String(katecPoint.x))"
         param["y"] = "\(String(katecPoint.y))"
-        param["radius"] = "5000"
-        param["prodcd"] = "B027"
+        param["radius"] = radius
+        param["prodcd"] = prodcd
         param["sort"] = "1"
         
         useCase.getAroundGasStation(param)

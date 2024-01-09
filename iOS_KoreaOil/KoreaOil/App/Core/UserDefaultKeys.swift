@@ -35,6 +35,16 @@ enum RangeType: String, CaseIterable {
     case oneK = "1"
     case threeK = "3"
     case fiveK = "5"
+    
+    var reqType: Int {
+        switch self {
+        case .hunM: 100
+        case .fiveHunM: 500
+        case .oneK: 1000
+        case .threeK: 3000
+        case .fiveK: 5000
+        }
+    }
 }
 
 enum NaviType: String, CaseIterable {

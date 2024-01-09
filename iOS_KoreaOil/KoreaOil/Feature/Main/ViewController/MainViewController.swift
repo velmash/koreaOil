@@ -16,6 +16,12 @@ class MainViewController: BaseViewController<MainView> {
     
     var viewModel: MainViewModel?
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel?.getStationInfo()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
