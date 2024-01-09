@@ -13,7 +13,7 @@ struct OilChartUIView: View {
     
     var body: some View {
         ScrollView {
-            VStack {
+            VStack(alignment: .leading) {
                 Text("지난 7일간 유가 추이")
                     .font(.system(size: 24))
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -45,6 +45,7 @@ struct OilChartUIView: View {
                     }
                     .buttonStyle(OilTypeButtonStyle(isSelected: viewModel.selectedOilType == OilType.kerosene.rawValue))
                 }
+                .padding([.leading], 15)
                 
                 Chart {
                     ForEach(Array(viewModel.oilPricesData.enumerated()), id: \.element) { index, data in
