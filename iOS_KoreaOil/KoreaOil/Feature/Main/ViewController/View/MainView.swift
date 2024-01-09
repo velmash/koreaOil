@@ -31,6 +31,8 @@ class MainView: BaseView {
         self.backgroundColor = .white
         
         mapView = NMFMapView(frame: self.frame)
+        mapView?.minZoomLevel = 13
+        mapView?.maxZoomLevel = 15
         if let mapView {
             self.addSubview(mapView)
         }
