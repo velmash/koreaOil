@@ -30,11 +30,11 @@ enum OilType: String, CaseIterable {
 }
 
 enum RangeType: String, CaseIterable {
+    case hunM = "0.1"
+    case fiveHunM = "0.5"
     case oneK = "1"
     case threeK = "3"
     case fiveK = "5"
-    case tenK = "10"
-    case thirtyK = "30"
 }
 
 enum NaviType: String, CaseIterable {

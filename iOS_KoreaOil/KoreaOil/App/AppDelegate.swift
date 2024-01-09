@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if defaults.string(forKey: UDRangeType) == nil {
-            defaults.setValue(RangeType.tenK.rawValue, forKey: UDRangeType)
+            defaults.setValue(RangeType.oneK.rawValue, forKey: UDRangeType)
         }
         
         if defaults.string(forKey: UDNaviType) == nil {

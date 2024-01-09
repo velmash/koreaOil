@@ -35,7 +35,13 @@ class SettingTableViewCell: UITableViewCell {
             subLabel.text = defaults.string(forKey: UDOilType)
         case .regionRange:
             arrowImg.image = UIImage(systemName: "gearshape.2.fill")
-            subLabel.text = "\(String(describing: defaults.string(forKey: UDRangeType)!))km"
+            let rangeText = String(describing: defaults.string(forKey: UDRangeType)!)
+            if rangeText == "0.1" || rangeText == "0.5" {
+                subLabel.text = "\(String(format: "%.0f", (Double(rangeText) ?? 0) * 1000))m"
+            } else {
+                subLabel.text = "\(rangeText)km"
+            }
+            
         case .naviType:
             arrowImg.image = UIImage(systemName: "gearshape.2.fill")
             subLabel.text = defaults.string(forKey: UDNaviType)
