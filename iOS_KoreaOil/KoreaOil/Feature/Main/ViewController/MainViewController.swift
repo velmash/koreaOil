@@ -12,8 +12,6 @@ import RxGesture
 import NMapsMap
 
 class MainViewController: BaseViewController<MainView> {
-    private var bag = DisposeBag()
-    
     var viewModel: MainViewModel?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,7 +36,9 @@ class MainViewController: BaseViewController<MainView> {
         
         output.currentCoordinatePost
             .driveNext { [weak self] coordinate in
-                let mapView = self?.contentView.mapView
+                guard let self = self else { return }
+                
+                let mapView = self.contentView.mapView
                 
                 let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude))
                 let marker = NMFMarker()
@@ -51,6 +51,14 @@ class MainViewController: BaseViewController<MainView> {
             }
             .disposed(by: bag)
         
+        output.aroundGasStationInfoPost
+            .driveNext { [weak self] stations in
+                guard let self = self else { return }
+                
+                print("Post Test: ", stations)
+            }
+            .disposed(by: bag)
+        
         contentView.searchView.rx.tapGesture()
             .when(.recognized)
             .withUnretained(self)
@@ -58,7 +66,6 @@ class MainViewController: BaseViewController<MainView> {
                 owner.contentView.searchBar.resignFirstResponder()
             }
             .disposed(by: bag)
-        
     }
 
 }

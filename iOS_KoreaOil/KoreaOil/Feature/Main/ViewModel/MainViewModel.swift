@@ -20,6 +20,7 @@ class MainViewModel: NSObject, ViewModelType {
     let useCase = MainSceneUseCase()
     
     private let currentLatLonSubject = BehaviorRelay<CLLocationCoordinate2D>(value: CLLocationCoordinate2D(latitude: 0, longitude: 0))
+    private let aroundStationInfoSubject = PublishSubject<[AroundGasStation]>()
     
     init(coordinator: Coordinator) {
         self.coordinator = coordinator
@@ -30,22 +31,16 @@ class MainViewModel: NSObject, ViewModelType {
         
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
-
-//        self.currentLatLonSubject
-//            .filter { $0.latitude != 0.0 }
-//            .take(1)
-//            .subscribeNext { [weak self] _ in
-//                self?.getStationInfo()
-//            }
-//            .disposed(by: bag)
     }
     
     func transform(input: Input) -> Output {
         
         let currentLatLonPost = self.currentLatLonSubject.asDriverOnErrorJustComplete()
+        let aroundStationInfoPost = self.aroundStationInfoSubject.asDriverOnErrorJustComplete()
         
         return Output(
-            currentCoordinatePost: currentLatLonPost
+            currentCoordinatePost: currentLatLonPost,
+            aroundGasStationInfoPost: aroundStationInfoPost
         )
     }
     
@@ -65,11 +60,9 @@ class MainViewModel: NSObject, ViewModelType {
         param["prodcd"] = prodcd
         param["sort"] = "1"
         
-        print("SFDHIFHIFSDF", param)
-        
         useCase.getAroundGasStation(param)
-            .subscribeNext { data in
-                print("DSFHISDFHI", data.value.result.oil)
+            .subscribeNext { [weak self] data in
+                self?.aroundStationInfoSubject.onNext(data.value.result.oil)
             }
             .disposed(by: bag)
     }
@@ -82,6 +75,7 @@ extension MainViewModel {
     
     struct Output {
         let currentCoordinatePost: Driver<CLLocationCoordinate2D>
+        let aroundGasStationInfoPost: Driver<[AroundGasStation]>
     }
 }
 

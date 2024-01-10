@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import RxSwift
 
 class BaseViewController<ContentView: UIView>: UIViewController, UIGestureRecognizerDelegate {
+    var bag = DisposeBag()
+    
     var contentView: ContentView {
         return view as! ContentView
     }
@@ -15,12 +18,13 @@ class BaseViewController<ContentView: UIView>: UIViewController, UIGestureRecogn
         self.view = ContentView(frame: UIScreen.main.bounds)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         
+        bag = DisposeBag()
         self.bindViewModel()
     }
     

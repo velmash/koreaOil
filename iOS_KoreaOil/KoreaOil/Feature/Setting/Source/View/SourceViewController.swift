@@ -11,7 +11,6 @@ import RxCocoa
 import RxGesture
 
 class SourceViewController: BaseViewController<SourceView> {
-    private var bag = DisposeBag()
     
     var viewModel: SourceViewModel?
     
