@@ -88,9 +88,15 @@ class MainViewController: BaseViewController<MainView> {
                     
                     let isMinPriceStation = stationInfo == minPriceStation
                     let latlon = GeoConverter().convert(sourceType: .KATEC, destinationType: .WGS_84, geoPoint: GeographicPoint(x: stationInfo.lon, y: stationInfo.lat))!
+                    let locationView = MyLocationView(stationInfo: stationInfo, isMinPriceStation: isMinPriceStation)
                     
                     marker.position = NMGLatLng(lat: latlon.y, lng: latlon.x)
-                    marker.iconImage = NMFOverlayImage(image: self.convertViewToImage(view: MyLocationView(stationInfo: stationInfo, isMinPriceStation: isMinPriceStation)))
+                    marker.iconImage = NMFOverlayImage(image: self.convertViewToImage(view: locationView))
+                    
+                    marker.touchHandler = { overlay in
+                        self.viewModel?.stationMarkerTap(stationInfo: locationView.stationInfo)
+                        return true
+                    }
                     
                     marker.mapView = mapView
                     

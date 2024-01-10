@@ -21,6 +21,14 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
+        self.childCoordinators.append(StationDetailCoordinator(self.navigationController))
         self.navigationController.pushViewController(self.mainViewController, animated: true)
+    }
+    
+    func goStationDetail(stationInfo: AroundGasStation) {
+        if let stationDetailCoordinator = childCoordinators.first(where: { $0.type == .stationDetail }) as? StationDetailCoordinator {
+            stationDetailCoordinator.stationDetailViewController.viewModel?.initData = stationInfo
+            stationDetailCoordinator.start()
+        }
     }
 }

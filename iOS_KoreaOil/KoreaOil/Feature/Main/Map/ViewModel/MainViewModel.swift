@@ -13,7 +13,7 @@ import CoreLocation
 
 class MainViewModel: NSObject, ViewModelType {
     private let defaults = UserDefaults.standard
-    private var coordinator: Coordinator
+    private var coordinator: MainCoordinator
     private var locationManager: CLLocationManager!
     private let geoConverter = GeoConverter()
     
@@ -26,7 +26,7 @@ class MainViewModel: NSObject, ViewModelType {
     
     private var minPriceStationInfo: AroundGasStation?
     
-    init(coordinator: Coordinator) {
+    init(coordinator: MainCoordinator) {
         self.coordinator = coordinator
         super.init()
         
@@ -84,6 +84,10 @@ class MainViewModel: NSObject, ViewModelType {
                 self?.minPriceStationInfo = self?.findCheapestStation(stationInfos: stationInfos)
             }
             .disposed(by: bag)
+    }
+    
+    func stationMarkerTap(stationInfo: AroundGasStation) {
+        self.coordinator.goStationDetail(stationInfo: stationInfo)
     }
     
     func findCheapestStation(stationInfos: [AroundGasStation]) -> AroundGasStation? {

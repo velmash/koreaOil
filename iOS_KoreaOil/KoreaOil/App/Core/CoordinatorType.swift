@@ -8,5 +8,5 @@
 enum CoordinatorType {
     case home, chart, region, setting
     case tab
-    case source
+    case stationDetail, source
 }
