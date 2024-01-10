@@ -12,6 +12,9 @@ import RxGesture
 import NMapsMap
 
 class MainViewController: BaseViewController<MainView> {
+    private var currentMarker = NMFMarker()
+    private var stationMarkers = [NMFMarker]()
+    
     var viewModel: MainViewModel?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,33 +38,58 @@ class MainViewController: BaseViewController<MainView> {
         let output = viewModel.transform(input: input)
         
         output.currentCoordinatePost
+            .doOnNext { [weak self] _ in
+                guard let self = self else { return }
+                
+                currentMarker.mapView = nil
+                currentMarker = NMFMarker()
+            }
             .driveNext { [weak self] coordinate in
                 guard let self = self else { return }
                 
                 let mapView = self.contentView.mapView
                 
                 let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude))
-                let marker = NMFMarker()
-                marker.position = NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
-                marker.captionText = "내 위치"
-                marker.captionAligns = [NMFAlignType.top]
+                currentMarker.position = NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
+                currentMarker.captionText = "내 위치"
+                currentMarker.captionAligns = [NMFAlignType.top]
                 mapView?.moveCamera(cameraUpdate)
-                marker.mapView = mapView
+                currentMarker.mapView = mapView
             }
             .disposed(by: bag)
         
         output.aroundGasStationInfoPost
+            .doOnNext { [weak self] _ in
+                guard let self = self else { return }
+                
+                for marker in self.stationMarkers {
+                    marker.mapView = nil
+                }
+                
+                self.stationMarkers = []
+            }
+            .doOnNext { stations in
+                if stations.count <= 0 {
+                    iToast.show("주변에 주유소가 없습니다. \"설정\"으로 이동하여, 반경 범위 조건을 변경 해 주세요.")
+                }
+                return
+            }
             .driveNext { [weak self] stations in
                 guard let self = self else { return }
                 
                 let mapView = self.contentView.mapView
                 
+                let minPriceStation = stations.min(by: { $0.price < $1.price })
+                
                 for stationInfo in stations {
                     let marker = NMFMarker()
                     let latlon = GeoConverter().convert(sourceType: .KATEC, destinationType: .WGS_84, geoPoint: GeographicPoint(x: stationInfo.lon, y: stationInfo.lat))!
                     marker.position = NMGLatLng(lat: latlon.y, lng: latlon.x)
-                    marker.iconImage = NMFOverlayImage(image: self.convertViewToImage(view: MyLocationView(stationInfo: stationInfo)))
+                    let isMinPriceStation = stationInfo.price == minPriceStation?.price
+                    marker.iconImage = NMFOverlayImage(image: self.convertViewToImage(view: MyLocationView(stationInfo: stationInfo, isMinPriceStation: isMinPriceStation)))
                     marker.mapView = mapView
+                    
+                    self.stationMarkers.append(marker)
                 }
             }
             .disposed(by: bag)

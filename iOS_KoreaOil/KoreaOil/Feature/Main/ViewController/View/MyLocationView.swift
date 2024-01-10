@@ -11,6 +11,7 @@ import Then
 
 class MyLocationView: BaseView {
     var stationInfo: AroundGasStation
+    var isMinPriceStation: Bool
     
     lazy var centerPoint = UIView().then {
         $0.backgroundColor = .red
@@ -26,9 +27,21 @@ class MyLocationView: BaseView {
         $0.contentMode = .scaleAspectFit
     }
     
+    lazy var priceLb = UILabel().then {
+        $0.text = "₩\(String(format: "%.0f", stationInfo.price))"
+        $0.font = .systemFont(ofSize: 12)
+        
+        if isMinPriceStation {
+            $0.font = .systemFont(ofSize: 13)
+            $0.textColor = .red
+        }
+    }
+    
     init(stationInfo: AroundGasStation, 
+         isMinPriceStation: Bool,
          frame: CGRect = CGRect(origin: CGPoint(x: 30, y: 0), size: CGSize(width: 142, height: 50))) {
         self.stationInfo = stationInfo
+        self.isMinPriceStation = isMinPriceStation
         
         super.init(frame: frame)
         self.backgroundColor = .clear
@@ -47,6 +60,7 @@ class MyLocationView: BaseView {
         addSubview(centerPoint)
         addSubview(baloonView)
         baloonView.addSubview(brandImg)
+        baloonView.addSubview(priceLb)
     }
     
     override func addConstraints() {
@@ -67,6 +81,11 @@ class MyLocationView: BaseView {
             $0.top.equalToSuperview().offset(6.2)
             $0.leading.equalToSuperview().offset(9.43)
             $0.size.equalTo(25)
+        }
+        
+        priceLb.snp.makeConstraints {
+            $0.centerY.equalTo(brandImg)
+            $0.trailing.equalToSuperview().offset(-15)
         }
     }
 }

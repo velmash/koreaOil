@@ -20,7 +20,7 @@ class MainViewModel: NSObject, ViewModelType {
     let useCase = MainSceneUseCase()
     
     private let currentLatLonSubject = BehaviorRelay<CLLocationCoordinate2D>(value: CLLocationCoordinate2D(latitude: 0, longitude: 0))
-    private let aroundStationInfoSubject = BehaviorRelay<[AroundGasStation]>(value: [])
+    private let aroundStationInfoSubject = PublishSubject<[AroundGasStation]>()
     
     init(coordinator: Coordinator) {
         self.coordinator = coordinator
@@ -62,7 +62,7 @@ class MainViewModel: NSObject, ViewModelType {
         
         useCase.getAroundGasStation(param)
             .subscribeNext { [weak self] data in
-                self?.aroundStationInfoSubject.accept(data.value.result.oil)
+                self?.aroundStationInfoSubject.onNext(data.value.result.oil)
             }
             .disposed(by: bag)
     }
