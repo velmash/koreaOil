@@ -10,6 +10,8 @@ import SnapKit
 import Then
 
 class MyLocationView: BaseView {
+    var stationInfo: AroundGasStation
+    
     lazy var centerPoint = UIView().then {
         $0.backgroundColor = .red
         $0.layer.masksToBounds = true
@@ -19,9 +21,16 @@ class MyLocationView: BaseView {
         $0.tintColor = .blue
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: CGRect(origin: CGPoint(x: 30, y: 0), size: CGSize(width: 142, height: 50)))
+    lazy var brandImg = UIImageView().then {
+        $0.image = stationInfo.stationType?.image
+        $0.contentMode = .scaleAspectFit
+    }
+    
+    init(stationInfo: AroundGasStation, 
+         frame: CGRect = CGRect(origin: CGPoint(x: 30, y: 0), size: CGSize(width: 142, height: 50))) {
+        self.stationInfo = stationInfo
         
+        super.init(frame: frame)
         self.backgroundColor = .clear
     }
     
@@ -37,6 +46,7 @@ class MyLocationView: BaseView {
     override func addSubviews() {
         addSubview(centerPoint)
         addSubview(baloonView)
+        baloonView.addSubview(brandImg)
     }
     
     override func addConstraints() {
@@ -47,10 +57,16 @@ class MyLocationView: BaseView {
         }
         
         baloonView.snp.makeConstraints {
-            $0.centerX.equalToSuperview().offset(23)
+            $0.centerX.equalToSuperview().offset(20)
             $0.bottom.equalTo(centerPoint.snp.top)
             $0.width.equalTo(100)
             $0.height.equalTo(40)
+        }
+        
+        brandImg.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(6.2)
+            $0.leading.equalToSuperview().offset(9.43)
+            $0.size.equalTo(25)
         }
     }
 }

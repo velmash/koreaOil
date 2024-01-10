@@ -56,11 +56,11 @@ class MainViewController: BaseViewController<MainView> {
                 
                 let mapView = self.contentView.mapView
                 
-                stations.forEach {
+                for stationInfo in stations {
                     let marker = NMFMarker()
-                    let latlon = GeoConverter().convert(sourceType: .KATEC, destinationType: .WGS_84, geoPoint: GeographicPoint(x: $0.lon, y: $0.lat))!
+                    let latlon = GeoConverter().convert(sourceType: .KATEC, destinationType: .WGS_84, geoPoint: GeographicPoint(x: stationInfo.lon, y: stationInfo.lat))!
                     marker.position = NMGLatLng(lat: latlon.y, lng: latlon.x)
-                    marker.iconImage = NMFOverlayImage(image: self.convertViewToImage(view: MyLocationView()))
+                    marker.iconImage = NMFOverlayImage(image: self.convertViewToImage(view: MyLocationView(stationInfo: stationInfo)))
                     marker.mapView = mapView
                 }
             }
