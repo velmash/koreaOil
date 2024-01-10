@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>iNaviAppKey</key>
-	<string>5Wsu0uBFFUmJEMInl5l6</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>광고 허용 테스트</string>
 	<key>GADApplicationIdentifier</key>

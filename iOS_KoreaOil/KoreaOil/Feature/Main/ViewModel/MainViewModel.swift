@@ -10,7 +10,6 @@ import RxSwift
 import RxCocoa
 import Alamofire
 import CoreLocation
-import iNaviMaps
 
 class MainViewModel: NSObject, ViewModelType {
     let defaults = UserDefaults.standard
@@ -32,13 +31,13 @@ class MainViewModel: NSObject, ViewModelType {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
 
-        self.currentLatLonSubject
-            .filter { $0.latitude != 0.0 }
-            .take(1)
-            .subscribeNext { [weak self] _ in
-                self?.getStationInfo()
-            }
-            .disposed(by: bag)
+//        self.currentLatLonSubject
+//            .filter { $0.latitude != 0.0 }
+//            .take(1)
+//            .subscribeNext { [weak self] _ in
+//                self?.getStationInfo()
+//            }
+//            .disposed(by: bag)
     }
     
     func transform(input: Input) -> Output {
@@ -51,30 +50,28 @@ class MainViewModel: NSObject, ViewModelType {
     }
     
     func getStationInfo() {
-        let katecPoint = self.wgsToKatec(point: currentLatLonSubject.value)
+        let converter = GeoConverter()
+        let dd = converter.convert(sourceType: .WGS_84, destinationType: .KATEC, geoPoint: GeographicPoint(x: currentLatLonSubject.value.longitude, y: currentLatLonSubject.value.latitude))!
+        
         let prodcd = OilType.allCases.first(where: { $0.rawValue == defaults.string(forKey: UDOilType) })?.resType ?? "B027"
         let radius = RangeType.allCases.first(where: { $0.rawValue == defaults.string(forKey: UDRangeType) })?.reqType ?? 0
+        
         var param = Parameters()
-        print("testdd", radius)
         param["code"] = ApiKey().free
         param["out"] = "json"
-        param["x"] = "\(String(katecPoint.x))"
-        param["y"] = "\(String(katecPoint.y))"
+        param["x"] = "\(String(dd.x))"
+        param["y"] = "\(String(dd.y))"
         param["radius"] = radius
         param["prodcd"] = prodcd
         param["sort"] = "1"
+        
+        print("SFDHIFHIFSDF", param)
         
         useCase.getAroundGasStation(param)
             .subscribeNext { data in
                 print("DSFHISDFHI", data.value.result.oil)
             }
             .disposed(by: bag)
-    }
-    
-    private func wgsToKatec(point: CLLocationCoordinate2D) -> INVKatec {
-        let wgs84 = INVLatLng(lat: point.latitude, lng: point.longitude)
-        let katec = INVKatec(latLng: wgs84)
-        return katec
     }
 }
 

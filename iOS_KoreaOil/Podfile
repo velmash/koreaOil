@@ -14,7 +14,6 @@ target 'KoreaOil' do
   pod 'RxGesture'
   pod 'ReactorKit'
   pod 'NMapsMap'
-  pod 'inavi-maps-sdk'
   pod 'FirebaseAnalytics'
   pod 'Google-Mobile-Ads-SDK'
  
