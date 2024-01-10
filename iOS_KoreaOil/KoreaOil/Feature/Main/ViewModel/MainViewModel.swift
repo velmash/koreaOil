@@ -12,15 +12,19 @@ import Alamofire
 import CoreLocation
 
 class MainViewModel: NSObject, ViewModelType {
-    let defaults = UserDefaults.standard
-    var coordinator: Coordinator
-    var locationManager: CLLocationManager!
+    private let defaults = UserDefaults.standard
+    private var coordinator: Coordinator
+    private var locationManager: CLLocationManager!
+    private let geoConverter = GeoConverter()
     
-    var bag = DisposeBag()
-    let useCase = MainSceneUseCase()
+    private var bag = DisposeBag()
+    private let useCase = MainSceneUseCase()
     
     private let currentLatLonSubject = BehaviorRelay<CLLocationCoordinate2D>(value: CLLocationCoordinate2D(latitude: 0, longitude: 0))
     private let aroundStationInfoSubject = PublishSubject<[AroundGasStation]>()
+    private let minPriceStationGPSSubject = PublishSubject<GeographicPoint>()
+    
+    private var minPriceStationInfo: AroundGasStation?
     
     init(coordinator: Coordinator) {
         self.coordinator = coordinator
@@ -35,18 +39,30 @@ class MainViewModel: NSObject, ViewModelType {
     
     func transform(input: Input) -> Output {
         
+        input.goMinBtnTap
+            .withUnretained(self)
+            .subscribeNext { owner, _ in
+                if let minPriceStationInfo = owner.minPriceStationInfo {
+                    let convertedWGSGPS = owner.geoConverter.convert(sourceType: .KATEC, destinationType: .WGS_84, geoPoint: GeographicPoint(x: minPriceStationInfo.lon, y: minPriceStationInfo.lat))!
+                    
+                    owner.minPriceStationGPSSubject.onNext(convertedWGSGPS)
+                }
+            }
+            .disposed(by: bag)
+        
         let currentLatLonPost = self.currentLatLonSubject.asDriverOnErrorJustComplete()
         let aroundStationInfoPost = self.aroundStationInfoSubject.asDriverOnErrorJustComplete()
+        let minPriceStationGPSPost = self.minPriceStationGPSSubject.asDriverOnErrorJustComplete()
         
         return Output(
             currentCoordinatePost: currentLatLonPost,
-            aroundGasStationInfoPost: aroundStationInfoPost
+            aroundGasStationInfoPost: aroundStationInfoPost,
+            minPriceStationGPSPost: minPriceStationGPSPost
         )
     }
     
     func getStationInfo() {
-        let converter = GeoConverter()
-        let dd = converter.convert(sourceType: .WGS_84, destinationType: .KATEC, geoPoint: GeographicPoint(x: currentLatLonSubject.value.longitude, y: currentLatLonSubject.value.latitude))!
+        let convertedKatecGPS = geoConverter.convert(sourceType: .WGS_84, destinationType: .KATEC, geoPoint: GeographicPoint(x: currentLatLonSubject.value.longitude, y: currentLatLonSubject.value.latitude))!
         
         let prodcd = OilType.allCases.first(where: { $0.rawValue == defaults.string(forKey: UDOilType) })?.resType ?? "B027"
         let radius = RangeType.allCases.first(where: { $0.rawValue == defaults.string(forKey: UDRangeType) })?.reqType ?? 0
@@ -54,28 +70,42 @@ class MainViewModel: NSObject, ViewModelType {
         var param = Parameters()
         param["code"] = ApiKey().free
         param["out"] = "json"
-        param["x"] = "\(String(dd.x))"
-        param["y"] = "\(String(dd.y))"
+        param["x"] = "\(String(convertedKatecGPS.x))"
+        param["y"] = "\(String(convertedKatecGPS.y))"
         param["radius"] = radius
         param["prodcd"] = prodcd
-        param["sort"] = "1"
+        param["sort"] = "2"
         
         useCase.getAroundGasStation(param)
             .subscribeNext { [weak self] data in
-                self?.aroundStationInfoSubject.onNext(data.value.result.oil)
+                let stationInfos = data.value.result.oil
+                self?.aroundStationInfoSubject.onNext(stationInfos)
+                
+                self?.minPriceStationInfo = self?.findCheapestStation(stationInfos: stationInfos)
             }
             .disposed(by: bag)
+    }
+    
+    func findCheapestStation(stationInfos: [AroundGasStation]) -> AroundGasStation? {
+        let sortedStations = stationInfos.sorted {
+            if $0.price == $1.price {
+                return $0.distance < $1.distance
+            }
+            return $0.price < $1.price
+        }
+        return sortedStations.first
     }
 }
 
 extension MainViewModel {
     struct Input {
-        
+        let goMinBtnTap: Observable<Void>
     }
     
     struct Output {
         let currentCoordinatePost: Driver<CLLocationCoordinate2D>
         let aroundGasStationInfoPost: Driver<[AroundGasStation]>
+        let minPriceStationGPSPost: Driver<GeographicPoint>
     }
 }
 

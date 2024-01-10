@@ -26,15 +26,17 @@ class MainViewController: BaseViewController<MainView> {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.contentView.vc = self
         contentView.mapView?.touchDelegate = self
+        contentView.mapView?.addCameraDelegate(delegate: self)
         contentView.searchBar.delegate = self
     }
     
     override func bindViewModel() {
         guard let viewModel = viewModel else { return }
         
-        let input = MainViewModel.Input()
+        let input = MainViewModel.Input(
+            goMinBtnTap: self.contentView.goMinPriceBtn.rx.tap.asObservable()
+        )
         let output = viewModel.transform(input: input)
         
         output.currentCoordinatePost
@@ -79,17 +81,35 @@ class MainViewController: BaseViewController<MainView> {
                 
                 let mapView = self.contentView.mapView
                 
-                let minPriceStation = stations.min(by: { $0.price < $1.price })
+                let minPriceStation = viewModel.findCheapestStation(stationInfos: stations)
                 
                 for stationInfo in stations {
                     let marker = NMFMarker()
+                    
+                    let isMinPriceStation = stationInfo == minPriceStation
                     let latlon = GeoConverter().convert(sourceType: .KATEC, destinationType: .WGS_84, geoPoint: GeographicPoint(x: stationInfo.lon, y: stationInfo.lat))!
+                    
                     marker.position = NMGLatLng(lat: latlon.y, lng: latlon.x)
-                    let isMinPriceStation = stationInfo.price == minPriceStation?.price
                     marker.iconImage = NMFOverlayImage(image: self.convertViewToImage(view: MyLocationView(stationInfo: stationInfo, isMinPriceStation: isMinPriceStation)))
+                    
                     marker.mapView = mapView
                     
                     self.stationMarkers.append(marker)
+                }
+            }
+            .disposed(by: bag)
+        
+        output.minPriceStationGPSPost
+            .driveNext { [weak self] wgsGps in
+                guard let self = self else { return }
+                
+                self.contentView.goMinPriceBtn.isHidden = true
+                
+                let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: wgsGps.y, lng: wgsGps.x), zoomTo: 16)
+                cameraUpdate.animation = .fly
+                cameraUpdate.animationDuration = 1
+                self.contentView.mapView?.moveCamera(cameraUpdate) { _ in
+                    self.contentView.goMinPriceBtn.isHidden = true
                 }
             }
             .disposed(by: bag)
@@ -108,6 +128,12 @@ class MainViewController: BaseViewController<MainView> {
 extension MainViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         print("\(latlng.lat), \(latlng.lng)")
+    }
+}
+
+extension MainViewController: NMFMapViewCameraDelegate {
+    func mapView(_ mapView: NMFMapView, cameraIsChangingByReason reason: Int) {
+        self.contentView.goMinPriceBtn.isHidden = false
     }
 }
 

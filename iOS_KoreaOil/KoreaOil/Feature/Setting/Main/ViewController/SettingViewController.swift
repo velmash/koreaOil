@@ -24,8 +24,6 @@ class SettingViewController: BaseViewController<SettingView> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.contentView.vc = self
-        
         //Admob Setting
         contentView.bannerView.rootViewController = self
         contentView.bannerView.delegate = self

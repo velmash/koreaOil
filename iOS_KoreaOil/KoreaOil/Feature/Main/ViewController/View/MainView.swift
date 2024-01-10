@@ -11,11 +11,11 @@ import SnapKit
 import Then
 
 class MainView: BaseView {
-    weak var vc: MainViewController?
     var mapView: NMFMapView?
     
     lazy var searchBar = createSearchBar()
     lazy var searchView = SearchView()
+    lazy var goMinPriceBtn = createGoMinPriceBtn()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,20 +32,24 @@ class MainView: BaseView {
         
         mapView = NMFMapView(frame: self.frame)
         mapView?.minZoomLevel = 13
-        mapView?.maxZoomLevel = 15
+        mapView?.maxZoomLevel = 16
+        mapView?.isTiltGestureEnabled = false
+        mapView?.isRotateGestureEnabled = false
+        
         if let mapView {
             self.addSubview(mapView)
         }
         
         addSubview(searchView)
         addSubview(searchBar)
+        addSubview(goMinPriceBtn)
     }
     
     override func addConstraints() {
-        if let mapView, let tabBar = vc?.tabBarController?.tabBar {
+        if let mapView {
             mapView.snp.makeConstraints {
                 $0.top.leading.trailing.equalToSuperview()
-                $0.bottom.equalTo(tabBar.snp.top)
+                $0.bottom.equalToSuperview().offset(-self.tabBarHeight)
             }
         }
         
@@ -58,6 +62,13 @@ class MainView: BaseView {
         
         searchView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        goMinPriceBtn.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-(20 + self.tabBarHeight))
+            $0.width.equalTo(130)
+            $0.height.equalTo(30)
         }
     }
     
@@ -104,5 +115,20 @@ extension MainView {
         }
         
         return searchBar
+    }
+    
+    private func createGoMinPriceBtn() -> UIButton {
+        let btn = UIButton()
+        
+        btn.backgroundColor = .white
+        btn.clipsToBounds = true
+        btn.layer.cornerRadius = 15
+        btn.layer.borderColor =  UIColor.gray.cgColor
+        btn.layer.borderWidth = 2
+        btn.setTitle("최저가로 지도 이동", for: .normal)
+        btn.setTitleColor(.black, for: .normal)
+        btn.titleLabel?.font = .systemFont(ofSize: 14)
+        
+        return btn
     }
 }
