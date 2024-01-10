@@ -20,7 +20,7 @@ class MyLocationView: BaseView {
     }
     
     override init(frame: CGRect) {
-        super.init(frame: CGRect(origin: CGPoint(x: 30, y: 0), size: CGSize(width: 162, height: 70)))
+        super.init(frame: CGRect(origin: CGPoint(x: 30, y: 0), size: CGSize(width: 142, height: 50)))
         
         self.backgroundColor = .clear
     }
@@ -49,8 +49,8 @@ class MyLocationView: BaseView {
         baloonView.snp.makeConstraints {
             $0.centerX.equalToSuperview().offset(23)
             $0.bottom.equalTo(centerPoint.snp.top)
-            $0.width.equalTo(120)
-            $0.height.equalTo(60)
+            $0.width.equalTo(100)
+            $0.height.equalTo(40)
         }
     }
 }

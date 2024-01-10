@@ -45,7 +45,6 @@ class MainViewController: BaseViewController<MainView> {
                 marker.position = NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
                 marker.captionText = "내 위치"
                 marker.captionAligns = [NMFAlignType.top]
-//                marker.iconImage = NMFOverlayImage(image: self!.convertViewToImage(view: MyLocationView()))
                 mapView?.moveCamera(cameraUpdate)
                 marker.mapView = mapView
             }
@@ -55,7 +54,15 @@ class MainViewController: BaseViewController<MainView> {
             .driveNext { [weak self] stations in
                 guard let self = self else { return }
                 
-                print("Post Test: ", stations)
+                let mapView = self.contentView.mapView
+                
+                stations.forEach {
+                    let marker = NMFMarker()
+                    let latlon = GeoConverter().convert(sourceType: .KATEC, destinationType: .WGS_84, geoPoint: GeographicPoint(x: $0.lon, y: $0.lat))!
+                    marker.position = NMGLatLng(lat: latlon.y, lng: latlon.x)
+                    marker.iconImage = NMFOverlayImage(image: self.convertViewToImage(view: MyLocationView()))
+                    marker.mapView = mapView
+                }
             }
             .disposed(by: bag)
         
