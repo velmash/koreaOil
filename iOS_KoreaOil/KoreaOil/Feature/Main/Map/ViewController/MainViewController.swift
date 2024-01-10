@@ -20,6 +20,7 @@ class MainViewController: BaseViewController<MainView> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.contentView.goMinPriceBtn.isHidden = false
         viewModel?.getStationInfo()
     }
     
@@ -70,8 +71,9 @@ class MainViewController: BaseViewController<MainView> {
                 
                 self.stationMarkers = []
             }
-            .doOnNext { stations in
+            .doOnNext { [weak self] stations in
                 if stations.count <= 0 {
+                    self?.contentView.goMinPriceBtn.isHidden = true
                     iToast.show("주변에 주유소가 없습니다. \"설정\"으로 이동하여, 반경 범위 조건을 변경 해 주세요.")
                 }
                 return

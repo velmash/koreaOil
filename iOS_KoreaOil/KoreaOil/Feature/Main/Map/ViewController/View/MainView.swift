@@ -66,7 +66,7 @@ class MainView: BaseView {
         
         goMinPriceBtn.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-(20 + self.tabBarHeight))
+            $0.bottom.equalToSuperview().offset(-(20 + bottomSafetyAreaInset + tabBarHeight))
             $0.width.equalTo(130)
             $0.height.equalTo(30)
         }
