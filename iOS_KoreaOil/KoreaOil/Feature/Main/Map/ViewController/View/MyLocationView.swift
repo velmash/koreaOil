@@ -28,18 +28,29 @@ class MyLocationView: BaseView {
     }
     
     lazy var priceLb = UILabel().then {
-        $0.text = "₩\(String(format: "%.0f", stationInfo.price))"
-        $0.font = .systemFont(ofSize: 12)
+        var priceString = String(format: "%.0f", stationInfo.price)
+        if let number = Int(priceString), number >= 1000 {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal // 천 단위 구분자 사용
+            formatter.groupingSeparator = ","
+            formatter.groupingSize = 3
+            
+            if let formattedNumber = formatter.string(from: NSNumber(value: number)) {
+                priceString = formattedNumber
+            }
+        }
+        
+        $0.text = "₩\(priceString)"
+        $0.font = .systemFont(ofSize: 13)
         
         if isMinPriceStation {
-            $0.font = .systemFont(ofSize: 13)
             $0.textColor = .red
         }
     }
     
     init(stationInfo: AroundGasStation, 
          isMinPriceStation: Bool,
-         frame: CGRect = CGRect(origin: CGPoint(x: 30, y: 0), size: CGSize(width: 142, height: 50))) {
+         frame: CGRect = CGRect(origin: CGPoint(x: 30, y: 0), size: CGSize(width: 142, height: 65))) {
         self.stationInfo = stationInfo
         self.isMinPriceStation = isMinPriceStation
         
@@ -67,25 +78,25 @@ class MyLocationView: BaseView {
         centerPoint.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview()
-            $0.size.equalTo(10)
+            $0.size.equalTo(15)
         }
         
         baloonView.snp.makeConstraints {
             $0.centerX.equalToSuperview().offset(20)
             $0.bottom.equalTo(centerPoint.snp.top)
             $0.width.equalTo(100)
-            $0.height.equalTo(40)
+            $0.height.equalTo(50)
         }
         
         brandImg.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(6.2)
+            $0.top.equalToSuperview().offset(7.2)
             $0.leading.equalToSuperview().offset(9.43)
-            $0.size.equalTo(25)
+            $0.size.equalTo(30)
         }
         
         priceLb.snp.makeConstraints {
-            $0.centerY.equalTo(brandImg)
-            $0.trailing.equalToSuperview().offset(-15)
+            $0.centerY.equalTo(brandImg).offset(2)
+            $0.trailing.equalToSuperview().offset(-11)
         }
     }
 }
