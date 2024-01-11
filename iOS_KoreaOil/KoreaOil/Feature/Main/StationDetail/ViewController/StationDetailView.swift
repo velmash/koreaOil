@@ -6,19 +6,52 @@
 //
 
 import UIKit
+import NMapsMap
 import SnapKit
 import Then
 
 class StationDetailView: BaseView {
-    lazy var tempLb = UILabel().then {
-        $0.font = .systemFont(ofSize: 18)
-        $0.numberOfLines = 0
+    var mapView: NMFMapView?
+    
+    lazy var topBar = UIView().then {
+        $0.backgroundColor = .white
     }
+    
+    lazy var backBtn = UIButton().then {
+        $0.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        $0.tintColor = .black
+        $0.contentMode = .scaleAspectFit
+    }
+    
+    lazy var titleLb = UILabel().then {
+        $0.font = .systemFont(ofSize: 18)
+        $0.text = "주유소 상세 정보"
+    }
+    
+    lazy var detailContainerView = UIView().then {
+        $0.backgroundColor = .white
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 15
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.gray.cgColor
+    }
+    
+    lazy var stationTitleLb = UILabel().then {
+        $0.font = .systemFont(ofSize: 18)
+        $0.textColor = .black
+    }
+    
+    lazy var btnContainerView = UIView().then {
+        $0.backgroundColor = .white
+    }
+    
+    lazy var stopoverBtn = makeRouteBtn(isDest: false)
+    lazy var destBtn = makeRouteBtn(isDest: true)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = .yellow
+        self.backgroundColor = .white
     }
     
     required init?(coder: NSCoder) {
@@ -26,12 +59,136 @@ class StationDetailView: BaseView {
     }
     
     override func addSubviews() {
-        addSubview(tempLb)
+        mapView = NMFMapView(frame: self.frame)
+        
+        self.addSubview(topBar)
+        self.topBar.addSubview(backBtn)
+        self.topBar.addSubview(titleLb)
+        
+        self.addSubview(detailContainerView)
+        detailContainerView.addSubview(stationTitleLb)
+        
+        if let mapView {
+            mapView.zoomLevel = 17
+            mapView.isScrollGestureEnabled = false
+            mapView.isTiltGestureEnabled = false
+            mapView.isRotateGestureEnabled = false
+            mapView.isZoomGestureEnabled = false
+            
+            detailContainerView.addSubview(mapView)
+        }
+        
+        detailContainerView.addSubview(btnContainerView)
+        btnContainerView.addSubview(stopoverBtn)
+        btnContainerView.addSubview(destBtn)
     }
     
     override func addConstraints() {
-        tempLb.snp.makeConstraints {
+        self.topBar.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(topSafetyAreaInset)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(30)
+        }
+        
+        self.backBtn.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
+            $0.centerY.equalToSuperview()
+            $0.size.equalTo(topBar.snp.height)
+        }
+        
+        titleLb.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
+        
+        detailContainerView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.bottom.equalToSuperview().offset(-(20 + bottomSafetyAreaInset + tabBarHeight))
+            $0.top.equalTo(topBar.snp.bottom).offset(30)
+        }
+        
+        stationTitleLb.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(20)
+            $0.centerX.equalToSuperview()
+        }
+        
+        if let mapView {
+            mapView.snp.makeConstraints {
+                $0.top.equalTo(self.stationTitleLb.snp.bottom).offset(15)
+                $0.leading.equalToSuperview().offset(15)
+                $0.trailing.equalToSuperview().offset(-15)
+                $0.height.equalTo(mapView.snp.width)
+            }
+        }
+        
+        btnContainerView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.bottom.equalToSuperview().offset(-10)
+            $0.height.equalTo(50)
+        }
+        
+        stopoverBtn.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview()
+            $0.leading.equalToSuperview().offset(10)
+            $0.trailing.equalTo(btnContainerView.snp.centerX).offset(-10)
+        }
+        
+        destBtn.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview()
+            $0.leading.equalTo(btnContainerView.snp.centerX).offset(10)
+            $0.trailing.equalToSuperview().offset(-10)
+        }
+    }
+    
+    func bindStationInfoUI(info: AroundGasStation) {
+        setTitleAttrStr(info)
+        self.setMapview(info)
+    }
+    
+    private func setTitleAttrStr(_ info: AroundGasStation) {
+        let textAttachment = NSTextAttachment()
+        textAttachment.image = info.stationType?.image
+        
+        let imageSize = textAttachment.image!.size
+        let scaleFactor = imageSize.height / stationTitleLb.font.lineHeight
+        textAttachment.bounds = CGRect(x: 0, y: -4, width: imageSize.width / scaleFactor, height: imageSize.height / scaleFactor)
+
+        let fullString = NSMutableAttributedString(string: "\(info.brandName) ")
+        fullString.append(NSAttributedString(attachment: textAttachment))
+
+        stationTitleLb.attributedText = fullString
+    }
+    
+    private func setMapview(_ info: AroundGasStation) {
+        self.mapView?.clipsToBounds = true
+        self.mapView?.layer.cornerRadius = 15
+        
+        if let wgsGps = GeoConverter().convert(sourceType: .KATEC, destinationType: .WGS_84, geoPoint: GeographicPoint(x: info.lon, y: info.lat)) {
+            
+            let currentPoint = NMGLatLng(lat: wgsGps.y, lng: wgsGps.x)
+            let cameraUpdate = NMFCameraUpdate(scrollTo: currentPoint, zoomTo: 17)
+            let marker = NMFMarker()
+            marker.position = currentPoint
+            
+            mapView?.moveCamera(cameraUpdate)
+            marker.mapView = mapView
+        }
+    }
+    
+    private func makeRouteBtn(isDest: Bool) -> UIButton {
+        let btn = UIButton()
+        
+        btn.clipsToBounds = true
+        btn.layer.borderWidth = 1
+        btn.layer.cornerRadius = 15
+        
+        btn.layer.borderColor = isDest ? UIColor.gray.cgColor : UIColor.white.cgColor
+        btn.backgroundColor = isDest ? .white : .gray
+        btn.titleLabel?.font = .systemFont(ofSize: 14)
+        btn.setTitle(isDest ? "길 안내" : "경유지로", for: .normal)
+        btn.setTitleColor(isDest ? .black : .white, for: .normal)
+        
+        return btn
     }
 }

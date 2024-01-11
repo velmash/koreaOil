@@ -10,8 +10,20 @@ import Foundation
 class StationDetaionViewModel: NSObject, ViewModelType {
     var initData: AroundGasStation?
     
+    var coordinator: StationDetailCoordinator
+    
+    init(coordinator: StationDetailCoordinator) {
+        self.coordinator = coordinator
+    }
+    
     func transform(input: Input) -> Output {
         return Output()
+    }
+    
+    func goBack() {
+        if let coordinator = coordinator as? StationDetailCoordinator {
+            coordinator.goBack()
+        }
     }
 }
 

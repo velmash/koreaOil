@@ -12,9 +12,17 @@ class StationDetailViewController: BaseViewController<StationDetailView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func bindViewModel() {
+        guard let viewModel = self.viewModel, let stationInfo = viewModel.initData else { return }
         
-        if let data = self.viewModel?.initData {
-            self.contentView.tempLb.text = "\(data.stationId)\n\(data.brand)\n\(data.brandName)\n\(data.price)\n\(data.distance)\n\(data.distance)\n\(data.lat)\n\(data.lon)\n\(data.stationType?.rawValue)"
-        }
+        self.contentView.bindStationInfoUI(info: stationInfo)
+        
+        contentView.backBtn.rx.tap
+            .subscribeNext { [weak self] _ in
+                self?.viewModel?.goBack()
+            }
+            .disposed(by: bag)
     }
 }

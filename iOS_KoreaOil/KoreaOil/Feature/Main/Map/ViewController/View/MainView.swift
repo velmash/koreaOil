@@ -125,7 +125,7 @@ extension MainView {
         btn.layer.cornerRadius = 15
         btn.layer.borderColor =  UIColor.gray.cgColor
         btn.layer.borderWidth = 2
-        btn.setTitle(" 최저가로 지도 이동 ", for: .normal)
+        btn.setTitle("  최저가로 지도 이동  ", for: .normal)
         btn.setTitleColor(.black, for: .normal)
         btn.titleLabel?.font = .systemFont(ofSize: 14)
         

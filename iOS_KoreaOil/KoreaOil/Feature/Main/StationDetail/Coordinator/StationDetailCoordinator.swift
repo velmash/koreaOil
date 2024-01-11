@@ -17,10 +17,14 @@ class StationDetailCoordinator: Coordinator {
     required init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
         self.stationDetailViewController = StationDetailViewController()
-        self.stationDetailViewController.viewModel = StationDetaionViewModel()
+        self.stationDetailViewController.viewModel = StationDetaionViewModel(coordinator: self)
     }
     
     func start() {
         self.navigationController.pushViewController(self.stationDetailViewController, animated: true)
+    }
+    
+    func goBack() {
+        self.navigationController.popViewController(animated: true)
     }
 }
