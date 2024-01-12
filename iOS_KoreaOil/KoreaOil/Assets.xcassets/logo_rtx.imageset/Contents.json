@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "logo_rtx.png",
+      "filename" : "airre_list_gasst_07.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "logo_rtx 1.png",
+      "filename" : "airre_list_gasst_07@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "logo_rtx 2.png",
+      "filename" : "airre_list_gasst_07@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -48,6 +48,26 @@ class StationDetailView: BaseView {
     lazy var stopoverBtn = makeRouteBtn(isDest: false)
     lazy var destBtn = makeRouteBtn(isDest: true)
     
+    lazy var descScrollView = UIScrollView().then {
+        $0.backgroundColor = .white
+    }
+    
+    lazy var callBtn = UIButton().then {
+        $0.setImage(UIImage(systemName: "phone.fill"), for: .normal)
+        $0.contentVerticalAlignment = .fill
+        $0.contentHorizontalAlignment = .fill
+    }
+    
+    lazy var stationTitleLb2 = UILabel().then {
+        $0.font = .systemFont(ofSize: 18)
+        $0.textColor = .black
+    }
+    
+    lazy var stationTitleLb3 = UILabel().then {
+        $0.font = .systemFont(ofSize: 18)
+        $0.textColor = .black
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -67,6 +87,8 @@ class StationDetailView: BaseView {
         
         self.addSubview(detailContainerView)
         detailContainerView.addSubview(stationTitleLb)
+        detailContainerView.addSubview(btnContainerView)
+        detailContainerView.addSubview(descScrollView)
         
         if let mapView {
             mapView.zoomLevel = 17
@@ -75,10 +97,13 @@ class StationDetailView: BaseView {
             mapView.isRotateGestureEnabled = false
             mapView.isZoomGestureEnabled = false
             
-            detailContainerView.addSubview(mapView)
+            descScrollView.addSubview(mapView)
         }
         
-        detailContainerView.addSubview(btnContainerView)
+        descScrollView.addSubview(callBtn)
+        descScrollView.addSubview(stationTitleLb2)
+        descScrollView.addSubview(stationTitleLb3)
+        
         btnContainerView.addSubview(stopoverBtn)
         btnContainerView.addSubview(destBtn)
     }
@@ -112,15 +137,6 @@ class StationDetailView: BaseView {
             $0.centerX.equalToSuperview()
         }
         
-        if let mapView {
-            mapView.snp.makeConstraints {
-                $0.top.equalTo(self.stationTitleLb.snp.bottom).offset(15)
-                $0.leading.equalToSuperview().offset(15)
-                $0.trailing.equalToSuperview().offset(-15)
-                $0.height.equalTo(mapView.snp.width)
-            }
-        }
-        
         btnContainerView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
@@ -139,11 +155,43 @@ class StationDetailView: BaseView {
             $0.leading.equalTo(btnContainerView.snp.centerX).offset(10)
             $0.trailing.equalToSuperview().offset(-10)
         }
+        
+        descScrollView.snp.makeConstraints {
+            $0.top.equalTo(stationTitleLb.snp.bottom).offset(15)
+            $0.bottom.equalTo(btnContainerView.snp.top).offset(-15)
+            $0.leading.equalToSuperview().offset(30)
+            $0.trailing.equalToSuperview().offset(-30)
+        }
+        
+        if let mapView {
+            mapView.snp.makeConstraints {
+                $0.top.leading.trailing.equalToSuperview()
+                $0.size.equalTo(descScrollView.snp.width)
+            }
+            
+            callBtn.snp.makeConstraints {
+                $0.top.equalTo(mapView.snp.bottom).offset(10)
+                $0.leading.equalToSuperview()
+                $0.size.equalTo(30)
+            }
+            stationTitleLb2.snp.makeConstraints {
+                $0.top.equalTo(callBtn.snp.bottom).offset(20)
+                $0.leading.trailing.equalToSuperview()
+            }
+            stationTitleLb3.snp.makeConstraints {
+                $0.top.equalTo(stationTitleLb2.snp.bottom).offset(20)
+                $0.leading.trailing.equalToSuperview()
+                
+                $0.bottom.equalToSuperview().offset(-10)
+            }
+        }
     }
     
     func bindStationInfoUI(info: AroundGasStation) {
         setTitleAttrStr(info)
         self.setMapview(info)
+        stationTitleLb2.text = "xptmxm"
+        stationTitleLb3.text = "xptmxm"
     }
     
     private func setTitleAttrStr(_ info: AroundGasStation) {

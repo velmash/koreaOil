@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "logo_station.png",
+      "filename" : "airre_icon_around_01_p.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "logo_station 1.png",
+      "filename" : "airre_icon_around_01_p@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "logo_station 2.png",
+      "filename" : "airre_icon_around_01_p@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

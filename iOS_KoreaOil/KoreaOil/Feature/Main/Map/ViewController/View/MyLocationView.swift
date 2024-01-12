@@ -89,13 +89,13 @@ class MyLocationView: BaseView {
         }
         
         brandImg.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(7.2)
-            $0.leading.equalToSuperview().offset(9.43)
+            $0.top.equalToSuperview().offset(8)
+            $0.leading.equalToSuperview().offset(8)
             $0.size.equalTo(30)
         }
         
         priceLb.snp.makeConstraints {
-            $0.centerY.equalTo(brandImg).offset(2)
+            $0.centerY.equalTo(brandImg)
             $0.trailing.equalToSuperview().offset(-11)
         }
     }

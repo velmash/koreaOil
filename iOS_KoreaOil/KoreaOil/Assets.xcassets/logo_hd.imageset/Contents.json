@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "logo_hd.png",
+      "filename" : "airre_list_gasst_04.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "logo_hd 1.png",
+      "filename" : "airre_list_gasst_04@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "logo_hd 2.png",
+      "filename" : "airre_list_gasst_04@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

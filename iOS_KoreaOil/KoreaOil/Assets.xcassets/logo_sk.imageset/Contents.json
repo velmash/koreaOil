@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "logo_sk.png",
+      "filename" : "airre_list_gasst_01.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "logo_sk 1.png",
+      "filename" : "airre_list_gasst_01@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "logo_sk 2.png",
+      "filename" : "airre_list_gasst_01@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
