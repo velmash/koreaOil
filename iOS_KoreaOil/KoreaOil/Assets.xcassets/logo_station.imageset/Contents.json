@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "airre_icon_around_01_p.png",
+      "filename" : "airre_icon_around_01_n.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "airre_icon_around_01_p@2x.png",
+      "filename" : "airre_icon_around_01_n@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "airre_icon_around_01_p@3x.png",
+      "filename" : "airre_icon_around_01_n@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
