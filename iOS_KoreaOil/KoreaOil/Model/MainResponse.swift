@@ -74,3 +74,76 @@ enum StationType: String, CaseIterable {
         }
     }
 }
+
+
+struct StationDetailInfoResponse: Codable {
+    var result: StationDetailInfoResult
+
+    enum CodingKeys: String, CodingKey {
+        case result = "RESULT"
+    }
+}
+
+struct StationDetailInfoResult: Codable {
+    var oil: [StationDetailInfo]
+
+    enum CodingKeys: String, CodingKey {
+        case oil = "OIL"
+    }
+}
+
+struct StationDetailInfo: Codable, Hashable {
+    var stationId: String
+    var brand: String
+    var gBrand: String?
+    var brandName: String
+    var addrOld: String
+    var addrNew: String
+    var phoneNum: String
+    var regionCode: String
+    var type: String
+    var isMaint: String
+    var isCarWash: String
+    var isCertied: String
+    var isStore: String
+    var x: Double
+    var y: Double
+    var oilInfo: [StationOilInfo]
+    
+    enum CodingKeys: String, CodingKey {
+        case stationId = "UNI_ID"
+        case brand = "POLL_DIV_CD"
+        case gBrand = "GPOLL_DIV_CD"
+        case brandName = "OS_NM"
+        case addrOld = "VAN_ADR"
+        case addrNew = "NEW_ADR"
+        case phoneNum = "TEL"
+        case regionCode = "SIGUNCD"
+        case type = "LPG_YN"
+        case isMaint = "MAINT_YN"
+        case isCarWash = "CAR_WASH_YN"
+        case isCertied = "KPETRO_YN"
+        case isStore = "CVS_YN"
+        case x = "GIS_X_COOR"
+        case y = "GIS_Y_COOR"
+        case oilInfo = "OIL_PRICE"
+    }
+}
+
+struct StationOilInfo: Codable, Hashable {
+    var prodcd: String
+    var price: Int
+    var date: String
+    var time: String
+    
+    var oilType: OilType? {
+        return OilType.allCases.first(where: { $0.resType == self.prodcd })
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case prodcd = "PRODCD"
+        case price = "PRICE"
+        case date = "TRADE_DT"
+        case time = "TRADE_TM"
+    }
+}

@@ -11,11 +11,16 @@ import Alamofire
 
 enum MainSceneURL: OpinetAPIPath {
     case aroundGasStation = "/aroundAll.do"
+    case stationDetailInfo = "/detailById.do"
 }
 
 class MainSceneUseCase {
     func getAroundGasStation(_ param: Parameters) -> Observable<Response<AroundGasStationResponse>> {
         return NetworkService().opinetAPIFetchable(opinetPath: MainSceneURL.aroundGasStation.rawValue, method: .get, param: param)
+    }
+    
+    func getStationDetailInfo(_ param: Parameters) -> Observable<Response<StationDetailInfoResponse>> {
+        return NetworkService().opinetAPIFetchable(opinetPath: MainSceneURL.stationDetailInfo.rawValue, method: .get, param: param)
     }
 }
 
