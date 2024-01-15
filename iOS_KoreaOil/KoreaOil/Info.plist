@@ -5,6 +5,7 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>nmap</string>
+		<string>tmap</string>
 	</array>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>광고 허용 테스트</string>

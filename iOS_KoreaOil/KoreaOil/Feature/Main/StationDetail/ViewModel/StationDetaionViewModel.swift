@@ -15,7 +15,7 @@ class StationDetaionViewModel: NSObject, ViewModelType {
     private let defaults = UserDefaults.standard
     private var coordinator: StationDetailCoordinator
     private let geoConverter = GeoConverter()
-
+    
     private var bag = DisposeBag()
     private let useCase = MainSceneUseCase()
     
@@ -94,15 +94,33 @@ class StationDetaionViewModel: NSObject, ViewModelType {
         let convertedWGSPoint = geoConverter.convert(sourceType: .KATEC, destinationType: .WGS_84, geoPoint: GeographicPoint(x: statioinInfo.x, y: statioinInfo.y))
         
         if naviType == .naver {
-            let url = URL(string: "nmap://route/car?dlat=\(convertedWGSPoint?.y ?? 0)&dlng=\(convertedWGSPoint?.x ?? 0)&dname=도착지 직접입력&v1lat=\(convertedWGSPoint?.y ?? 0)&v1lng=\(convertedWGSPoint?.x ?? 0)&v1name=\(statioinInfo.brandName)")!
+            let urlStr = "nmap://route/car?dlat=\(convertedWGSPoint?.y ?? 0)&dlng=\(convertedWGSPoint?.x ?? 0)&dname=도착지 직접입력&v1lat=\(convertedWGSPoint?.y ?? 0)&v1lng=\(convertedWGSPoint?.x ?? 0)&v1name=\(statioinInfo.brandName)"
+            guard let encodedStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
+            guard let url = URL(string: encodedStr) else { return }
             let appStoreURL = URL(string: "http://itunes.apple.com/app/id311867728?mt=8")!
-
+            
             if UIApplication.shared.canOpenURL(url) {
-              UIApplication.shared.open(url)
+                UIApplication.shared.open(url)
             } else {
-              UIApplication.shared.open(appStoreURL)
+                UIApplication.shared.open(appStoreURL)
             }
+        } else {
+            iToast.show("서비스 준비중입니다. 네이버 지도를 이용해주세요")
         }
+//        else if naviType == .tmap {
+//            let urlStr = "tmap://route?rGoName=도착지 직접입력&rGoX=\(convertedWGSPoint?.x ?? 0)&rGoY=\(convertedWGSPoint?.y ?? 0)&rV1Name=\(statioinInfo.brandName)&rV1X=\(convertedWGSPoint?.x ?? 0)&rV1Y=\(convertedWGSPoint?.y ?? 0)"
+//            
+//            guard let encodedStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
+//            guard let url = URL(string: encodedStr) else { return }
+//            
+//            let appStoreURL = URL(string: "http://itunes.apple.com/app/id431589174")!
+//            
+//            if UIApplication.shared.canOpenURL(url) {
+//                UIApplication.shared.open(url)
+//            } else {
+//                UIApplication.shared.open(appStoreURL)
+//            }
+//        }
     }
     
     private func destMap() {
@@ -111,13 +129,28 @@ class StationDetaionViewModel: NSObject, ViewModelType {
         let convertedWGSPoint = geoConverter.convert(sourceType: .KATEC, destinationType: .WGS_84, geoPoint: GeographicPoint(x: statioinInfo.x, y: statioinInfo.y))
         
         if naviType == .naver {
-            let url = URL(string: "nmap://route/car?dlat=\(convertedWGSPoint?.y ?? 0)&dlng=\(convertedWGSPoint?.x ?? 0)&dname=\(statioinInfo.brandName)")!
+            let urlStr = "nmap://route/car?dlat=\(convertedWGSPoint?.y ?? 0)&dlng=\(convertedWGSPoint?.x ?? 0)&dname=\(statioinInfo.brandName)"
+            guard let encodedStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
+            guard let url = URL(string: encodedStr) else { return }
             let appStoreURL = URL(string: "http://itunes.apple.com/app/id311867728?mt=8")!
-
+            
             if UIApplication.shared.canOpenURL(url) {
-              UIApplication.shared.open(url)
+                UIApplication.shared.open(url)
             } else {
-              UIApplication.shared.open(appStoreURL)
+                UIApplication.shared.open(appStoreURL)
+            }
+        } else if naviType == .tmap {
+            let urlStr = "tmap://route?rGoName=\(statioinInfo.brandName)&rGoX=\(convertedWGSPoint?.x ?? 0)&rGoY=\(convertedWGSPoint?.y ?? 0)"
+            
+            guard let encodedStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
+            guard let url = URL(string: encodedStr) else { return }
+            
+            let appStoreURL = URL(string: "http://itunes.apple.com/app/id431589174")!
+            
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.open(appStoreURL)
             }
         }
     }
@@ -139,11 +172,10 @@ extension StationDetaionViewModel {
         case goBack
         case call
         case routeType(RouteType)
-
+        
         enum RouteType {
             case stopover
             case dest
         }
     }
-
 }
