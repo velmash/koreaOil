@@ -58,12 +58,12 @@ class StationDetailView: BaseView {
         $0.contentHorizontalAlignment = .fill
     }
     
-    lazy var stationTitleLb2 = UILabel().then {
+    lazy var isCarWashLb = UILabel().then {
         $0.font = .systemFont(ofSize: 18)
         $0.textColor = .black
     }
     
-    lazy var stationTitleLb3 = UILabel().then {
+    lazy var isStoreLb = UILabel().then {
         $0.font = .systemFont(ofSize: 18)
         $0.textColor = .black
     }
@@ -101,8 +101,8 @@ class StationDetailView: BaseView {
         }
         
         descScrollView.addSubview(callBtn)
-        descScrollView.addSubview(stationTitleLb2)
-        descScrollView.addSubview(stationTitleLb3)
+        descScrollView.addSubview(isCarWashLb)
+        descScrollView.addSubview(isStoreLb)
         
         btnContainerView.addSubview(stopoverBtn)
         btnContainerView.addSubview(destBtn)
@@ -174,12 +174,12 @@ class StationDetailView: BaseView {
                 $0.leading.equalToSuperview()
                 $0.size.equalTo(30)
             }
-            stationTitleLb2.snp.makeConstraints {
+            isCarWashLb.snp.makeConstraints {
                 $0.top.equalTo(callBtn.snp.bottom).offset(20)
                 $0.leading.trailing.equalToSuperview()
             }
-            stationTitleLb3.snp.makeConstraints {
-                $0.top.equalTo(stationTitleLb2.snp.bottom).offset(20)
+            isStoreLb.snp.makeConstraints {
+                $0.top.equalTo(isCarWashLb.snp.bottom).offset(20)
                 $0.leading.trailing.equalToSuperview()
                 
                 $0.bottom.equalToSuperview().offset(-10)
@@ -190,8 +190,11 @@ class StationDetailView: BaseView {
     func bindStationInfoUI(info: AroundGasStation) {
         setTitleAttrStr(info)
         self.setMapview(info)
-        stationTitleLb2.text = "xptmxm"
-        stationTitleLb3.text = "xptmxm"
+    }
+    
+    func bindStationInfoDetailUI(info: StationDetailInfo) {
+        self.isCarWashLb.text = "· 세차장 유무: \(info.isCarWash ? "O" : "X")"
+        self.isStoreLb.text = "· 편의점 유뮤: \(info.isStore ? "O" : "X")"
     }
     
     private func setTitleAttrStr(_ info: AroundGasStation) {

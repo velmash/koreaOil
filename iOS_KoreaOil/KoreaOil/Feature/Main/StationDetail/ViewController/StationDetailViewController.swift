@@ -29,8 +29,8 @@ class StationDetailViewController: BaseViewController<StationDetailView> {
         let output = viewModel.transform(input: input)
         
         output.stationDetailInfoPost
-            .driveNext { [weak self] data in
-                print("데이터 테스트", data)
+            .driveNext { [weak self] detailInfo in
+                self?.contentView.bindStationInfoDetailUI(info: detailInfo)
             }
             .disposed(by: bag)
     }
