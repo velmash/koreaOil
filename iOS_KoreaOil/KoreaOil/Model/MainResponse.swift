@@ -94,7 +94,7 @@ struct StationDetailInfoResult: Codable {
 
 struct StationDetailInfo: Codable, Hashable {
     var stationId: String
-    var brand: String
+    var brand: String?
     var gBrand: String?
     var brandName: String
     var addrOld: String
@@ -102,13 +102,29 @@ struct StationDetailInfo: Codable, Hashable {
     var phoneNum: String
     var regionCode: String
     var type: String
-    var isMaint: String
-    var isCarWash: String
-    var isCertied: String
-    var isStore: String
+    var _isMaint: String
+    var _isCarWash: String
+    var _isCertied: String
+    var _isStore: String
     var x: Double
     var y: Double
     var oilInfo: [StationOilInfo]
+    
+    var isMaint: Bool {
+        return _isMaint == "Y"
+    }
+    
+    var isCarWash: Bool {
+        return _isCarWash == "Y"
+    }
+    
+    var isCertied: Bool {
+        return _isCertied == "Y"
+    }
+    
+    var isStore: Bool {
+        return _isStore == "Y"
+    }
     
     enum CodingKeys: String, CodingKey {
         case stationId = "UNI_ID"
@@ -120,10 +136,10 @@ struct StationDetailInfo: Codable, Hashable {
         case phoneNum = "TEL"
         case regionCode = "SIGUNCD"
         case type = "LPG_YN"
-        case isMaint = "MAINT_YN"
-        case isCarWash = "CAR_WASH_YN"
-        case isCertied = "KPETRO_YN"
-        case isStore = "CVS_YN"
+        case _isMaint = "MAINT_YN"
+        case _isCarWash = "CAR_WASH_YN"
+        case _isCertied = "KPETRO_YN"
+        case _isStore = "CVS_YN"
         case x = "GIS_X_COOR"
         case y = "GIS_Y_COOR"
         case oilInfo = "OIL_PRICE"
