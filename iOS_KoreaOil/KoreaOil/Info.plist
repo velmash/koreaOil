@@ -6,6 +6,7 @@
 	<array>
 		<string>nmap</string>
 		<string>tmap</string>
+		<string>kakaonavi-sdk</string>
 	</array>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>광고 허용 테스트</string>

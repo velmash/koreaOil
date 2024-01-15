@@ -10,6 +10,7 @@ import Alamofire
 import RxSwift
 import RxCocoa
 import NMapsMap
+import KakaoSDKNavi
 
 class StationDetaionViewModel: NSObject, ViewModelType {
     private let defaults = UserDefaults.standard
@@ -104,6 +105,18 @@ class StationDetaionViewModel: NSObject, ViewModelType {
             } else {
                 UIApplication.shared.open(appStoreURL)
             }
+        } else if naviType == .kakao {
+            let destination = NaviLocation(name: "도착지 직접입력", x: "\(Int64(statioinInfo.x) + 10)", y: "\(Int64(statioinInfo.y) + 10)")
+            let viaList = [NaviLocation(name: "\(statioinInfo.brandName)",  x: "\(Int64(statioinInfo.x))", y: "\(Int64(statioinInfo.y))")]
+            guard let navigateUrl = NaviApi.shared.shareUrl(destination: destination, viaList: viaList) else {
+                return
+            }
+
+            if UIApplication.shared.canOpenURL(navigateUrl) {
+                UIApplication.shared.open(navigateUrl, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.open(NaviApi.webNaviInstallUrl, options: [:], completionHandler: nil)
+            }
         } else {
             iToast.show("서비스 준비중입니다. 네이버 지도를 이용해주세요")
         }
@@ -152,6 +165,19 @@ class StationDetaionViewModel: NSObject, ViewModelType {
             } else {
                 UIApplication.shared.open(appStoreURL)
             }
+        } else if naviType == .kakao {
+            let destination = NaviLocation(name: "\(statioinInfo.brandName)", x: "\(Int64(statioinInfo.x))", y: "\(Int64(statioinInfo.y))")
+            guard let shareUrl = NaviApi.shared.shareUrl(destination: destination) else {
+                return
+            }
+
+            if UIApplication.shared.canOpenURL(shareUrl) {
+                UIApplication.shared.open(shareUrl, options: [:], completionHandler: nil)
+            }
+            else {
+                UIApplication.shared.open(NaviApi.webNaviInstallUrl, options: [:], completionHandler: nil)
+            }
+
         }
     }
 }

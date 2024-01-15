@@ -72,6 +72,19 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.11.5):
     - GoogleUtilities/Logger
+  - KakaoSDKAuth (2.17.0):
+    - KakaoSDKCommon (= 2.17.0)
+  - KakaoSDKCommon (2.17.0):
+    - KakaoSDKCommon/Common (= 2.17.0)
+    - KakaoSDKCommon/Network (= 2.17.0)
+  - KakaoSDKCommon/Common (2.17.0)
+  - KakaoSDKCommon/Network (2.17.0):
+    - Alamofire (~> 5.1)
+    - KakaoSDKCommon/Common (= 2.17.0)
+  - KakaoSDKNavi (2.17.0):
+    - KakaoSDKCommon/Common (= 2.17.0)
+  - KakaoSDKUser (2.17.0):
+    - KakaoSDKAuth (= 2.17.0)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
@@ -101,6 +114,8 @@ DEPENDENCIES:
   - Alamofire
   - FirebaseAnalytics
   - Google-Mobile-Ads-SDK
+  - KakaoSDKNavi
+  - KakaoSDKUser
   - NMapsMap
   - ReactorKit
   - RxCocoa
@@ -120,6 +135,10 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleUserMessagingPlatform
     - GoogleUtilities
+    - KakaoSDKAuth
+    - KakaoSDKCommon
+    - KakaoSDKNavi
+    - KakaoSDKUser
     - nanopb
     - NMapsGeometry
     - NMapsMap
@@ -143,6 +162,10 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 722db6550d1e6d552b08398b69a975ac61039338
   GoogleUserMessagingPlatform: dce302b8f1b84d6e945812ee7a15c3f65a102cbf
   GoogleUtilities: 13e2c67ede716b8741c7989e26893d151b2b2084
+  KakaoSDKAuth: 85c1d89f16b8be3bf266a0c77dff8b5438696b43
+  KakaoSDKCommon: 194ccea3710f30036ee63d79cf524ed7ae6c1595
+  KakaoSDKNavi: 2842aed422c957c2ac3ccb34d8fc1699244c0dea
+  KakaoSDKUser: f37e67aebf9061698462eabcb6860c1e750d3b35
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: a5b909a31b6f3d27a670f6eb2ddc913c38975474
@@ -156,6 +179,6 @@ SPEC CHECKSUMS:
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 743849e45825235f286786455c758806d7630c22
+PODFILE CHECKSUM: 53edddaf0d069eb0ed6cf9f33fadf651f1ee5c2c
 
 COCOAPODS: 1.13.0

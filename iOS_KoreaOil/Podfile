@@ -16,6 +16,9 @@ target 'KoreaOil' do
   pod 'NMapsMap'
   pod 'FirebaseAnalytics'
   pod 'Google-Mobile-Ads-SDK'
+
+  pod 'KakaoSDKUser'
+  pod 'KakaoSDKNavi'  # 카카오내비 
  
   post_install do |installer|
       installer.generated_projects.each do |project|

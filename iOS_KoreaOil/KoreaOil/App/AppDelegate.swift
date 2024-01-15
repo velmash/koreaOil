@@ -9,6 +9,7 @@ import UIKit
 import NMapsMap
 import FirebaseCore
 import GoogleMobileAds
+import KakaoSDKCommon
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         
+        //카카오내비 용
+        KakaoSDK.initSDK(appKey: "185c06b1b0b9bdcb0c914bb7f18a193a")
         
         if defaults.string(forKey: UDOilType) == nil {
             defaults.setValue(OilType.gasolin.rawValue, forKey: UDOilType)
