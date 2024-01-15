@@ -9,10 +9,15 @@ import Foundation
 import Alamofire
 import RxSwift
 import RxCocoa
+import NMapsMap
 
 class StationDetaionViewModel: NSObject, ViewModelType {
-    private let useCase = MainSceneUseCase()
+    private let defaults = UserDefaults.standard
+    private var coordinator: StationDetailCoordinator
+    private let geoConverter = GeoConverter()
+
     private var bag = DisposeBag()
+    private let useCase = MainSceneUseCase()
     
     private let stationDetailInfoRelay = BehaviorRelay<StationDetailInfo?>(value: nil)
     
@@ -21,8 +26,6 @@ class StationDetaionViewModel: NSObject, ViewModelType {
             self.getStationDetailInfo()
         }
     }
-    
-    var coordinator: StationDetailCoordinator
     
     init(coordinator: StationDetailCoordinator) {
         self.coordinator = coordinator
@@ -86,11 +89,37 @@ class StationDetaionViewModel: NSObject, ViewModelType {
     }
     
     private func stopoverMap() {
-        iToast.show("구현해라 123")
+        let naviType = NaviType.allCases.first(where: { $0.rawValue == defaults.string(forKey: UDNaviType )}) ?? .tmap
+        guard let statioinInfo = stationDetailInfoRelay.value else { return }
+        let convertedWGSPoint = geoConverter.convert(sourceType: .KATEC, destinationType: .WGS_84, geoPoint: GeographicPoint(x: statioinInfo.x, y: statioinInfo.y))
+        
+        if naviType == .naver {
+            let url = URL(string: "nmap://route/car?dlat=\(convertedWGSPoint?.y ?? 0)&dlng=\(convertedWGSPoint?.x ?? 0)&dname=도착지 직접입력&v1lat=\(convertedWGSPoint?.y ?? 0)&v1lng=\(convertedWGSPoint?.x ?? 0)&v1name=\(statioinInfo.brandName)")!
+            let appStoreURL = URL(string: "http://itunes.apple.com/app/id311867728?mt=8")!
+
+            if UIApplication.shared.canOpenURL(url) {
+              UIApplication.shared.open(url)
+            } else {
+              UIApplication.shared.open(appStoreURL)
+            }
+        }
     }
     
     private func destMap() {
-        iToast.show("구현해라 456")
+        let naviType = NaviType.allCases.first(where: { $0.rawValue == defaults.string(forKey: UDNaviType )}) ?? .tmap
+        guard let statioinInfo = stationDetailInfoRelay.value else { return }
+        let convertedWGSPoint = geoConverter.convert(sourceType: .KATEC, destinationType: .WGS_84, geoPoint: GeographicPoint(x: statioinInfo.x, y: statioinInfo.y))
+        
+        if naviType == .naver {
+            let url = URL(string: "nmap://route/car?dlat=\(convertedWGSPoint?.y ?? 0)&dlng=\(convertedWGSPoint?.x ?? 0)&dname=\(statioinInfo.brandName)")!
+            let appStoreURL = URL(string: "http://itunes.apple.com/app/id311867728?mt=8")!
+
+            if UIApplication.shared.canOpenURL(url) {
+              UIApplication.shared.open(url)
+            } else {
+              UIApplication.shared.open(appStoreURL)
+            }
+        }
     }
 }
 
