@@ -19,9 +19,17 @@ class StationDetailViewController: BaseViewController<StationDetailView> {
         
         self.contentView.bindStationInfoUI(info: stationInfo)
         
+        contentView.callBtn.rx.tap
+            .withUnretained(self)
+            .subscribeNext { owner, _ in
+                owner.viewModel?.callStation()
+            }
+            .disposed(by: bag)
+        
         contentView.backBtn.rx.tap
-            .subscribeNext { [weak self] _ in
-                self?.viewModel?.goBack()
+            .withUnretained(self)
+            .subscribeNext { owner, _ in
+                owner.viewModel?.goBack()
             }
             .disposed(by: bag)
     }
