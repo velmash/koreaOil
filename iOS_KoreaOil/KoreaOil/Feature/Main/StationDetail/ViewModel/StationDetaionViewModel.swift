@@ -13,7 +13,8 @@ import RxCocoa
 class StationDetaionViewModel: NSObject, ViewModelType {
     private let useCase = MainSceneUseCase()
     private var bag = DisposeBag()
-    private var phoneNum: String?
+    
+    private let stationDetailInfoRelay = BehaviorRelay<StationDetailInfo?>(value: nil)
     
     var initData: AroundGasStation? {
         didSet {
@@ -28,7 +29,30 @@ class StationDetaionViewModel: NSObject, ViewModelType {
     }
     
     func transform(input: Input) -> Output {
-        return Output()
+        Driver.merge(
+            input.goBackBtnTap.map { _ in InputBtnType.goBack },
+            input.callBtnTap.map { _ in InputBtnType.call },
+            input.stopoverBtnTap.map { _ in InputBtnType.routeType(.stopover) },
+            input.destBtnTap.map { _ in InputBtnType.routeType(.dest) }
+        )
+        .throttle(.milliseconds(500), latest: false)
+        .driveNext { [weak self] type in
+            switch type {
+            case .goBack:
+                self?.goBack()
+            case .call:
+                self?.callStation()
+            case .routeType(.stopover):
+                self?.stopoverMap()
+            case .routeType(.dest):
+                self?.destMap()
+            }
+        }
+        .disposed(by: bag)
+        
+        let stationDetailInfoPost = stationDetailInfoRelay.compactMap { $0 }.asObservable().asDriverOnErrorJustComplete()
+        
+        return Output(stationDetailInfoPost: stationDetailInfoPost)
     }
     
     private func getStationDetailInfo() {
@@ -43,29 +67,54 @@ class StationDetaionViewModel: NSObject, ViewModelType {
             .withUnretained(self)
             .subscribeNext { owner, data in
                 let parsingData = data.value.result.oil.first
-                owner.phoneNum = parsingData?.phoneNum
-                print("테스트 진행중: ", parsingData?.isMaint)
+                owner.stationDetailInfoRelay.accept(parsingData)
             }
             .disposed(by: bag)
     }
     
-    func callStation() {
-        if let num = self.phoneNum, let callUrl = URL(string: "tel://\(num))") {
+    private func goBack() {
+        coordinator.goBack()
+    }
+    
+    private func callStation() {
+        if let num = self.stationDetailInfoRelay.value?.phoneNum,
+           let callUrl = URL(string: "tel://\(num))") {
             UIApplication.shared.open(callUrl, options: [:], completionHandler: nil)
         } else {
             iToast.show("전화 기능을 사용할 수 없습니다.")
         }
     }
     
-    func goBack() {
-        coordinator.goBack()
+    private func stopoverMap() {
+        iToast.show("구현해라 123")
+    }
+    
+    private func destMap() {
+        iToast.show("구현해라 456")
     }
 }
 
 extension StationDetaionViewModel {
     struct Input {
+        let goBackBtnTap: Driver<Void>
+        let callBtnTap: Driver<Void>
+        let stopoverBtnTap: Driver<Void>
+        let destBtnTap: Driver<Void>
     }
     
     struct Output {
+        let stationDetailInfoPost: Driver<StationDetailInfo>
     }
+    
+    private enum InputBtnType {
+        case goBack
+        case call
+        case routeType(RouteType)
+
+        enum RouteType {
+            case stopover
+            case dest
+        }
+    }
+
 }

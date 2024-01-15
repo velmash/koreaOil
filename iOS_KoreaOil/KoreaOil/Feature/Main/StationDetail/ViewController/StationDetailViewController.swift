@@ -19,17 +19,18 @@ class StationDetailViewController: BaseViewController<StationDetailView> {
         
         self.contentView.bindStationInfoUI(info: stationInfo)
         
-        contentView.callBtn.rx.tap
-            .withUnretained(self)
-            .subscribeNext { owner, _ in
-                owner.viewModel?.callStation()
-            }
-            .disposed(by: bag)
+        let input = StationDetaionViewModel.Input(
+            goBackBtnTap: self.contentView.backBtn.rx.tap.asDriverOnErrorJustComplete(),
+            callBtnTap: self.contentView.callBtn.rx.tap.asDriverOnErrorJustComplete(),
+            stopoverBtnTap: self.contentView.stopoverBtn.rx.tap.asDriverOnErrorJustComplete(),
+            destBtnTap: self.contentView.destBtn.rx.tap.asDriverOnErrorJustComplete()
+        )
         
-        contentView.backBtn.rx.tap
-            .withUnretained(self)
-            .subscribeNext { owner, _ in
-                owner.viewModel?.goBack()
+        let output = viewModel.transform(input: input)
+        
+        output.stationDetailInfoPost
+            .driveNext { [weak self] data in
+                print("데이터 테스트", data)
             }
             .disposed(by: bag)
     }
