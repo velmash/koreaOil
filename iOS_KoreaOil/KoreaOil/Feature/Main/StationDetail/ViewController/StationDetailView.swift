@@ -50,6 +50,7 @@ class StationDetailView: BaseView {
     
     lazy var descScrollView = UIScrollView().then {
         $0.backgroundColor = .white
+        $0.showsVerticalScrollIndicator = false
     }
     
     lazy var callBtn = UIButton().then {
@@ -66,6 +67,13 @@ class StationDetailView: BaseView {
     lazy var isStoreLb = UILabel().then {
         $0.font = .systemFont(ofSize: 18)
         $0.textColor = .black
+    }
+    
+    lazy var addrLb = UILabel().then {
+        $0.font = .systemFont(ofSize: 14)
+        $0.textColor = .black
+        $0.numberOfLines = 0
+        $0.lineBreakMode = .byCharWrapping
     }
     
     override init(frame: CGRect) {
@@ -103,6 +111,7 @@ class StationDetailView: BaseView {
         descScrollView.addSubview(callBtn)
         descScrollView.addSubview(isCarWashLb)
         descScrollView.addSubview(isStoreLb)
+        descScrollView.addSubview(addrLb)
         
         btnContainerView.addSubview(stopoverBtn)
         btnContainerView.addSubview(destBtn)
@@ -178,10 +187,16 @@ class StationDetailView: BaseView {
                 $0.top.equalTo(callBtn.snp.bottom).offset(20)
                 $0.leading.trailing.equalToSuperview()
             }
+            
             isStoreLb.snp.makeConstraints {
                 $0.top.equalTo(isCarWashLb.snp.bottom).offset(20)
                 $0.leading.trailing.equalToSuperview()
-                
+            }
+            
+            addrLb.snp.makeConstraints {
+                $0.top.equalTo(isStoreLb.snp.bottom).offset(20)
+                $0.leading.equalToSuperview()
+                $0.trailing.equalToSuperview().offset(-10)
                 $0.bottom.equalToSuperview().offset(-10)
             }
         }
@@ -195,6 +210,7 @@ class StationDetailView: BaseView {
     func bindStationInfoDetailUI(info: StationDetailInfo) {
         self.isCarWashLb.text = "· 세차장 유무: \(info.isCarWash ? "O" : "X")"
         self.isStoreLb.text = "· 편의점 유뮤: \(info.isStore ? "O" : "X")"
+        self.addrLb.text = "* 주소 *\n  \(info.addrNew)"
     }
     
     private func setTitleAttrStr(_ info: AroundGasStation) {
