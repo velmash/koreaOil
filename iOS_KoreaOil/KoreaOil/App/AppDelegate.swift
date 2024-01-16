@@ -10,9 +10,10 @@ import NMapsMap
 import FirebaseCore
 import GoogleMobileAds
 import KakaoSDKCommon
+import TMapSDK
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, TMapTapiDelegate {
 
     let defaults = UserDefaults.standard
 
@@ -26,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //카카오내비 용
         KakaoSDK.initSDK(appKey: "185c06b1b0b9bdcb0c914bb7f18a193a")
+        TMapApi.setSKTMapAuthenticationWithDelegate(self, apiKey: "lGB31QPwRm2ojUF7Il7aM4yM4rE7usSwhzqoMda0")
         
         if defaults.string(forKey: UDOilType) == nil {
             defaults.setValue(OilType.gasolin.rawValue, forKey: UDOilType)
@@ -55,7 +57,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-
-
+    
+    func SKTMapApikeySucceed() {
+        print("TMAP API 연동 성공")
+    }
+    
+    func SKTMapApikeyFailed(error: NSError?) {
+        print("TMAP API 연동 실패")
+    }
 }
 
