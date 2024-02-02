@@ -8,9 +8,11 @@
 import UIKit
 
 class RegionView: BaseView {
-    lazy var label = UILabel().then {
-        $0.text = "기름 최저가 리스트 구현해라 윤형찬"
-        $0.font = .systemFont(ofSize: 30)
+    var tableView = StationTableView()
+    
+    lazy var titleLabel = UILabel().then {
+        $0.text = " - "
+        $0.font = .systemFont(ofSize: 16)
         $0.textColor = .black
     }
     
@@ -25,12 +27,21 @@ class RegionView: BaseView {
     }
     
     override func addSubviews() {
-        addSubview(label)
+        addSubview(titleLabel)
+        addSubview(tableView)
     }
     
     override func addConstraints() {
-        label.snp.makeConstraints {
-            $0.center.equalToSuperview()
+        titleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(20 + self.topSafetyAreaInset)
+            $0.leading.equalToSuperview().offset(20)
+        }
+        
+        tableView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(10)
+            $0.bottom.equalToSuperview().offset(-(self.bottomSafetyAreaInset + self.tabBarHeight))
         }
     }
 }

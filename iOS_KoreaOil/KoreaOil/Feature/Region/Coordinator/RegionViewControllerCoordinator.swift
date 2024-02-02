@@ -17,6 +17,7 @@ class RegionCoordinator: Coordinator {
     required init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
         self.regionViewController = RegionViewController()
+        self.regionViewController.viewModel = RegionViewModel(coordinator: self)
     }
     
     func start() {
