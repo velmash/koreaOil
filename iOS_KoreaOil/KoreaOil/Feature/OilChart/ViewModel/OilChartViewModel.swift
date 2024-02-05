@@ -18,15 +18,15 @@ class OilChartViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private let useCase = OilChartSceneUseCase()
     
-    init() {
+    init() { }
+    
+    func getChartsDatas() {
         if let oilType = defaults.string(forKey: UDOilType) {
             self.selectedOilType = oilType
         } else {
             self.selectedOilType = OilType.gasolin.rawValue
         }
-    }
-    
-    func getChartsDatas() {
+        
         var param = Parameters()
         param["code"] = ApiKey().charged
         param["out"] = "json"
