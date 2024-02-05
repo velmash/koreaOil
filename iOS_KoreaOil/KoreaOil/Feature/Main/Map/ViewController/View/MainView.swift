@@ -43,6 +43,9 @@ class MainView: BaseView {
         addSubview(searchView)
         addSubview(searchBar)
         addSubview(goMinPriceBtn)
+        
+        //TODO: 사양 정해서 searchBar 구현 해야함
+        searchBar.isHidden = true
     }
     
     override func addConstraints() {
