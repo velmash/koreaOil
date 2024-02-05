@@ -53,6 +53,7 @@ struct OilChartUIView: View {
                             x: .value("날짜", data.date.convertChartsDate() ?? ""),
                             y: .value("가격", Double(data.price))
                         )
+                        .foregroundStyle(Color.gray)
                     }
                 }
                 .chartYScale(domain: viewModel.minMaxPrices)
