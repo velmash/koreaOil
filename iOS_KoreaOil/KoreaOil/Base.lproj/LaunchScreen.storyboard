@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -12,23 +11,24 @@
         <scene sceneID="EHf-IW-A2E">
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SpU-wI-ycn"/>
+                        <viewControllerLayoutGuide type="bottom" id="iRr-Ca-72W"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ThumbLoa" translatesAutoresizingMaskIntoConstraints="NO" id="1rE-65-EQ5">
-                                <rect key="frame" x="96.666666666666686" y="326" width="200" height="200"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="xsM-El-qom"/>
-                                    <constraint firstAttribute="height" constant="200" id="zqM-NL-M9m"/>
-                                </constraints>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="1rE-65-EQ5">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                             </imageView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.99999994039999995" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="1rE-65-EQ5" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Ysi-oj-wOr"/>
-                            <constraint firstItem="1rE-65-EQ5" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="eY1-IO-TSA"/>
+                            <constraint firstAttribute="trailing" secondItem="1rE-65-EQ5" secondAttribute="trailing" id="2sc-wd-J4D"/>
+                            <constraint firstAttribute="bottom" secondItem="1rE-65-EQ5" secondAttribute="bottom" id="Baa-Le-xCk"/>
+                            <constraint firstItem="1rE-65-EQ5" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="EfL-uq-MzZ"/>
+                            <constraint firstItem="1rE-65-EQ5" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="OR1-ji-QEI"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -38,6 +38,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ThumbLoa" width="120" height="120"/>
+        <image name="LaunchScreen" width="258.66665649414062" height="482"/>
     </resources>
 </document>
