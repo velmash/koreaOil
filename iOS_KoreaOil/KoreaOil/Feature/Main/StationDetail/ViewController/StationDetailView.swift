@@ -57,6 +57,7 @@ class StationDetailView: BaseView {
         $0.setImage(UIImage(systemName: "phone.fill"), for: .normal)
         $0.contentVerticalAlignment = .fill
         $0.contentHorizontalAlignment = .fill
+        $0.tintColor = .gray
     }
     
     lazy var isCarWashLb = UILabel().then {

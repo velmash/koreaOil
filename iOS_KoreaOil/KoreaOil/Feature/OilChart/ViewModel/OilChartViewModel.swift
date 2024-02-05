@@ -28,7 +28,7 @@ class OilChartViewModel: ObservableObject {
     
     func getChartsDatas() {
         var param = Parameters()
-        param["code"] = ApiKey().free
+        param["code"] = ApiKey().charged
         param["out"] = "json"
         param["prodcd"] = OilType(rawValue: selectedOilType)!.resType
         

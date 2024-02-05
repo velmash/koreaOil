@@ -13,6 +13,7 @@ class StationTableView: UITableView {
         
         self.register(StationTableViewCell.self, forCellReuseIdentifier: "StationTableViewCell")
         self.separatorColor = .clear
+        self.showsVerticalScrollIndicator = false
     }
     
     required init?(coder: NSCoder) {

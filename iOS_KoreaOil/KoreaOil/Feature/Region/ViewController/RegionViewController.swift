@@ -12,9 +12,13 @@ import RxCocoa
 class RegionViewController: BaseViewController<RegionView> {
     
     var viewModel: RegionViewModel?
+    private var stationDetails = [StationDetailInfo]()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        viewModel?.getPrices()
+        
         self.setTable()
     }
     
@@ -45,6 +49,15 @@ class RegionViewController: BaseViewController<RegionView> {
             }
             .drive()
             .disposed(by: bag)
+        
+        output.stationInfoPost
+            .doOnNext { [weak self] infos in
+                self?.stationDetails = infos
+            }
+            .driveNext { [weak self] _ in
+                self?.contentView.tableView.reloadData()
+            }
+            .disposed(by: bag)
     }
     
     private func setTable() {
@@ -57,11 +70,11 @@ class RegionViewController: BaseViewController<RegionView> {
 
 extension RegionViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return stationDetails.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 80
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -69,8 +82,12 @@ extension RegionViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        cell.configure()
+        cell.configure(info: stationDetails[indexPath.row])
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.viewModel?.cellTap(info: stationDetails[indexPath.row])
     }
 }

@@ -1,12 +1,48 @@
-////
-////  RegionResponse.swift
-////  KoreaOil
-////
-////  Created by 윤형찬 on 1/16/24.
-////
 //
-//import Foundation
+//  RegionResponse.swift
+//  KoreaOil
 //
+//  Created by 윤형찬 on 1/16/24.
+//
+
+import Foundation
+
+struct OilPriceOfRegionResponse: Codable {
+    var result: OilPriceResponse
+    
+    enum CodingKeys: String, CodingKey {
+        case result = "RESULT"
+    }
+}
+
+struct OilPriceResponse: Codable {
+    var oil: [RegionOilPriceResponse]
+    
+    enum CodingKeys: String, CodingKey {
+        case oil = "OIL"
+    }
+}
+
+struct RegionOilPriceResponse: Codable {
+    var stationId: String
+    var prodcd: String
+    var price: Int
+    var date: String
+    var time: String
+    
+    enum CodingKeys: String, CodingKey {
+        case stationId = "UNI_ID"
+        case prodcd = "PRODCD"
+        case price = "PRICE"
+        case date = "TRADE_DT"
+        case time = "TRADE_TM"
+    }
+}
+
+
+
+
+
 //enum RegionCode: CaseIterable {
 //    case seoul(SeoulCode)
 //    case gyeongi

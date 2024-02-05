@@ -94,7 +94,7 @@ struct StationDetailInfoResult: Codable {
 
 struct StationDetailInfo: Codable, Hashable {
     var stationId: String
-    var brand: String?
+    var pBrand: String?
     var gBrand: String?
     var brandName: String
     var addrOld: String
@@ -126,10 +126,20 @@ struct StationDetailInfo: Codable, Hashable {
         return _isStore == "Y"
     }
     
+    var brand: String {
+        if let pBrand {
+            return pBrand
+        } else if let gBrand {
+            return gBrand
+        } else {
+            return ""
+        }
+    }
+    
     enum CodingKeys: String, CodingKey {
         case stationId = "UNI_ID"
-        case brand = "POLL_DIV_CD"
-        case gBrand = "GPOLL_DIV_CD"
+        case pBrand = "POLL_DIV_CO"
+        case gBrand = "GPOLL_DIV_CO"
         case brandName = "OS_NM"
         case addrOld = "VAN_ADR"
         case addrNew = "NEW_ADR"
@@ -148,7 +158,7 @@ struct StationDetailInfo: Codable, Hashable {
 
 struct StationOilInfo: Codable, Hashable {
     var prodcd: String
-    var price: Int
+    var price: Double
     var date: String
     var time: String
     
