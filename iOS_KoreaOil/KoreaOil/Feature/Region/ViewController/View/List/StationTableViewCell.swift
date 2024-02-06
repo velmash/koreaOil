@@ -58,8 +58,6 @@ class StationTableViewCell: UITableViewCell {
         let prodcd = OilType.allCases.first(where: { $0.rawValue == defaults.string(forKey: UDOilType) })?.resType ?? "B027"
         guard let item = info.oilInfo.first(where: { $0.prodcd == prodcd}) else { return }
         
-        print(info.brand)
-        
         nameLabel.text = info.brandName
         brandImg.image = StationType.allCases.first(where: { $0.rawValue == info.brand })?.image
         
