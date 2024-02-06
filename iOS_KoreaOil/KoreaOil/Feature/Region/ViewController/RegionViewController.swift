@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import SnapKit
 
 class RegionViewController: BaseViewController<RegionView> {
     
@@ -63,8 +64,25 @@ class RegionViewController: BaseViewController<RegionView> {
     private func setTable() {
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
+        setTableHeaderAd()
         
         contentView.tableView.reloadData()
+    }
+    
+    private func setTableHeaderAd() {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: contentView.tableView.frame.width, height: 50))
+        headerView.backgroundColor = .clear // 배경색 설정
+
+        let bannerView = contentView.makeBannerView()
+        bannerView.rootViewController = self
+
+        headerView.addSubview(bannerView)
+        
+        bannerView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+
+        contentView.tableView.tableHeaderView = headerView
     }
 }
 

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 class RegionView: BaseView {
     var tableView = StationTableView()
@@ -42,6 +43,13 @@ class RegionView: BaseView {
             $0.trailing.equalToSuperview().offset(-20)
             $0.top.equalTo(titleLabel.snp.bottom).offset(10)
             $0.bottom.equalToSuperview().offset(-(self.bottomSafetyAreaInset + self.tabBarHeight))
+        }
+    }
+    
+    func makeBannerView() -> GADBannerView {
+        return GADBannerView(adSize: GADAdSizeBanner).then {
+            $0.adUnitID = "ca-app-pub-4670694619553812/3440135644"
+            $0.load(GADRequest())
         }
     }
 }
