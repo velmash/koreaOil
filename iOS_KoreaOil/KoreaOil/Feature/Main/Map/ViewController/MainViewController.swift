@@ -10,15 +10,23 @@ import RxSwift
 import RxCocoa
 import RxGesture
 import NMapsMap
+import GoogleMobileAds
 
 class MainViewController: BaseViewController<MainView> {
     private var currentMarker = NMFMarker()
     private var stationMarkers = [NMFMarker]()
     
     var viewModel: MainViewModel?
+    private var interstitial: GADInterstitialAd? {
+        didSet {
+            interstitial?.present(fromRootViewController: self)
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.loadAd()
         
         self.contentView.goMinPriceBtn.isHidden = false
         viewModel?.getStationInfo()
@@ -130,7 +138,19 @@ class MainViewController: BaseViewController<MainView> {
             }
             .disposed(by: bag)
     }
-
+    
+    private func loadAd() {
+        let request = GADRequest()
+        GADInterstitialAd.load(withAdUnitID: "ca-app-pub-4670694619553812/2666696753",
+                               request: request) { [weak self] ad, error in
+            guard let self = self else { return }
+            if let error = error {
+                print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+                return
+            }
+            interstitial = ad
+        }
+    }
 }
 
 extension MainViewController: NMFMapViewTouchDelegate {
