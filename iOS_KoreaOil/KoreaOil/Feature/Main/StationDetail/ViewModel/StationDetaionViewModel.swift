@@ -64,7 +64,7 @@ class StationDetaionViewModel: NSObject, ViewModelType {
         guard let initData = initData else { return }
         
         var param = Parameters()
-        param["code"] = ApiKey().charged
+        param["code"] = ApiKey().free
         param["out"] = "json"
         param["id"] = initData.stationId
         

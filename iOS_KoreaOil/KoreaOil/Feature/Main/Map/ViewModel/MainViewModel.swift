@@ -69,7 +69,7 @@ class MainViewModel: NSObject, ViewModelType {
         let radius = RangeType.allCases.first(where: { $0.rawValue == defaults.string(forKey: UDRangeType) })?.reqType ?? 0
         
         var param = Parameters()
-        param["code"] = ApiKey().charged
+        param["code"] = ApiKey().free
         param["out"] = "json"
         param["x"] = "\(String(convertedKatecGPS.x))"
         param["y"] = "\(String(convertedKatecGPS.y))"
