@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import AppTrackingTransparency
-import AdSupport
 import GoogleMobileAds
 
 class SettingViewController: BaseViewController<SettingView> {
@@ -29,20 +27,6 @@ class SettingViewController: BaseViewController<SettingView> {
         contentView.bannerView.delegate = self
         
         self.setTables()
-        
-        ATTrackingManager.requestTrackingAuthorization { status in
-            switch status {
-            case .authorized:
-                // 'authorized' 상태에서는 IDFA에 접근할 수 있습니다.
-                let idfa = ASIdentifierManager.shared().advertisingIdentifier.uuidString
-                print("IDFA: \(idfa)")
-            case .denied, .notDetermined, .restricted:
-                // 이 상태에서는 IDFA에 접근할 수 없습니다.
-                break
-            @unknown default:
-                break
-            }
-        }
     }
     
     private func setTables() {
