@@ -66,18 +66,9 @@ struct OilChartUIView: View {
                     .padding()
                 }
                 
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.white)
-                    .frame(height: 50)
-                    .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.gray, lineWidth: 1)
-                        )
-                    .overlay(
-                        Text("//TODO: 광고 넣기")
-                            .font(.system(size: 18))
-                    )
-                    .padding([.leading, .trailing], 15)
+                AdBannerView()
+                    .frame(width: UIScreen.main.bounds.width - 30, height: 50)
+                    .padding([.leading], 15)
                 
                 Text("상세")
                     .font(.system(size: 22))
