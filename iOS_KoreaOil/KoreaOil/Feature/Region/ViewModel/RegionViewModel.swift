@@ -65,7 +65,8 @@ class RegionViewModel: NSObject, ViewModelType {
             .map { $0.sorted(by: { $0.price < $1.price }) }
             .asObservable()
             .flatMap { prices -> Observable<[StationDetailInfo]> in
-                let detailObservables = prices.map { self.getStationDetailInfo(stationId: $0.stationId) }
+                let limitedPrices = Array(prices.prefix(10)) //TODO: 서버 DB Call로 추후 변경 필요
+                let detailObservables = limitedPrices.map { self.getStationDetailInfo(stationId: $0.stationId) }
                 return Observable.combineLatest(detailObservables)
             }
         
