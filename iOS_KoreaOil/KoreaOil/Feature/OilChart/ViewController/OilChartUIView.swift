@@ -47,18 +47,24 @@ struct OilChartUIView: View {
                 }
                 .padding([.leading], 15)
                 
-                Chart {
-                    ForEach(Array(viewModel.oilPricesData.enumerated()), id: \.element) { index, data in
-                        LineMark(
-                            x: .value("날짜", data.date.convertChartsDate() ?? ""),
-                            y: .value("가격", Double(data.price))
-                        )
-                        .foregroundStyle(Color.gray)
+                if viewModel.oilPricesData.isEmpty {
+                    Text("데이터가 없습니다.")
+                        .frame(height: 250)
+                        .padding()
+                } else {
+                    Chart {
+                        ForEach(Array(viewModel.oilPricesData.enumerated()), id: \.element) { index, data in
+                            LineMark(
+                                x: .value("날짜", data.date.convertChartsDate() ?? ""),
+                                y: .value("가격", Double(data.price))
+                            )
+                            .foregroundStyle(Color.gray)
+                        }
                     }
+                    .chartYScale(domain: viewModel.minMaxPrices)
+                    .frame(height: 250)
+                    .padding()
                 }
-                .chartYScale(domain: viewModel.minMaxPrices)
-                .frame(height: 250)
-                .padding()
                 
                 RoundedRectangle(cornerRadius: 10)
                     .fill(Color.white)
