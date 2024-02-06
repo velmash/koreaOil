@@ -6,12 +6,20 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 class StationDetailViewController: BaseViewController<StationDetailView> {
     var viewModel: StationDetaionViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        contentView.bannerView.rootViewController = self
+        contentView.bannerView.delegate = self
     }
     
     override func bindViewModel() {
@@ -33,5 +41,15 @@ class StationDetailViewController: BaseViewController<StationDetailView> {
                 self?.contentView.bindStationInfoDetailUI(info: detailInfo)
             }
             .disposed(by: bag)
+    }
+}
+
+extension StationDetailViewController: GADBannerViewDelegate {
+    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+        print("광고 수신 성공")
+    }
+    
+    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+        print("광고 수신 실패", error.localizedDescription)
     }
 }

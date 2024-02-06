@@ -9,9 +9,15 @@ import UIKit
 import NMapsMap
 import SnapKit
 import Then
+import GoogleMobileAds
 
 class StationDetailView: BaseView {
     var mapView: NMFMapView?
+    
+    lazy var bannerView = GADBannerView(adSize: GADAdSizeBanner).then {
+        $0.adUnitID = "ca-app-pub-4670694619553812/3245243262" //Test ID
+        $0.load(GADRequest())
+    }
     
     lazy var topBar = UIView().then {
         $0.backgroundColor = .white
@@ -110,6 +116,7 @@ class StationDetailView: BaseView {
         }
         
         descScrollView.addSubview(callBtn)
+        descScrollView.addSubview(bannerView)
         descScrollView.addSubview(isCarWashLb)
         descScrollView.addSubview(isStoreLb)
         descScrollView.addSubview(addrLb)
@@ -179,19 +186,25 @@ class StationDetailView: BaseView {
                 $0.size.equalTo(descScrollView.snp.width)
             }
             
-            callBtn.snp.makeConstraints {
+            bannerView.snp.makeConstraints {
                 $0.top.equalTo(mapView.snp.bottom).offset(10)
-                $0.leading.equalToSuperview()
-                $0.size.equalTo(30)
+                $0.leading.trailing.equalToSuperview()
             }
+            
             isCarWashLb.snp.makeConstraints {
-                $0.top.equalTo(callBtn.snp.bottom).offset(20)
+                $0.top.equalTo(bannerView.snp.bottom).offset(10)
                 $0.leading.trailing.equalToSuperview()
             }
             
             isStoreLb.snp.makeConstraints {
-                $0.top.equalTo(isCarWashLb.snp.bottom).offset(20)
+                $0.top.equalTo(isCarWashLb.snp.bottom).offset(10)
                 $0.leading.trailing.equalToSuperview()
+            }
+            
+            callBtn.snp.makeConstraints {
+                $0.top.equalTo(isCarWashLb.snp.centerY)
+                $0.trailing.equalToSuperview()
+                $0.size.equalTo(30)
             }
             
             addrLb.snp.makeConstraints {
