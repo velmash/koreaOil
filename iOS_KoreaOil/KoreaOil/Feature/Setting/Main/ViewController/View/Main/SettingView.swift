@@ -13,7 +13,7 @@ import GoogleMobileAds
 class SettingView: BaseView {    
     var tableView = SettingTableView()
     lazy var bannerView = GADBannerView(adSize: GADAdSizeBanner).then {
-        $0.adUnitID = "ca-app-pub-3940256099942544/2934735716" //Test ID
+        $0.adUnitID = "ca-app-pub-4670694619553812/1289163765" //Test ID
         $0.load(GADRequest())
     }
     
