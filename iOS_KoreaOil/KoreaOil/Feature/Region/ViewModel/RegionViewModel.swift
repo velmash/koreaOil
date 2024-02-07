@@ -51,7 +51,7 @@ class RegionViewModel: NSObject, ViewModelType {
         let prodcd = OilType.allCases.first(where: { $0.rawValue == defaults.string(forKey: UDOilType) })?.resType ?? "B027"
         
         var param = Parameters()
-        param["code"] = ApiKey().free
+        param["code"] = ApiKey().charged
         param["out"] = "json"
         param["area"] = "0202"
         

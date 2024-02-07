@@ -15,16 +15,14 @@ class RegionViewController: BaseViewController<RegionView> {
     var viewModel: RegionViewModel?
     private var stationDetails = [StationDetailInfo]()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         viewModel?.getPrices()
-        bindViewModelOnViewDidLoad()
-        
         self.setTable()
     }
     
-    private func bindViewModelOnViewDidLoad() {
+    override func bindViewModel() {
         guard let viewModel = viewModel else { return }
         
         let input = RegionViewModel.Input()

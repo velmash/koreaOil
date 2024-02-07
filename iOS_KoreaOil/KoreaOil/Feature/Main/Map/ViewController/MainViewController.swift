@@ -10,26 +10,18 @@ import RxSwift
 import RxCocoa
 import RxGesture
 import NMapsMap
-import GoogleMobileAds
+import AppTrackingTransparency
 
 class MainViewController: BaseViewController<MainView> {
     private var currentMarker = NMFMarker()
     private var stationMarkers = [NMFMarker]()
     
     var viewModel: MainViewModel?
-    private var interstitial: GADInterstitialAd? {
-        didSet {
-            interstitial?.present(fromRootViewController: self)
-        }
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.loadAd()
-        
         self.contentView.goMinPriceBtn.isHidden = false
-        viewModel?.getStationInfo()
     }
     
     override func viewDidLoad() {
@@ -70,6 +62,9 @@ class MainViewController: BaseViewController<MainView> {
             .disposed(by: bag)
         
         output.aroundGasStationInfoPost
+            .doOnNext { [weak self] _ in
+                self?.viewModel?.requestTrackingAuthorization()
+            }
             .doOnNext { [weak self] _ in
                 guard let self = self else { return }
                 
@@ -137,19 +132,6 @@ class MainViewController: BaseViewController<MainView> {
                 owner.contentView.searchBar.resignFirstResponder()
             }
             .disposed(by: bag)
-    }
-    
-    private func loadAd() {
-        let request = GADRequest()
-        GADInterstitialAd.load(withAdUnitID: "ca-app-pub-4670694619553812/2666696753",
-                               request: request) { [weak self] ad, error in
-            guard let self = self else { return }
-            if let error = error {
-                print("Failed to load interstitial ad with error: \(error.localizedDescription)")
-                return
-            }
-            interstitial = ad
-        }
     }
 }
 

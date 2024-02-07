@@ -10,6 +10,10 @@
 	</array>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>미허용 시 앱 내 기능이 다수 제한될 수 있습니다.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>미허용 시 앱 내 기능이 다수 제한될 수 있습니다.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>미허용 시 앱 내 기능이 다수 제한될 수 있습니다.</string>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-4670694619553812~1947133769</string>
 	<key>NMFClientId</key>

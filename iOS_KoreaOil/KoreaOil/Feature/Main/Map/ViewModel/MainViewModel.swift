@@ -36,6 +36,7 @@ class MainViewModel: NSObject, ViewModelType {
         locationManager.delegate = self
         
         locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
     }
     
     func transform(input: Input) -> Output {
@@ -78,9 +79,6 @@ class MainViewModel: NSObject, ViewModelType {
         param["sort"] = "2"
         
         useCase.getAroundGasStation(param)
-            .doOnNext { [weak self] _ in
-                self?.requestTrackingAuthorization()
-            }
             .subscribeNext { [weak self] data in
                 let stationInfos = data.value.result.oil
                 self?.aroundStationInfoSubject.onNext(stationInfos)
@@ -104,22 +102,18 @@ class MainViewModel: NSObject, ViewModelType {
         return sortedStations.first
     }
     
-    private func requestTrackingAuthorization() {
-        DispatchQueue.main.async {
-            ATTrackingManager.requestTrackingAuthorization { status in
-                switch status {
-                case .authorized:
-                    print("추적 권한 허가됨")
-                    // 추적 권한이 허가되었을 때 필요한 작업 수행
-                case .denied, .restricted, .notDetermined:
-                    print("추적 권한 거부됨 또는 미결정")
-                    // 추적 권한이 거부되었거나 미결정일 때 필요한 작업 수행
-                @unknown default:
-                    print("알 수 없는 추적 권한 상태")
-                }
+    func requestTrackingAuthorization() {
+        ATTrackingManager.requestTrackingAuthorization { status in
+            switch status {
+            case .authorized:
+                print("추적 권한 허가됨")
+                print(ASIdentifierManager.shared().advertisingIdentifier)
+            case .denied, .restricted, .notDetermined:
+                print("추적 권한 거부됨 또는 미결정")
+            @unknown default:
+                print("알 수 없는 추적 권한 상태")
             }
         }
-        
     }
 }
 
@@ -140,6 +134,7 @@ extension MainViewModel: CLLocationManagerDelegate {
         if let location = locations.first {
             self.currentLatLonSubject.accept(location.coordinate)
             locationManager.stopUpdatingLocation()
+            self.getStationInfo()
         }
     }
     
@@ -147,7 +142,6 @@ extension MainViewModel: CLLocationManagerDelegate {
         switch status {
         case .authorizedAlways, .authorizedWhenInUse:
             print("위치 권한 허가됨")
-            // 위치 권한이 허가되었을 때 필요한 작업 수행
             locationManager.startUpdatingLocation()
         default:
             break
