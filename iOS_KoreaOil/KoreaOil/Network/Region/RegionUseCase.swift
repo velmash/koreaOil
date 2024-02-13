@@ -9,12 +9,12 @@ import Foundation
 import RxSwift
 import Alamofire
 
-enum RegionSceneURL: OpinetAPIPath {
-    case oilPriceOfWeek = "/oilPriceList.do"
+enum RegionSceneMyURL: MyAPIPath {
+    case regionGeo = "/regions"
 }
 
 class RegionSceneUseCase {
-    func getOilPricesOfRegion(_ param: Parameters) -> Observable<Response<OilPriceOfRegionResponse>> {
-        return NetworkService().opinetAPIFetchable(opinetPath: RegionSceneURL.oilPriceOfWeek.rawValue, method: .get, param: param)
+    func requestRegionStationDetailInfo(_ param: Parameters) -> Observable<Response<StationDetailResponseOnRegion>> {
+        return NetworkService().opinetAPIFetchable(isMyAPI: true, path: RegionSceneMyURL.regionGeo.rawValue, method: .get, param: param)
     }
 }

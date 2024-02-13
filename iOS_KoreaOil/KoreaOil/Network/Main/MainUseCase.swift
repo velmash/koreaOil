@@ -16,11 +16,11 @@ enum MainSceneURL: OpinetAPIPath {
 
 class MainSceneUseCase {
     func getAroundGasStation(_ param: Parameters) -> Observable<Response<AroundGasStationResponse>> {
-        return NetworkService().opinetAPIFetchable(opinetPath: MainSceneURL.aroundGasStation.rawValue, method: .get, param: param)
+        return NetworkService().opinetAPIFetchable(isMyAPI: false, path: MainSceneURL.aroundGasStation.rawValue, method: .get, param: param)
     }
     
     func getStationDetailInfo(_ param: Parameters) -> Observable<Response<StationDetailInfoResponse>> {
-        return NetworkService().opinetAPIFetchable(opinetPath: MainSceneURL.stationDetailInfo.rawValue, method: .get, param: param)
+        return NetworkService().opinetAPIFetchable(isMyAPI: false, path: MainSceneURL.stationDetailInfo.rawValue, method: .get, param: param)
     }
 }
 

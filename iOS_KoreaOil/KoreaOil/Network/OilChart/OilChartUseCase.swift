@@ -15,6 +15,6 @@ enum OilChartSceneURL: OpinetAPIPath {
 
 class OilChartSceneUseCase {
     func getOilPricesOfWeek(_ param: Parameters) -> Observable<Response<OilPriceOfWeekResponse>> {
-        return NetworkService().opinetAPIFetchable(opinetPath: OilChartSceneURL.oilPriceOfWeek.rawValue, method: .get, param: param)
+        return NetworkService().opinetAPIFetchable(isMyAPI: false, path: OilChartSceneURL.oilPriceOfWeek.rawValue, method: .get, param: param)
     }
 }
