@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+import CoreLocation
 
 struct GeographicPoint {
     let x: Double   // longitude (경도)
@@ -600,4 +602,76 @@ class GeoConverter {
     private let helfPI = 0.5 * Double.pi
     private let cos67p5 = 0.38268343236508977   // cosine of 67.5 degrees
     private let adC = 1.0026000
+    
+    
+    func fetchReverseGeoCodeAddrStr(location: CLLocationCoordinate2D) -> Observable<String> {
+        return Observable.create { observer in
+            let urlString = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?request=coordsToaddr&coords=\(location.longitude),\(location.latitude)&sourcecrs=epsg:4326&output=json&orders=legalcode,admcode"
+            
+            guard let url = URL(string: urlString) else {
+                observer.onError(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
+                return Disposables.create()
+            }
+            
+            var request = URLRequest(url: url)
+            request.addValue("dfr1nk8wbp", forHTTPHeaderField: "X-NCP-APIGW-API-KEY-ID")
+            request.addValue("tbU4fdZy6gGpZR14dTN1ohMzITYVtifqXzgzsKRm", forHTTPHeaderField: "X-NCP-APIGW-API-KEY")
+            
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    observer.onError(error)
+                    return
+                }
+                
+                guard let data = data else {
+                    observer.onError(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data"]))
+                    return
+                }
+                
+                do {
+                    let decodedResponse = try JSONDecoder().decode(Response.self, from: data)
+                    if let area1Name = decodedResponse.results.first?.region.area1.name {
+                        var area2Name = decodedResponse.results.first?.region.area2.name ?? ""
+                        // 띄어쓰기가 있을 경우 첫 번째 단어만 사용
+                        if let firstSpaceIndex = area2Name.firstIndex(of: " ") {
+                            area2Name = String(area2Name[..<firstSpaceIndex])
+                        }
+                        let combinedLocation = "\(area1Name) \(area2Name)"
+                        observer.onNext(combinedLocation)
+                        observer.onCompleted()
+                    } else {
+                        observer.onError(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Location not found"]))
+                    }
+                } catch {
+                    observer.onError(error)
+                }
+            }
+            
+            task.resume()
+            
+            return Disposables.create {
+                task.cancel()
+            }
+        }
+    }
+
+    // JSON 디코딩을 위한 구조체 정의
+    struct Response: Codable {
+        struct Status: Codable {
+            let code: Int
+            let name: String
+            let message: String
+        }
+        struct Result: Codable {
+            struct Region: Codable {
+                struct Area: Codable {
+                    let name: String
+                }
+                let area1: Area
+                let area2: Area
+            }
+            let region: Region
+        }
+        let results: [Result]
+    }
 }

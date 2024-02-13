@@ -58,12 +58,6 @@ class RegionViewController: BaseViewController<RegionView> {
                 self?.contentView.tableView.reloadData()
             }
             .disposed(by: bag)
-        
-        viewModel.tempSubject
-            .subscribeNext { [weak self] title in
-                self?.contentView.regionText.text = title
-            }
-            .disposed(by: bag)
     }
     
     private func setTable() {
