@@ -21,7 +21,7 @@ class RegionViewModel: NSObject, ViewModelType {
     private let useCase = RegionSceneUseCase()
     private let mainUseCase = MainSceneUseCase()
     
-    private let currentLocationSubject = BehaviorSubject<String>(value: "위치 정보 없음")
+    private let currentLocationSubject = BehaviorRelay<String>(value: "위치 정보 없음")
     private let stationInfoSubject = PublishSubject<[StationDetailInfo]>()
     
     init(coordinator: RegionCoordinator) {
@@ -51,30 +51,21 @@ class RegionViewModel: NSObject, ViewModelType {
         let prodcd = OilType.allCases.first(where: { $0.rawValue == defaults.string(forKey: UDOilType) })?.resType ?? "B027"
         
         var param = Parameters()
-        param["code"] = ApiKey().charged
-        param["out"] = "json"
-        param["area"] = "0202"
+        param["prodcd"] = prodcd
+        param["regionName"] = currentLocationSubject.value
         
-        let oilPricesObservable = useCase.getOilPricesOfRegion(param)
-            .compactMap { $0.value.result.oil }
-        
-        let filteredOilPricesObservable = oilPricesObservable
-            .flatMap { Observable.from($0) }
-            .filter { $0.prodcd == prodcd }
-            .toArray()
-            .map { $0.sorted(by: { $0.price < $1.price }) }
-            .asObservable()
-            .flatMap { prices -> Observable<[StationDetailInfo]> in
-                let limitedPrices = Array(prices.prefix(10)) //TODO: 서버 DB Call로 추후 변경 필요
-                let detailObservables = limitedPrices.map { self.getStationDetailInfo(stationId: $0.stationId) }
-                return Observable.combineLatest(detailObservables)
-            }
-        
-        filteredOilPricesObservable
+        useCase.requestRegionStationDetailInfo(param)
             .withUnretained(self)
-            .subscribeNext { owner, details in
+            .subscribeNext { owner, res in
+                var details = [StationDetailInfo]()
+                
+                for item in res.value.details {
+                    if let detail = item.OIL.first {
+                        details.append(detail)
+                    }
+                }
+                
                 owner.stationInfoSubject.onNext(details)
-//                print("Details: \(details)")
             }
             .disposed(by: bag)
     }
@@ -85,16 +76,6 @@ class RegionViewModel: NSObject, ViewModelType {
         
         let aa = AroundGasStation(stationId: info.stationId, brand: info.brand, brandName: info.brandName, price: item.price, distance: 0.0, lon: info.x, lat: info.y)
         self.coordinator.goStationDetail(stationInfo: aa)
-    }
-    
-    private func getStationDetailInfo(stationId: String) -> Observable<StationDetailInfo> {
-        var param = Parameters()
-        param["code"] = ApiKey().free
-        param["out"] = "json"
-        param["id"] = stationId
-        
-        return mainUseCase.getStationDetailInfo(param)
-            .compactMap { $0.value.result.oil.first }
     }
 }
 
@@ -127,10 +108,8 @@ extension RegionViewModel: CLLocationManagerDelegate {
 
             geoCoder.reverseGeocodeLocation(currentLocation, preferredLocale: locale) { (places, error) in
                 if let address = places?.last {
-//                    print("시(도): \(address.administrativeArea ?? "N/A")")
-//                    print("구(군): \(address.locality ?? "N/A")")
                     if let siStr = address.administrativeArea, let guStr = address.locality {
-                        self.currentLocationSubject.onNext("\(siStr) \(guStr)")
+                        self.currentLocationSubject.accept("\(siStr) \(guStr)")
                     }
                 }
             }
