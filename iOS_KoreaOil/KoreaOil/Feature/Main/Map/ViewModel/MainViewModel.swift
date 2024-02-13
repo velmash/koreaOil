@@ -134,7 +134,7 @@ extension MainViewModel: CLLocationManagerDelegate {
         if let location = locations.first {
             self.currentLatLonSubject.accept(location.coordinate)
             locationManager.stopUpdatingLocation()
-            self.getStationInfo()
+//            self.getStationInfo()
         }
     }
     

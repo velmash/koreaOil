@@ -52,6 +52,8 @@ class StationTableViewCell: UITableViewCell {
     }
     
     func configure(info: StationDetailInfo) {
+        self.backgroundColor = .white
+        
         setupViews()
         setupConstraints()
         

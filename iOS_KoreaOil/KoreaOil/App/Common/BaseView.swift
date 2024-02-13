@@ -25,6 +25,8 @@ class BaseView: UIView {
     }
     
     private func configure() {
+        self.backgroundColor = .white
+        
         addSubviews()
         addConstraints()
     }

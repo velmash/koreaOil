@@ -9,12 +9,23 @@ import UIKit
 import GoogleMobileAds
 
 class RegionView: BaseView {
-    var tableView = StationTableView()
+    var tableView = StationTableView().then {
+        $0.backgroundColor = .white
+    }
     
     lazy var titleLabel = UILabel().then {
         $0.text = " - "
         $0.font = .systemFont(ofSize: 16)
         $0.textColor = .black
+    }
+    
+    lazy var regionText = UILabel().then {
+        $0.text = ""
+        $0.font = .systemFont(ofSize: 12)
+        $0.textColor = .black
+        $0.numberOfLines = 0
+        $0.lineBreakMode = .byCharWrapping
+        $0.textAlignment = .center
     }
     
     override init(frame: CGRect) {
@@ -30,6 +41,7 @@ class RegionView: BaseView {
     override func addSubviews() {
         addSubview(titleLabel)
         addSubview(tableView)
+        addSubview(regionText)
     }
     
     override func addConstraints() {
@@ -43,6 +55,11 @@ class RegionView: BaseView {
             $0.trailing.equalToSuperview().offset(-20)
             $0.top.equalTo(titleLabel.snp.bottom).offset(10)
             $0.bottom.equalToSuperview().offset(-(self.bottomSafetyAreaInset + self.tabBarHeight))
+        }
+        
+        regionText.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(30)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     

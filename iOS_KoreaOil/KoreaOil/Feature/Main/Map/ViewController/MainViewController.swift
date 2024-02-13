@@ -22,6 +22,7 @@ class MainViewController: BaseViewController<MainView> {
         super.viewWillAppear(animated)
         
         self.contentView.goMinPriceBtn.isHidden = false
+        self.viewModel?.getStationInfo()
     }
     
     override func viewDidLoad() {

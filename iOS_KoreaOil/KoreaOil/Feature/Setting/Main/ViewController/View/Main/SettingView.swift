@@ -11,7 +11,9 @@ import SnapKit
 import GoogleMobileAds
 
 class SettingView: BaseView {    
-    var tableView = SettingTableView()
+    var tableView = SettingTableView().then {
+        $0.backgroundColor = .white
+    }
     lazy var bannerView = GADBannerView(adSize: GADAdSizeBanner).then {
         $0.adUnitID = "ca-app-pub-4670694619553812/1289163765" //Test ID
         $0.load(GADRequest())

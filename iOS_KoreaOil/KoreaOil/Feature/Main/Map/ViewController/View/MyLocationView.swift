@@ -42,6 +42,7 @@ class MyLocationView: BaseView {
         
         $0.text = "₩\(priceString)"
         $0.font = .systemFont(ofSize: 13)
+        $0.textColor = .black
         
         if isMinPriceStation {
             $0.textColor = .red

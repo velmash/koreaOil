@@ -15,6 +15,13 @@ class OilChartViewController: UIViewController {
         
         let swiftUIView = OilChartUIView()
         let hostingController = UIHostingController(rootView: swiftUIView)
+        hostingController.view.backgroundColor = .white
+        
+        let appearance = UITabBarAppearance()
+        appearance.backgroundColor = .white
+        
+        UITabBar.appearance().standardAppearance = appearance
+        
         
         addChild(hostingController)
         hostingController.view.frame = self.view.bounds

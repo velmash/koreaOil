@@ -27,6 +27,8 @@ class SettingTableViewCell: UITableViewCell {
     }
 
     func configure(with item: SettingType) {
+        self.backgroundColor = .white
+        
         titleLabel.text = item.title
         
         switch item {

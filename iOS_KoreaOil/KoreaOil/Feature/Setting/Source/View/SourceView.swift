@@ -27,6 +27,7 @@ class SourceView: BaseView {
     lazy var descLb = UILabel().then {
         $0.font = .systemFont(ofSize: 16)
         $0.text = "한국석유공사 · 오피넷"
+        $0.textColor = .black
     }
     
     override init(frame: CGRect) {

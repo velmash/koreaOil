@@ -24,6 +24,8 @@ class RegionViewModel: NSObject, ViewModelType {
     private let currentLocationSubject = BehaviorRelay<String>(value: "위치 정보 없음")
     private let stationInfoSubject = PublishSubject<[StationDetailInfo]>()
     
+    let tempSubject = BehaviorSubject<String>(value: "위치")
+    
     init(coordinator: RegionCoordinator) {
         self.coordinator = coordinator
         super.init()
@@ -110,6 +112,10 @@ extension RegionViewModel: CLLocationManagerDelegate {
                 if let address = places?.last {
                     if let siStr = address.administrativeArea, let guStr = address.locality {
                         self.currentLocationSubject.accept("\(siStr) \(guStr)")
+                        
+                        let locationStr = "\(address.name)\n\(address.thoroughfare)\n\(address.subThoroughfare)\n\(address.locality)\n\(address.subLocality)\n\(address.administrativeArea)\n\(address.subAdministrativeArea)\n\(address.postalCode)\n\(address.isoCountryCode)\n\(address.country)\n\(address.inlandWater)\n\(address.ocean)\n\(address.areasOfInterest)"
+                        
+                        self.tempSubject.onNext(locationStr)
                     }
                 }
             }

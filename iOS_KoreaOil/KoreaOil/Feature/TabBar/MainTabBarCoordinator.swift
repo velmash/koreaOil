@@ -53,9 +53,10 @@ class MainTabBarCoordinator: TabBarCoordinator {
         // home의 index로 TabBar Index 세팅
         self.tabBarController.selectedIndex = TabBarItemType.home.toInt()
         // TabBar 스타일 지정
-        self.tabBarController.view.backgroundColor = .systemBackground
-        self.tabBarController.tabBar.backgroundColor = .systemBackground
+        self.tabBarController.view.backgroundColor = .white
+        self.tabBarController.tabBar.backgroundColor = .white
         self.tabBarController.tabBar.tintColor = UIColor.black
+        self.tabBarController.tabBar.barTintColor = .gray
     }
     
     private func addTabBarController(){

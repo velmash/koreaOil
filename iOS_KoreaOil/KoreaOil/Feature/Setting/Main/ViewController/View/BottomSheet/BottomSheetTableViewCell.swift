@@ -29,6 +29,8 @@ class BottomSheetTableViewCell: UITableViewCell {
     }
     
     func configure(title: String) {
+        self.backgroundColor = .white
+        
         titleLabel.text = title
         
         let userDefaultsKeys = [UDOilType, UDRangeType, UDNaviType]
