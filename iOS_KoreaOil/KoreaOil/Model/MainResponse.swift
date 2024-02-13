@@ -173,3 +173,11 @@ struct StationOilInfo: Codable, Hashable {
         case time = "TRADE_TM"
     }
 }
+
+struct StationDetailResponseOnRegion: Codable {
+    var details: [Detail]
+}
+
+struct Detail: Codable {
+    var OIL: [StationDetailInfo]
+}
