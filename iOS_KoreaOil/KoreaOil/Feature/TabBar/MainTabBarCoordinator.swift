@@ -56,7 +56,7 @@ class MainTabBarCoordinator: TabBarCoordinator {
         self.tabBarController.view.backgroundColor = .white
         self.tabBarController.tabBar.backgroundColor = .white
         self.tabBarController.tabBar.tintColor = UIColor.black
-        self.tabBarController.tabBar.barTintColor = .gray
+        self.tabBarController.tabBar.barTintColor = .white
     }
     
     private func addTabBarController(){
