@@ -42,6 +42,7 @@ app.get('/api/regions', (req, res) => {
             .then(function (response) {
               const filteredOilPrices = response.data.RESULT.OIL
                   .filter(oilData => oilData.PRODCD === prodcd) // prodcd가 일치하는 항목만 필터링
+                  .sort((a, b) => a.PRICE - b.PRICE)
                   .slice(0, 10) // 최대 10개 항목 선택
                   .map(oilData => ({
                     stationId: oilData.UNI_ID,
