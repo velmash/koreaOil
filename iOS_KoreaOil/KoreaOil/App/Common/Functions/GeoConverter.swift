@@ -636,7 +636,15 @@ class GeoConverter {
                         if let firstSpaceIndex = area2Name.firstIndex(of: " ") {
                             area2Name = String(area2Name[..<firstSpaceIndex])
                         }
-                        let combinedLocation = "\(area1Name) \(area2Name)"
+                        
+                        var combinedLocation: String = ""
+                        
+                        if area2Name != "" {
+                            combinedLocation = "\(area1Name) \(area2Name)"
+                        } else {
+                            combinedLocation = "\(area1Name)"
+                        }
+                        
                         observer.onNext(combinedLocation)
                         observer.onCompleted()
                     } else {
