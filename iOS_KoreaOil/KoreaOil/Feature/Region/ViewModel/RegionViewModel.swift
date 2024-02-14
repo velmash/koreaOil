@@ -108,7 +108,8 @@ extension RegionViewModel: CLLocationManagerDelegate {
                 .asObservable()
                 .subscribeNext { [weak self] addrStr in
                     self?.currentLocationSubject.accept(addrStr)
-                }.disposed(by: bag)
+                }
+                .disposed(by: bag)
         }
     }
 }
