@@ -18,13 +18,6 @@ class MainViewController: BaseViewController<MainView> {
     
     var viewModel: MainViewModel?
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.contentView.goMinPriceBtn.isHidden = false
-        self.viewModel?.getStationInfo()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,7 +29,11 @@ class MainViewController: BaseViewController<MainView> {
     override func bindViewModel() {
         guard let viewModel = viewModel else { return }
         
+        let rxViewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
+            .mapToVoid()
+        
         let input = MainViewModel.Input(
+            viewWillAppear: rxViewWillAppear,
             goMinBtnTap: self.contentView.goMinPriceBtn.rx.tap.asObservable()
         )
         let output = viewModel.transform(input: input)
@@ -62,6 +59,14 @@ class MainViewController: BaseViewController<MainView> {
             }
             .disposed(by: bag)
         
+        output.noAccessPost
+            .driveNext { [weak self] warnText in
+                if warnText == "" { return }
+                self?.contentView.goMinPriceBtn.isHidden = true
+                iToast.show(warnText)
+            }
+            .disposed(by: bag)
+        
         output.aroundGasStationInfoPost
             .doOnNext { [weak self] _ in
                 self?.viewModel?.requestTrackingAuthorization()
@@ -84,6 +89,8 @@ class MainViewController: BaseViewController<MainView> {
             }
             .driveNext { [weak self] stations in
                 guard let self = self else { return }
+                
+                self.contentView.goMinPriceBtn.isHidden = false
                 
                 let mapView = self.contentView.mapView
                 

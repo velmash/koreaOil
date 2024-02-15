@@ -22,8 +22,11 @@ class MainViewModel: NSObject, ViewModelType {
     private var bag = DisposeBag()
     private let useCase = MainSceneUseCase()
     
+    private var hasFetchedStationInfo = false
+    
     private let currentLatLonSubject = BehaviorRelay<CLLocationCoordinate2D>(value: CLLocationCoordinate2D(latitude: 0, longitude: 0))
     private let aroundStationInfoSubject = PublishSubject<[AroundGasStation]>()
+    private let noGPSAccessSubejct = BehaviorSubject<String>(value: "")
     private let minPriceStationGPSSubject = PublishSubject<GeographicPoint>()
     
     private var minPriceStationInfo: AroundGasStation?
@@ -41,6 +44,13 @@ class MainViewModel: NSObject, ViewModelType {
     
     func transform(input: Input) -> Output {
         
+        input.viewWillAppear
+            .withUnretained(self)
+            .subscribeNext { owner, _ in
+                owner.getStationInfo()
+            }
+            .disposed(by: bag)
+        
         input.goMinBtnTap
             .withUnretained(self)
             .subscribeNext { owner, _ in
@@ -55,19 +65,26 @@ class MainViewModel: NSObject, ViewModelType {
         let currentLatLonPost = self.currentLatLonSubject.asDriverOnErrorJustComplete()
         let aroundStationInfoPost = self.aroundStationInfoSubject.asDriverOnErrorJustComplete()
         let minPriceStationGPSPost = self.minPriceStationGPSSubject.asDriverOnErrorJustComplete()
+        let noAccessPost = self.noGPSAccessSubejct.asDriverOnErrorJustComplete()
         
         return Output(
             currentCoordinatePost: currentLatLonPost,
+            noAccessPost: noAccessPost,
             aroundGasStationInfoPost: aroundStationInfoPost,
             minPriceStationGPSPost: minPriceStationGPSPost
         )
     }
     
-    func getStationInfo() {
+    private func getStationInfo() {
         let convertedKatecGPS = geoConverter.convert(sourceType: .WGS_84, destinationType: .KATEC, geoPoint: GeographicPoint(x: currentLatLonSubject.value.longitude, y: currentLatLonSubject.value.latitude))!
         
         let prodcd = OilType.allCases.first(where: { $0.rawValue == defaults.string(forKey: UDOilType) })?.resType ?? "B027"
         let radius = RangeType.allCases.first(where: { $0.rawValue == defaults.string(forKey: UDRangeType) })?.reqType ?? 0
+        
+        if currentLatLonSubject.value.latitude == 0.0 && currentLatLonSubject.value.longitude == 0.0 {
+            self.noGPSAccessSubejct.onNext("위치 정보 접근을 허용하지 않아, 주변 최저가 정보 서비스를 이용하실 수 없습니다.")
+            return
+        }
         
         var param = Parameters()
         param["code"] = ApiKey().free
@@ -119,11 +136,13 @@ class MainViewModel: NSObject, ViewModelType {
 
 extension MainViewModel {
     struct Input {
+        let viewWillAppear: Observable<Void>
         let goMinBtnTap: Observable<Void>
     }
     
     struct Output {
         let currentCoordinatePost: Driver<CLLocationCoordinate2D>
+        let noAccessPost: Driver<String>
         let aroundGasStationInfoPost: Driver<[AroundGasStation]>
         let minPriceStationGPSPost: Driver<GeographicPoint>
     }
@@ -134,7 +153,10 @@ extension MainViewModel: CLLocationManagerDelegate {
         if let location = locations.first {
             self.currentLatLonSubject.accept(location.coordinate)
             locationManager.stopUpdatingLocation()
-//            self.getStationInfo()
+            if !hasFetchedStationInfo {
+                self.getStationInfo()
+                self.hasFetchedStationInfo = true
+            }
         }
     }
     
@@ -144,6 +166,7 @@ extension MainViewModel: CLLocationManagerDelegate {
             print("위치 권한 허가됨")
             locationManager.startUpdatingLocation()
         default:
+            self.getStationInfo()
             break
         }
     }

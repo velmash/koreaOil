@@ -31,10 +31,7 @@ class MainView: BaseView {
         self.backgroundColor = .white
         
         mapView = NMFMapView(frame: self.frame)
-        mapView?.minZoomLevel = 13
-        mapView?.maxZoomLevel = 16
-        mapView?.isTiltGestureEnabled = false
-        mapView?.isRotateGestureEnabled = false
+        setInitMapview(mapView)
         
         if let mapView {
             self.addSubview(mapView)
@@ -82,6 +79,13 @@ class MainView: BaseView {
     func hideBottomView() {
         self.searchView.isHidden = true
         self.searchBar.resignFirstResponder()
+    }
+    
+    private func setInitMapview(_ mapView: NMFMapView?) {
+        mapView?.minZoomLevel = 13
+        mapView?.maxZoomLevel = 16
+        mapView?.isTiltGestureEnabled = false
+        mapView?.isRotateGestureEnabled = false
     }
 }
 
