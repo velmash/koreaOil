@@ -85,6 +85,8 @@ class MainViewModel: NSObject, ViewModelType {
         if currentLatLonSubject.value.latitude == 0.0 && currentLatLonSubject.value.longitude == 0.0 {
             self.noGPSAccessSubejct.onNext("위치 정보 접근을 허용하지 않아, 주변 최저가 정보 서비스를 이용하실 수 없습니다.")
             return
+        } else {
+            self.noGPSAccessSubejct.onNext("")
         }
         
         var param = Parameters()

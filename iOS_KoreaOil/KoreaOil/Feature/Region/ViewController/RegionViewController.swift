@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
+import AppTrackingTransparency
 
 class RegionViewController: BaseViewController<RegionView> {
     
@@ -18,7 +19,7 @@ class RegionViewController: BaseViewController<RegionView> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        viewModel?.getPrices()
+        checkAuthForBinding()
         self.setTable()
     }
     
@@ -58,6 +59,17 @@ class RegionViewController: BaseViewController<RegionView> {
                 self?.contentView.tableView.reloadData()
             }
             .disposed(by: bag)
+    }
+    
+    private func checkAuthForBinding() {
+        ATTrackingManager.requestTrackingAuthorization { [weak self] status in
+            switch status {
+            case .authorized:
+                self?.viewModel?.getPrices()
+            default:
+                iToast.show("추적 권한을 허용하지 않아서, 지역별 데이터를 확인하실 수 없습니다.")
+            }
+        }
     }
     
     private func setTable() {

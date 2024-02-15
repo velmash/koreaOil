@@ -48,6 +48,11 @@ class RegionViewModel: NSObject, ViewModelType {
     }
     
     func getPrices() {
+        if currentLocationSubject.value == "위치 정보 없음" {
+            iToast.show("위치 정보 접근을 허용하지 않아, 주변 최저가 정보 서비스를 이용하실 수 없습니다.")
+            return
+        }
+        
         let prodcd = OilType.allCases.first(where: { $0.rawValue == defaults.string(forKey: UDOilType) })?.resType ?? "B027"
         
         var param = Parameters()
