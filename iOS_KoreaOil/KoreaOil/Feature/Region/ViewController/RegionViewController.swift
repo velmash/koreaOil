@@ -53,6 +53,12 @@ class RegionViewController: BaseViewController<RegionView> {
         
         output.stationInfoPost
             .doOnNext { [weak self] infos in
+                if infos.count == 0 { 
+                    self?.contentView.noDataView.isHidden = false
+                } else {
+                    self?.contentView.noDataView.isHidden = true
+                }
+                
                 self?.stationDetails = infos
             }
             .driveNext { [weak self] _ in
@@ -68,6 +74,7 @@ class RegionViewController: BaseViewController<RegionView> {
                 self?.viewModel?.getPrices()
             default:
                 iToast.show("추적 권한을 허용하지 않아서, 지역별 데이터를 확인하실 수 없습니다.")
+                self?.contentView.noDataView.isHidden = false
             }
         }
     }
