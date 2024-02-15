@@ -56,6 +56,11 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
         if tableView == settingTableView {
             return settingItems.count
         } else {
+            if self.contentView.bottomSheet.contentView.layer.frame.height < 350 && sheetItems.count > 3 {
+                self.contentView.bottomSheet.tableView.isScrollEnabled = true
+            } else {
+                self.contentView.bottomSheet.tableView.isScrollEnabled = false
+            }
             return sheetItems.count
         }
     }
@@ -91,7 +96,9 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
             } else {
                 self.sheetItems = settingItems[indexPath.row].getAllCases()
                 self.selectedUDType = settingItems[indexPath.row].getUDType()
+                
                 self.contentView.bottomSheet.isHidden = false
+                
                 reloadTables()
             }
         } else {

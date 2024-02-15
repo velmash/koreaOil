@@ -14,7 +14,8 @@ class BottomSheetTableView: UITableView {
         
         // 추가적인 테이블 뷰 설정
         self.register(BottomSheetTableViewCell.self, forCellReuseIdentifier: "BottomSheetTableViewCell")
-        self.isScrollEnabled = false
+        
+        self.showsVerticalScrollIndicator = false
         self.backgroundColor = .white
     }
     

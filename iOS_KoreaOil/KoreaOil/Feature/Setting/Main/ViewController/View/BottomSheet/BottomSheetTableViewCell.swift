@@ -43,6 +43,13 @@ class BottomSheetTableViewCell: UITableViewCell {
             appIcon.image = UIImage(named: "KakaoNavi")
         } else if title == "티맵" {
             appIcon.image = UIImage(named: "Tmap")
+        } else if title == "0.1" || title == "0.5" {
+            let num = Int(Double(title)! * 1000)
+            titleLabel.text! = "\(num) m"
+            appIcon.image = nil
+        } else if title == "1" || title == "3" || title == "5" {
+            titleLabel.text! = "\(title) km"
+            appIcon.image = nil
         } else {
             appIcon.image = nil
         }
