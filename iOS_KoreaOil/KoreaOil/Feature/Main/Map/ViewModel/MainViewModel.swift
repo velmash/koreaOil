@@ -45,6 +45,7 @@ class MainViewModel: NSObject, ViewModelType {
     func transform(input: Input) -> Output {
         
         input.viewWillAppear
+            .take(1)
             .withUnretained(self)
             .subscribeNext { owner, _ in
                 owner.getStationInfo()
