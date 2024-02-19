@@ -168,7 +168,16 @@ class StationDetaionViewModel: NSObject, ViewModelType {
                 UIApplication.shared.open(NaviApi.webNaviInstallUrl, options: [:], completionHandler: nil)
             }
         } else if naviType == .apple {
+            let directionsURL = "http://maps.apple.com/?daddr=\(convertedWGSPoint?.y ?? 0),\(convertedWGSPoint?.x ?? 0)&dirflg=d"
             
+            if let url = URL(string: directionsURL), UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                let appStoreURL = "https://apps.apple.com/app/apple-maps/id915056765"
+                if let url = URL(string: appStoreURL) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            }
         }
     }
 }
