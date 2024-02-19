@@ -18,6 +18,10 @@ class StationDetailViewController: BaseViewController<StationDetailView> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        let naviType = NaviType.allCases.first(where: { $0.rawValue == viewModel?.defaults.string(forKey: UDNaviType )}) ?? .tmap
+        
+        contentView.stopoverBtn.isHidden = naviType == .apple
+        
         contentView.bannerView.rootViewController = self
         contentView.bannerView.delegate = self
     }

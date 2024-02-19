@@ -51,4 +51,5 @@ enum NaviType: String, CaseIterable {
     case naver = "네이버지도"
     case kakao = "카카오내비"
     case tmap = "티맵"
+    case apple = "애플지도"
 }

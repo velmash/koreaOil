@@ -14,7 +14,7 @@ import KakaoSDKNavi
 import TMapSDK
 
 class StationDetaionViewModel: NSObject, ViewModelType {
-    private let defaults = UserDefaults.standard
+    let defaults = UserDefaults.standard
     private var coordinator: StationDetailCoordinator
     private let geoConverter = GeoConverter()
     
@@ -167,6 +167,8 @@ class StationDetaionViewModel: NSObject, ViewModelType {
             else {
                 UIApplication.shared.open(NaviApi.webNaviInstallUrl, options: [:], completionHandler: nil)
             }
+        } else if naviType == .apple {
+            
         }
     }
 }
