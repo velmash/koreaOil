@@ -7,10 +7,16 @@
 
 import StoreKit
 
+protocol IAPManagerDelegate {
+    func endPay()
+}
+
 class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserver {
     static let shared = IAPManager()
     var productsRequest: SKProductsRequest?
     var iapProducts = [SKProduct]()
+    
+    var delegate: IAPManagerDelegate?
     
     func setupIAP() {
         SKPaymentQueue.default().add(self)
@@ -44,11 +50,13 @@ class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObser
             switch transaction.transactionState {
             case .purchased, .restored:
                 SKPaymentQueue.default().finishTransaction(transaction)
+                self.delegate?.endPay()
             case .failed:
                 if let error = transaction.error as? SKError {
                     print("Transaction Failed: \(error.localizedDescription)")
                 }
                 SKPaymentQueue.default().finishTransaction(transaction)
+                self.delegate?.endPay()
             default:
                 break
             }
@@ -56,7 +64,7 @@ class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObser
     }
     
     func startPurchase() {
-        if !iapProducts.isEmpty {
+        if SKPaymentQueue.canMakePayments() && !iapProducts.isEmpty {
             buyProduct(iapProducts[0])
         }
     }

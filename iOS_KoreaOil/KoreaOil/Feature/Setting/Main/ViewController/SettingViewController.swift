@@ -30,6 +30,7 @@ class SettingViewController: BaseViewController<SettingView> {
         contentView.bannerView.delegate = self
         
         self.setTables()
+        IAPManager.shared.delegate = self
     }
     
     override func bindViewModel() {
@@ -39,6 +40,7 @@ class SettingViewController: BaseViewController<SettingView> {
             .when(.recognized)
             .withUnretained(self)
             .subscribeNext { owner, _ in
+                owner.contentView.loadingIndicator.startAnimating()
                 IAPManager.shared.startPurchase()
             }
             .disposed(by: bag)
@@ -130,5 +132,11 @@ extension SettingViewController: GADBannerViewDelegate {
     
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
         print("광고 수신 실패", error.localizedDescription)
+    }
+}
+
+extension SettingViewController: IAPManagerDelegate {
+    func endPay() {
+        self.contentView.loadingIndicator.stopAnimating()
     }
 }

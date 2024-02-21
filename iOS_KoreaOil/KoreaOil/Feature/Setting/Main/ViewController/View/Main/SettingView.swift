@@ -57,6 +57,12 @@ class SettingView: BaseView {
         $0.configuration = config
     }
     
+    lazy var loadingIndicator = UIActivityIndicatorView().then {
+        $0.frame = CGRect(x: 10, y: 5, width: 50, height: 50)
+        $0.hidesWhenStopped = true
+        $0.style = .large
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -74,6 +80,7 @@ class SettingView: BaseView {
         self.addSubview(bannerView)
         self.addSubview(bottomSheet)
         self.addSubview(payBtn)
+        self.addSubview(loadingIndicator)
     }
     
     override func addConstraints() {
@@ -107,6 +114,10 @@ class SettingView: BaseView {
         self.payBtn.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(self.tableView.snp.top).offset(260)
+        }
+        
+        self.loadingIndicator.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
 }
