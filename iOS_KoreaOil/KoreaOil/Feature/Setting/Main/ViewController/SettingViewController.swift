@@ -7,6 +7,9 @@
 
 import UIKit
 import GoogleMobileAds
+import RxSwift
+import RxCocoa
+import RxGesture
 
 class SettingViewController: BaseViewController<SettingView> {
     weak var settingTableView: UITableView?
@@ -27,6 +30,18 @@ class SettingViewController: BaseViewController<SettingView> {
         contentView.bannerView.delegate = self
         
         self.setTables()
+    }
+    
+    override func bindViewModel() {
+        super.bindViewModel()
+        
+        self.contentView.payBtn.rx.tapGesture()
+            .when(.recognized)
+            .withUnretained(self)
+            .subscribeNext { owner, _ in
+                IAPManager.shared.startPurchase()
+            }
+            .disposed(by: bag)
     }
     
     private func setTables() {

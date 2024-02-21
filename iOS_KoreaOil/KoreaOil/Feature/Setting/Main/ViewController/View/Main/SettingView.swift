@@ -31,6 +31,32 @@ class SettingView: BaseView {
     
     lazy var bottomSheet = BottomSheetView()
     
+    lazy var payBtn = UIButton().then {
+        var config = UIButton.Configuration.filled()
+        config.title = "개발자에게 커피 사주기"
+        config.baseForegroundColor = .gray // 타이틀 색상
+        config.baseBackgroundColor = .white // 배경 색상
+        
+        let tintColor = UIColor.gray // 이미지 색상 설정
+        if let originalImage = UIImage(systemName: "hand.point.left.fill"),
+           let resizedImage = originalImage.resized(toWidth: 18)?.withTintColor(tintColor) {
+            config.image = resizedImage
+        }
+        
+        config.imagePlacement = .trailing // 이미지를 오른쪽에 배치
+        config.imagePadding = 5 // 텍스트와 이미지 사이의 패딩
+        config.cornerStyle = .medium // 버튼 모서리 스타일
+        
+        // 폰트 설정
+        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+            var outgoing = incoming
+            outgoing.font = .systemFont(ofSize: 16)
+            return outgoing
+        }
+        
+        $0.configuration = config
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -47,6 +73,7 @@ class SettingView: BaseView {
         self.addSubview(tableView)
         self.addSubview(bannerView)
         self.addSubview(bottomSheet)
+        self.addSubview(payBtn)
     }
     
     override func addConstraints() {
@@ -75,6 +102,11 @@ class SettingView: BaseView {
         self.bottomSheet.snp.makeConstraints {
             $0.leading.trailing.top.equalToSuperview()
             $0.bottom.equalTo(bannerView.snp.bottom)
+        }
+        
+        self.payBtn.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(self.tableView.snp.top).offset(260)
         }
     }
 }
