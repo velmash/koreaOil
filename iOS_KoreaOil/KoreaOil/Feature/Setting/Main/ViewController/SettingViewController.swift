@@ -110,6 +110,8 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
         if tableView == settingTableView {
             if let viewModel, settingItems[indexPath.row] == .source {
                 viewModel.goSourceVC()
+            } else if let viewModel, settingItems[indexPath.row] == .tutorial {
+                iToast.show("튜토리얼 구현")
             } else {
                 self.sheetItems = settingItems[indexPath.row].getAllCases()
                 self.selectedUDType = settingItems[indexPath.row].getUDType()

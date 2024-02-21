@@ -113,7 +113,7 @@ class SettingView: BaseView {
         
         self.payBtn.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(self.tableView.snp.top).offset(260)
+            $0.top.equalTo(self.tableView.snp.top).offset(320)
         }
         
         self.loadingIndicator.snp.makeConstraints {

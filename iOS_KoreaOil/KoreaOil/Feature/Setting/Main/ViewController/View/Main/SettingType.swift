@@ -12,6 +12,7 @@ enum SettingType: CaseIterable {
     case regionRange
     case naviType
     case source
+    case tutorial
     
     var title: String {
         switch self {
@@ -19,6 +20,7 @@ enum SettingType: CaseIterable {
         case .regionRange: return "반경 범위"
         case .naviType: return "길안내 앱"
         case .source: return "출처"
+        case .tutorial: return "튜토리얼 보기"
         }
     }
     
