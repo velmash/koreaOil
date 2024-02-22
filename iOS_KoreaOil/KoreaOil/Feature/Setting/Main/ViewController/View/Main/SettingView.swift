@@ -77,9 +77,9 @@ class SettingView: BaseView {
         self.addSubview(topBar)
         self.topBar.addSubview(topBarTitle)
         self.addSubview(tableView)
+        self.addSubview(payBtn)
         self.addSubview(bannerView)
         self.addSubview(bottomSheet)
-        self.addSubview(payBtn)
         self.addSubview(loadingIndicator)
     }
     
@@ -101,6 +101,11 @@ class SettingView: BaseView {
             $0.bottom.equalToSuperview()
         }
         
+        self.payBtn.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(self.tableView.snp.top).offset(320)
+        }
+        
         self.bannerView.snp.makeConstraints( {
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().offset(-(bottomSafetyAreaInset + tabBarHeight))
@@ -109,11 +114,6 @@ class SettingView: BaseView {
         self.bottomSheet.snp.makeConstraints {
             $0.leading.trailing.top.equalToSuperview()
             $0.bottom.equalTo(bannerView.snp.bottom)
-        }
-        
-        self.payBtn.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(self.tableView.snp.top).offset(320)
         }
         
         self.loadingIndicator.snp.makeConstraints {

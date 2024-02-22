@@ -73,7 +73,7 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
         if tableView == settingTableView {
             return settingItems.count
         } else {
-            if self.contentView.bottomSheet.contentView.layer.frame.height < 350 && sheetItems.count > 3 {
+            if self.contentView.bottomSheet.contentView.layer.frame.height < 350 && sheetItems.count > 4 {
                 self.contentView.bottomSheet.tableView.isScrollEnabled = true
             } else {
                 self.contentView.bottomSheet.tableView.isScrollEnabled = false
