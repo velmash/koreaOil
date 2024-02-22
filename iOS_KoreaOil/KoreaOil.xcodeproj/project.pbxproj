@@ -59,6 +59,7 @@
 		3AD704AE2B6B6D24005A571A /* StationTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD704AD2B6B6D24005A571A /* StationTableView.swift */; };
 		3AD704B02B6B6D51005A571A /* StationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD704AF2B6B6D51005A571A /* StationTableViewCell.swift */; };
 		3ADB800F2B71ED09008F5275 /* AdBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADB800E2B71ED09008F5275 /* AdBannerView.swift */; };
+		3AEE6C7F2B86E84300F98DA3 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE6C7E2B86E84300F98DA3 /* UIViewController+Extension.swift */; };
 		3AFE01BB2B27E4280005A0CB /* TabBarItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE01BA2B27E4280005A0CB /* TabBarItemType.swift */; };
 		3AFE01BD2B27EEE10005A0CB /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE01BC2B27EEE10005A0CB /* Coordinator.swift */; };
 		3AFE01BF2B27EF300005A0CB /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE01BE2B27EF300005A0CB /* TabBarCoordinator.swift */; };
@@ -179,6 +180,7 @@
 		3AD704AD2B6B6D24005A571A /* StationTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationTableView.swift; sourceTree = "<group>"; };
 		3AD704AF2B6B6D51005A571A /* StationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationTableViewCell.swift; sourceTree = "<group>"; };
 		3ADB800E2B71ED09008F5275 /* AdBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdBannerView.swift; sourceTree = "<group>"; };
+		3AEE6C7E2B86E84300F98DA3 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		3AFE01BA2B27E4280005A0CB /* TabBarItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemType.swift; sourceTree = "<group>"; };
 		3AFE01BC2B27EEE10005A0CB /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		3AFE01BE2B27EF300005A0CB /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 				3A102D822B284129009A33CC /* SharedSequenceConvertibleType.swift */,
 				3A2715322B85973F00DB7352 /* Bundle+Extension.swift */,
 				3A2715362B85AF4B00DB7352 /* UIImage+Extention.swift */,
+				3AEE6C7E2B86E84300F98DA3 /* UIViewController+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1015,6 +1018,7 @@
 				3A363F512AF4DF77001C0BCF /* MainView.swift in Sources */,
 				3AFE01DD2B281BAE0005A0CB /* OilChartViewControllerCoordinator.swift in Sources */,
 				3AFE01F72B281DF80005A0CB /* SettingViewControllerCoordinator.swift in Sources */,
+				3AEE6C7F2B86E84300F98DA3 /* UIViewController+Extension.swift in Sources */,
 				3AD704AE2B6B6D24005A571A /* StationTableView.swift in Sources */,
 				3AFE02002B2828880005A0CB /* String+Extension.swift in Sources */,
 				3AA939562B4E8F1300ACD233 /* StationDetailCoordinator.swift in Sources */,

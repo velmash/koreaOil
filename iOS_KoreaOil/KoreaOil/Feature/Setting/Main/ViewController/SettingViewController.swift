@@ -110,8 +110,10 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
         if tableView == settingTableView {
             if let viewModel, settingItems[indexPath.row] == .source {
                 viewModel.goSourceVC()
-            } else if let viewModel, settingItems[indexPath.row] == .tutorial {
-                iToast.show("튜토리얼 구현")
+            } else if settingItems[indexPath.row] == .tutorial {
+//                CustomAlertViewController.showPopup(from: self)
+                let popup = self.makeTutorialPopup()
+                self.present(popup, animated: true, completion: nil)
             } else {
                 self.sheetItems = settingItems[indexPath.row].getAllCases()
                 self.selectedUDType = settingItems[indexPath.row].getUDType()
