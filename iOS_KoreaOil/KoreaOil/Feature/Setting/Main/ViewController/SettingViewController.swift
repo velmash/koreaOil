@@ -111,8 +111,7 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
             if let viewModel, settingItems[indexPath.row] == .source {
                 viewModel.goSourceVC()
             } else if settingItems[indexPath.row] == .tutorial {
-//                CustomAlertViewController.showPopup(from: self)
-                let popup = self.makeTutorialPopup()
+                let popup = self.makeTutorialPopup(nil)
                 self.present(popup, animated: true, completion: nil)
             } else {
                 self.sheetItems = settingItems[indexPath.row].getAllCases()
