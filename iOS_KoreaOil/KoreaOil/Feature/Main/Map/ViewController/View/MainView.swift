@@ -17,7 +17,7 @@ class MainView: BaseView {
     lazy var searchView = SearchView()
     lazy var goMinPriceBtn = createGoMinPriceBtn()
     lazy var helpBtn = UIButton().then {
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 60, weight: .bold, scale: .large)
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 35, weight: .bold, scale: .large)
         let largeSymbolImage = UIImage(systemName: "questionmark.circle.fill", withConfiguration: largeConfig)?.withRenderingMode(.alwaysTemplate)
         
         $0.setImage(largeSymbolImage, for: .normal)
@@ -81,9 +81,9 @@ class MainView: BaseView {
         }
         
         helpBtn.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(10)
+            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(5)
             $0.trailing.equalToSuperview().offset(-10)
-            $0.size.equalTo(30)
+            $0.size.equalTo(35)
         }
     }
     
