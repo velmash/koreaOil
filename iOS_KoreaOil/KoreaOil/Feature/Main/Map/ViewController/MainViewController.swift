@@ -133,6 +133,15 @@ class MainViewController: BaseViewController<MainView> {
             }
             .disposed(by: bag)
         
+        contentView.helpBtn.rx.tapGesture()
+            .when(.recognized)
+            .withUnretained(self)
+            .subscribeNext { owner, _ in
+                let popup = owner.makeTutorialPopup()
+                owner.present(popup, animated: true, completion: nil)
+            }
+            .disposed(by: bag)
+        
         contentView.searchView.rx.tapGesture()
             .when(.recognized)
             .withUnretained(self)
