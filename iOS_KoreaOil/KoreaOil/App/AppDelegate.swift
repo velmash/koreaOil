@@ -25,7 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TMapTapiDelegate {
         FirebaseApp.configure()
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         
-        GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = ["4b8a4263303371b2e0ab8c7cc81aa705", "c61e86634a764e54ef77eb42d5d08a1a", "999f6a4fc94783ec9ddab449e2aa1d4d", "9539c94997fc1a158db1e39149ccb817"]
+        //애드몹 테스트코드
+//        GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = ["4b8a4263303371b2e0ab8c7cc81aa705", "c61e86634a764e54ef77eb42d5d08a1a", "999f6a4fc94783ec9ddab449e2aa1d4d", "9539c94997fc1a158db1e39149ccb817"]
         
         //카카오내비 용
         KakaoSDK.initSDK(appKey: "185c06b1b0b9bdcb0c914bb7f18a193a")
@@ -42,6 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TMapTapiDelegate {
         if defaults.string(forKey: UDNaviType) == nil {
             defaults.setValue(NaviType.naver.rawValue, forKey: UDNaviType)
         }
+        
+        IAPManager.shared.setupIAP()
         
         return true
     }

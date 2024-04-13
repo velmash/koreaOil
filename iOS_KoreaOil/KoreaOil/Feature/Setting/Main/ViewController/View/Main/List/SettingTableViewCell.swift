@@ -50,6 +50,9 @@ class SettingTableViewCell: UITableViewCell {
         case .source:
             arrowImg.image = UIImage(systemName: "chevron.right")
             subLabel.text = ""
+        case .tutorial:
+            arrowImg.image = nil
+            subLabel.text = ""
         }
         
         setupViews()

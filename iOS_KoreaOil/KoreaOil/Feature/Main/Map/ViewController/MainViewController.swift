@@ -10,7 +10,6 @@ import RxSwift
 import RxCocoa
 import RxGesture
 import NMapsMap
-import AppTrackingTransparency
 
 class MainViewController: BaseViewController<MainView> {
     private var currentMarker = NMFMarker()
@@ -69,7 +68,13 @@ class MainViewController: BaseViewController<MainView> {
         
         output.aroundGasStationInfoPost
             .doOnNext { [weak self] _ in
-                self?.viewModel?.requestTrackingAuthorization()
+                guard let self = self else { return }
+                if let isShownTutorial = self.viewModel?.tutorialPresent(), isShownTutorial {
+                    self.viewModel?.requestTrackingAuthorization()
+                } else {
+                    let popup = self.makeTutorialPopup(self.viewModel?.requestTrackingAuthorization)
+                    self.present(popup, animated: true, completion: nil)
+                }
             }
             .doOnNext { [weak self] _ in
                 guard let self = self else { return }
@@ -130,6 +135,15 @@ class MainViewController: BaseViewController<MainView> {
                 self.contentView.mapView?.moveCamera(cameraUpdate) { _ in
                     self.contentView.goMinPriceBtn.isHidden = true
                 }
+            }
+            .disposed(by: bag)
+        
+        contentView.helpBtn.rx.tapGesture()
+            .when(.recognized)
+            .withUnretained(self)
+            .subscribeNext { owner, _ in
+                let popup = owner.makeTutorialPopup(nil)
+                owner.present(popup, animated: true, completion: nil)
             }
             .disposed(by: bag)
         

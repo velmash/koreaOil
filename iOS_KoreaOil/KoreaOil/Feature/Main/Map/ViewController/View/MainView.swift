@@ -16,6 +16,14 @@ class MainView: BaseView {
     lazy var searchBar = createSearchBar()
     lazy var searchView = SearchView()
     lazy var goMinPriceBtn = createGoMinPriceBtn()
+    lazy var helpBtn = UIButton().then {
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 35, weight: .bold, scale: .large)
+        let largeSymbolImage = UIImage(systemName: "questionmark.circle.fill", withConfiguration: largeConfig)?.withRenderingMode(.alwaysTemplate)
+        
+        $0.setImage(largeSymbolImage, for: .normal)
+        $0.tintColor = .gray
+        $0.backgroundColor = .clear
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,6 +48,7 @@ class MainView: BaseView {
         addSubview(searchView)
         addSubview(searchBar)
         addSubview(goMinPriceBtn)
+        addSubview(helpBtn)
         
         //TODO: 사양 정해서 searchBar 구현 해야함
         searchBar.isHidden = true
@@ -69,6 +78,12 @@ class MainView: BaseView {
             $0.bottom.equalToSuperview().offset(-(20 + bottomSafetyAreaInset + tabBarHeight))
             $0.width.equalTo(130)
             $0.height.equalTo(40)
+        }
+        
+        helpBtn.snp.makeConstraints {
+            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(5)
+            $0.trailing.equalToSuperview().offset(-10)
+            $0.size.equalTo(35)
         }
     }
     

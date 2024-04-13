@@ -7,6 +7,9 @@
 
 import UIKit
 import GoogleMobileAds
+import RxSwift
+import RxCocoa
+import RxGesture
 
 class SettingViewController: BaseViewController<SettingView> {
     weak var settingTableView: UITableView?
@@ -27,6 +30,20 @@ class SettingViewController: BaseViewController<SettingView> {
         contentView.bannerView.delegate = self
         
         self.setTables()
+        IAPManager.shared.delegate = self
+    }
+    
+    override func bindViewModel() {
+        super.bindViewModel()
+        
+        self.contentView.payBtn.rx.tapGesture()
+            .when(.recognized)
+            .withUnretained(self)
+            .subscribeNext { owner, _ in
+                owner.contentView.loadingIndicator.startAnimating()
+                IAPManager.shared.startPurchase()
+            }
+            .disposed(by: bag)
     }
     
     private func setTables() {
@@ -56,7 +73,7 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
         if tableView == settingTableView {
             return settingItems.count
         } else {
-            if self.contentView.bottomSheet.contentView.layer.frame.height < 350 && sheetItems.count > 3 {
+            if self.contentView.bottomSheet.contentView.layer.frame.height < 350 && sheetItems.count > 4 {
                 self.contentView.bottomSheet.tableView.isScrollEnabled = true
             } else {
                 self.contentView.bottomSheet.tableView.isScrollEnabled = false
@@ -93,6 +110,9 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
         if tableView == settingTableView {
             if let viewModel, settingItems[indexPath.row] == .source {
                 viewModel.goSourceVC()
+            } else if settingItems[indexPath.row] == .tutorial {
+                let popup = self.makeTutorialPopup(nil)
+                self.present(popup, animated: true, completion: nil)
             } else {
                 self.sheetItems = settingItems[indexPath.row].getAllCases()
                 self.selectedUDType = settingItems[indexPath.row].getUDType()
@@ -115,5 +135,11 @@ extension SettingViewController: GADBannerViewDelegate {
     
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
         print("광고 수신 실패", error.localizedDescription)
+    }
+}
+
+extension SettingViewController: IAPManagerDelegate {
+    func endPay() {
+        self.contentView.loadingIndicator.stopAnimating()
     }
 }

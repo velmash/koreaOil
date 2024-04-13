@@ -135,6 +135,10 @@ class MainViewModel: NSObject, ViewModelType {
             }
         }
     }
+    
+    func tutorialPresent() -> Bool {
+        return defaults.bool(forKey: "isShownTutorial")
+    }
 }
 
 extension MainViewModel {
