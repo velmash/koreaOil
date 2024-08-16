@@ -42,6 +42,7 @@
 		3A71F3BD2B29663300945F4E /* SourceViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A71F3BC2B29663300945F4E /* SourceViewCoordinator.swift */; };
 		3A71F3C22B29814300945F4E /* SourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A71F3C12B29814300945F4E /* SourceViewModel.swift */; };
 		3A92264C2B2ADB10004559BF /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A92264B2B2ADB10004559BF /* SearchView.swift */; };
+		3A9B1DAE2C6F1E4000639968 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 3A9B1DAD2C6F1E4000639968 /* FirebaseCrashlytics */; };
 		3AA4D4322AF4E7E6005B1E2E /* KeyOpinet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA4D4312AF4E7E6005B1E2E /* KeyOpinet.swift */; };
 		3AA4D4342AF4E829005B1E2E /* Agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA4D4332AF4E829005B1E2E /* Agent.swift */; };
 		3AA4D4362AF4E8EE005B1E2E /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA4D4352AF4E8EE005B1E2E /* Service.swift */; };
@@ -221,6 +222,7 @@
 			files = (
 				3A2A72062B7C97A800683432 /* VSMSDK.framework in Frameworks */,
 				7CCA5AEE2044BE7BAAEA6D4C /* Pods_KoreaOil.framework in Frameworks */,
+				3A9B1DAE2C6F1E4000639968 /* FirebaseCrashlytics in Frameworks */,
 				3A2A72042B7C97A800683432 /* TMapSDK.framework in Frameworks */,
 				3A2715382B85BFE500DB7352 /* StoreKit.framework in Frameworks */,
 			);
@@ -778,12 +780,16 @@
 				3A363F102AF4CA27001C0BCF /* Resources */,
 				CC7EEC858499E653E2CBA0EC /* [CP] Embed Pods Frameworks */,
 				3A2A72082B7C97A800683432 /* Embed Frameworks */,
+				3A9B1DAF2C6F1E9000639968 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = KoreaOil;
+			packageProductDependencies = (
+				3A9B1DAD2C6F1E4000639968 /* FirebaseCrashlytics */,
+			);
 			productName = KoreaOil;
 			productReference = 3A363F122AF4CA27001C0BCF /* KoreaOil.app */;
 			productType = "com.apple.product-type.application";
@@ -860,6 +866,9 @@
 				Base,
 			);
 			mainGroup = 3A363F092AF4CA27001C0BCF;
+			packageReferences = (
+				3A9B1DAC2C6F1E4000639968 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 3A363F132AF4CA27001C0BCF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -915,6 +924,28 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KoreaOil-KoreaOilUITests/Pods-KoreaOil-KoreaOilUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		3A9B1DAF2C6F1E9000639968 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"$(SRCROOT)/${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"$(SRCROOT)/${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(SRCROOT)/$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(SRCROOT)/$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
 		};
 		89595A86EE766DAA672059EC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1446,6 +1477,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3A9B1DAC2C6F1E4000639968 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3A9B1DAD2C6F1E4000639968 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3A9B1DAC2C6F1E4000639968 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3A363F0A2AF4CA27001C0BCF /* Project object */;
 }
