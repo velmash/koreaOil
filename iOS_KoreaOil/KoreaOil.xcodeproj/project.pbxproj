@@ -42,7 +42,9 @@
 		3A71F3BD2B29663300945F4E /* SourceViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A71F3BC2B29663300945F4E /* SourceViewCoordinator.swift */; };
 		3A71F3C22B29814300945F4E /* SourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A71F3C12B29814300945F4E /* SourceViewModel.swift */; };
 		3A92264C2B2ADB10004559BF /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A92264B2B2ADB10004559BF /* SearchView.swift */; };
-		3A9B1DAE2C6F1E4000639968 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 3A9B1DAD2C6F1E4000639968 /* FirebaseCrashlytics */; };
+		3A9B1DB42C6F2C9400639968 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 3A9B1DB32C6F2C9400639968 /* FirebaseAnalytics */; };
+		3A9B1DB62C6F2C9400639968 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 3A9B1DB52C6F2C9400639968 /* FirebaseCrashlytics */; };
+		3A9B1DB92C6F2F8C00639968 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 3A9B1DB82C6F2F8C00639968 /* GoogleMobileAds */; };
 		3AA4D4322AF4E7E6005B1E2E /* KeyOpinet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA4D4312AF4E7E6005B1E2E /* KeyOpinet.swift */; };
 		3AA4D4342AF4E829005B1E2E /* Agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA4D4332AF4E829005B1E2E /* Agent.swift */; };
 		3AA4D4362AF4E8EE005B1E2E /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA4D4352AF4E8EE005B1E2E /* Service.swift */; };
@@ -85,9 +87,9 @@
 		3AFE01FC2B2827640005A0CB /* MainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE01FB2B2827640005A0CB /* MainUseCase.swift */; };
 		3AFE01FE2B28279D0005A0CB /* MainResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE01FD2B28279D0005A0CB /* MainResponse.swift */; };
 		3AFE02002B2828880005A0CB /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFE01FF2B2828880005A0CB /* String+Extension.swift */; };
-		6142555944B2D39F73791DC3 /* Pods_KoreaOil_KoreaOilUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C506312AE736D453E3A60F59 /* Pods_KoreaOil_KoreaOilUITests.framework */; };
-		7CCA5AEE2044BE7BAAEA6D4C /* Pods_KoreaOil.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A06ADA5AC2965719F903083 /* Pods_KoreaOil.framework */; };
-		DF12AEA7C7A5940EB89590C8 /* Pods_KoreaOilTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 296CDA58B2EBEE074DF2B60F /* Pods_KoreaOilTests.framework */; };
+		5B31A773808356101266567E /* Pods_KoreaOilTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A80224A913D4608B5AACC3B2 /* Pods_KoreaOilTests.framework */; };
+		6254D3E33AAC50722AFEA922 /* Pods_KoreaOil.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 550258D4DD7B249F4C66B61F /* Pods_KoreaOil.framework */; };
+		7020C12C0B7C82FC491A928C /* Pods_KoreaOil_KoreaOilUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A05C565FA03753818969BA /* Pods_KoreaOil_KoreaOilUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,8 +125,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		296CDA58B2EBEE074DF2B60F /* Pods_KoreaOilTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KoreaOilTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3A06ADA5AC2965719F903083 /* Pods_KoreaOil.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KoreaOil.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		08A05C565FA03753818969BA /* Pods_KoreaOil_KoreaOilUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KoreaOil_KoreaOilUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A102D802B28411D009A33CC /* ObservableType+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+Extension.swift"; sourceTree = "<group>"; };
 		3A102D822B284129009A33CC /* SharedSequenceConvertibleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedSequenceConvertibleType.swift; sourceTree = "<group>"; };
 		3A1D64942B35702200EADA14 /* OilChartUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OilChartUIView.swift; sourceTree = "<group>"; };
@@ -206,13 +207,14 @@
 		3AFE01FB2B2827640005A0CB /* MainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUseCase.swift; sourceTree = "<group>"; };
 		3AFE01FD2B28279D0005A0CB /* MainResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainResponse.swift; sourceTree = "<group>"; };
 		3AFE01FF2B2828880005A0CB /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
-		40482A548511324EEACDC36D /* Pods-KoreaOilTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaOilTests.debug.xcconfig"; path = "Target Support Files/Pods-KoreaOilTests/Pods-KoreaOilTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5001522ADBB472D11376360F /* Pods-KoreaOilTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaOilTests.release.xcconfig"; path = "Target Support Files/Pods-KoreaOilTests/Pods-KoreaOilTests.release.xcconfig"; sourceTree = "<group>"; };
-		5202CBBC6079E7111218EFF5 /* Pods-KoreaOil.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaOil.release.xcconfig"; path = "Target Support Files/Pods-KoreaOil/Pods-KoreaOil.release.xcconfig"; sourceTree = "<group>"; };
-		67D9546F4D3095096FA98D6E /* Pods-KoreaOil-KoreaOilUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaOil-KoreaOilUITests.debug.xcconfig"; path = "Target Support Files/Pods-KoreaOil-KoreaOilUITests/Pods-KoreaOil-KoreaOilUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		8A943A91083058BF4ECE726B /* Pods-KoreaOil.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaOil.debug.xcconfig"; path = "Target Support Files/Pods-KoreaOil/Pods-KoreaOil.debug.xcconfig"; sourceTree = "<group>"; };
-		C506312AE736D453E3A60F59 /* Pods_KoreaOil_KoreaOilUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KoreaOil_KoreaOilUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F1EE61A88E010B99A0DD0728 /* Pods-KoreaOil-KoreaOilUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaOil-KoreaOilUITests.release.xcconfig"; path = "Target Support Files/Pods-KoreaOil-KoreaOilUITests/Pods-KoreaOil-KoreaOilUITests.release.xcconfig"; sourceTree = "<group>"; };
+		550258D4DD7B249F4C66B61F /* Pods_KoreaOil.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KoreaOil.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		66148C4D20F0D2EF63D21126 /* Pods-KoreaOil.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaOil.release.xcconfig"; path = "Target Support Files/Pods-KoreaOil/Pods-KoreaOil.release.xcconfig"; sourceTree = "<group>"; };
+		96CDFE43969EF920F5A32AD6 /* Pods-KoreaOilTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaOilTests.release.xcconfig"; path = "Target Support Files/Pods-KoreaOilTests/Pods-KoreaOilTests.release.xcconfig"; sourceTree = "<group>"; };
+		A80224A913D4608B5AACC3B2 /* Pods_KoreaOilTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KoreaOilTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9AF9445542BC601357C082B /* Pods-KoreaOil-KoreaOilUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaOil-KoreaOilUITests.debug.xcconfig"; path = "Target Support Files/Pods-KoreaOil-KoreaOilUITests/Pods-KoreaOil-KoreaOilUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		B781BCB9BA0F2E60F8025D7D /* Pods-KoreaOil-KoreaOilUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaOil-KoreaOilUITests.release.xcconfig"; path = "Target Support Files/Pods-KoreaOil-KoreaOilUITests/Pods-KoreaOil-KoreaOilUITests.release.xcconfig"; sourceTree = "<group>"; };
+		E04A6B99ECFA4FE2BBB0619F /* Pods-KoreaOil.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaOil.debug.xcconfig"; path = "Target Support Files/Pods-KoreaOil/Pods-KoreaOil.debug.xcconfig"; sourceTree = "<group>"; };
+		FE2ED3D636B786556A3E0E17 /* Pods-KoreaOilTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaOilTests.debug.xcconfig"; path = "Target Support Files/Pods-KoreaOilTests/Pods-KoreaOilTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,10 +223,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A2A72062B7C97A800683432 /* VSMSDK.framework in Frameworks */,
-				7CCA5AEE2044BE7BAAEA6D4C /* Pods_KoreaOil.framework in Frameworks */,
-				3A9B1DAE2C6F1E4000639968 /* FirebaseCrashlytics in Frameworks */,
 				3A2A72042B7C97A800683432 /* TMapSDK.framework in Frameworks */,
+				3A9B1DB62C6F2C9400639968 /* FirebaseCrashlytics in Frameworks */,
+				3A9B1DB42C6F2C9400639968 /* FirebaseAnalytics in Frameworks */,
 				3A2715382B85BFE500DB7352 /* StoreKit.framework in Frameworks */,
+				6254D3E33AAC50722AFEA922 /* Pods_KoreaOil.framework in Frameworks */,
+				3A9B1DB92C6F2F8C00639968 /* GoogleMobileAds in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,7 +236,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF12AEA7C7A5940EB89590C8 /* Pods_KoreaOilTests.framework in Frameworks */,
+				5B31A773808356101266567E /* Pods_KoreaOilTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,7 +244,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6142555944B2D39F73791DC3 /* Pods_KoreaOil_KoreaOilUITests.framework in Frameworks */,
+				7020C12C0B7C82FC491A928C /* Pods_KoreaOil_KoreaOilUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -747,9 +751,9 @@
 				3A2A71FE2B7C938700683432 /* TMapSDK.framework */,
 				3A2A71FF2B7C938700683432 /* VSMSDK.framework */,
 				3A57AF9E2B734E08004278AA /* StoreKit.framework */,
-				3A06ADA5AC2965719F903083 /* Pods_KoreaOil.framework */,
-				C506312AE736D453E3A60F59 /* Pods_KoreaOil_KoreaOilUITests.framework */,
-				296CDA58B2EBEE074DF2B60F /* Pods_KoreaOilTests.framework */,
+				550258D4DD7B249F4C66B61F /* Pods_KoreaOil.framework */,
+				08A05C565FA03753818969BA /* Pods_KoreaOil_KoreaOilUITests.framework */,
+				A80224A913D4608B5AACC3B2 /* Pods_KoreaOilTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -757,12 +761,12 @@
 		E204B79EF401D2B1E0C680AD /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				8A943A91083058BF4ECE726B /* Pods-KoreaOil.debug.xcconfig */,
-				5202CBBC6079E7111218EFF5 /* Pods-KoreaOil.release.xcconfig */,
-				67D9546F4D3095096FA98D6E /* Pods-KoreaOil-KoreaOilUITests.debug.xcconfig */,
-				F1EE61A88E010B99A0DD0728 /* Pods-KoreaOil-KoreaOilUITests.release.xcconfig */,
-				40482A548511324EEACDC36D /* Pods-KoreaOilTests.debug.xcconfig */,
-				5001522ADBB472D11376360F /* Pods-KoreaOilTests.release.xcconfig */,
+				E04A6B99ECFA4FE2BBB0619F /* Pods-KoreaOil.debug.xcconfig */,
+				66148C4D20F0D2EF63D21126 /* Pods-KoreaOil.release.xcconfig */,
+				A9AF9445542BC601357C082B /* Pods-KoreaOil-KoreaOilUITests.debug.xcconfig */,
+				B781BCB9BA0F2E60F8025D7D /* Pods-KoreaOil-KoreaOilUITests.release.xcconfig */,
+				FE2ED3D636B786556A3E0E17 /* Pods-KoreaOilTests.debug.xcconfig */,
+				96CDFE43969EF920F5A32AD6 /* Pods-KoreaOilTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -774,13 +778,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3A363F3C2AF4CA28001C0BCF /* Build configuration list for PBXNativeTarget "KoreaOil" */;
 			buildPhases = (
-				B3152CBD254257FB47D29905 /* [CP] Check Pods Manifest.lock */,
+				FD6A32CBA7972F81B3EC0717 /* [CP] Check Pods Manifest.lock */,
 				3A363F0E2AF4CA27001C0BCF /* Sources */,
 				3A363F0F2AF4CA27001C0BCF /* Frameworks */,
 				3A363F102AF4CA27001C0BCF /* Resources */,
-				CC7EEC858499E653E2CBA0EC /* [CP] Embed Pods Frameworks */,
 				3A2A72082B7C97A800683432 /* Embed Frameworks */,
 				3A9B1DAF2C6F1E9000639968 /* ShellScript */,
+				2CF428FC8FDCB6AF88557E15 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -788,7 +792,9 @@
 			);
 			name = KoreaOil;
 			packageProductDependencies = (
-				3A9B1DAD2C6F1E4000639968 /* FirebaseCrashlytics */,
+				3A9B1DB32C6F2C9400639968 /* FirebaseAnalytics */,
+				3A9B1DB52C6F2C9400639968 /* FirebaseCrashlytics */,
+				3A9B1DB82C6F2F8C00639968 /* GoogleMobileAds */,
 			);
 			productName = KoreaOil;
 			productReference = 3A363F122AF4CA27001C0BCF /* KoreaOil.app */;
@@ -798,7 +804,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3A363F3F2AF4CA28001C0BCF /* Build configuration list for PBXNativeTarget "KoreaOilTests" */;
 			buildPhases = (
-				CB95D1E437D3F0587069AEA5 /* [CP] Check Pods Manifest.lock */,
+				E2DED47A8EDFED72CD401F6C /* [CP] Check Pods Manifest.lock */,
 				3A363F242AF4CA28001C0BCF /* Sources */,
 				3A363F252AF4CA28001C0BCF /* Frameworks */,
 				3A363F262AF4CA28001C0BCF /* Resources */,
@@ -817,11 +823,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3A363F422AF4CA28001C0BCF /* Build configuration list for PBXNativeTarget "KoreaOilUITests" */;
 			buildPhases = (
-				89595A86EE766DAA672059EC /* [CP] Check Pods Manifest.lock */,
+				8C3370E93AAC7A9B85B25B14 /* [CP] Check Pods Manifest.lock */,
 				3A363F2E2AF4CA28001C0BCF /* Sources */,
 				3A363F2F2AF4CA28001C0BCF /* Frameworks */,
 				3A363F302AF4CA28001C0BCF /* Resources */,
-				3713284588F21647A0CA680D /* [CP] Embed Pods Frameworks */,
+				56F5DB7182D2CEE0EF61F0D5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -868,6 +874,7 @@
 			mainGroup = 3A363F092AF4CA27001C0BCF;
 			packageReferences = (
 				3A9B1DAC2C6F1E4000639968 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				3A9B1DB72C6F2F8C00639968 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			productRefGroup = 3A363F132AF4CA27001C0BCF /* Products */;
 			projectDirPath = "";
@@ -908,21 +915,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3713284588F21647A0CA680D /* [CP] Embed Pods Frameworks */ = {
+		2CF428FC8FDCB6AF88557E15 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-KoreaOil-KoreaOilUITests/Pods-KoreaOil-KoreaOilUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-KoreaOil/Pods-KoreaOil-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-KoreaOil-KoreaOilUITests/Pods-KoreaOil-KoreaOilUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-KoreaOil/Pods-KoreaOil-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KoreaOil-KoreaOilUITests/Pods-KoreaOil-KoreaOilUITests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KoreaOil/Pods-KoreaOil-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		3A9B1DAF2C6F1E9000639968 /* ShellScript */ = {
@@ -947,7 +954,24 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
 		};
-		89595A86EE766DAA672059EC /* [CP] Check Pods Manifest.lock */ = {
+		56F5DB7182D2CEE0EF61F0D5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-KoreaOil-KoreaOilUITests/Pods-KoreaOil-KoreaOilUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-KoreaOil-KoreaOilUITests/Pods-KoreaOil-KoreaOilUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KoreaOil-KoreaOilUITests/Pods-KoreaOil-KoreaOilUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8C3370E93AAC7A9B85B25B14 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -969,29 +993,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B3152CBD254257FB47D29905 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-KoreaOil-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CB95D1E437D3F0587069AEA5 /* [CP] Check Pods Manifest.lock */ = {
+		E2DED47A8EDFED72CD401F6C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1013,21 +1015,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CC7EEC858499E653E2CBA0EC /* [CP] Embed Pods Frameworks */ = {
+		FD6A32CBA7972F81B3EC0717 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-KoreaOil/Pods-KoreaOil-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-KoreaOil/Pods-KoreaOil-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KoreaOil-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KoreaOil/Pods-KoreaOil-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1271,7 +1278,7 @@
 		};
 		3A363F3D2AF4CA28001C0BCF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8A943A91083058BF4ECE726B /* Pods-KoreaOil.debug.xcconfig */;
+			baseConfigurationReference = E04A6B99ECFA4FE2BBB0619F /* Pods-KoreaOil.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1315,7 +1322,7 @@
 		};
 		3A363F3E2AF4CA28001C0BCF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5202CBBC6079E7111218EFF5 /* Pods-KoreaOil.release.xcconfig */;
+			baseConfigurationReference = 66148C4D20F0D2EF63D21126 /* Pods-KoreaOil.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1359,7 +1366,7 @@
 		};
 		3A363F402AF4CA28001C0BCF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 40482A548511324EEACDC36D /* Pods-KoreaOilTests.debug.xcconfig */;
+			baseConfigurationReference = FE2ED3D636B786556A3E0E17 /* Pods-KoreaOilTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1380,7 +1387,7 @@
 		};
 		3A363F412AF4CA28001C0BCF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5001522ADBB472D11376360F /* Pods-KoreaOilTests.release.xcconfig */;
+			baseConfigurationReference = 96CDFE43969EF920F5A32AD6 /* Pods-KoreaOilTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1401,7 +1408,7 @@
 		};
 		3A363F432AF4CA28001C0BCF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 67D9546F4D3095096FA98D6E /* Pods-KoreaOil-KoreaOilUITests.debug.xcconfig */;
+			baseConfigurationReference = A9AF9445542BC601357C082B /* Pods-KoreaOil-KoreaOilUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1420,7 +1427,7 @@
 		};
 		3A363F442AF4CA28001C0BCF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1EE61A88E010B99A0DD0728 /* Pods-KoreaOil-KoreaOilUITests.release.xcconfig */;
+			baseConfigurationReference = B781BCB9BA0F2E60F8025D7D /* Pods-KoreaOil-KoreaOilUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1487,13 +1494,31 @@
 				minimumVersion = 11.0.0;
 			};
 		};
+		3A9B1DB72C6F2F8C00639968 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.8.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3A9B1DAD2C6F1E4000639968 /* FirebaseCrashlytics */ = {
+		3A9B1DB32C6F2C9400639968 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3A9B1DAC2C6F1E4000639968 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		3A9B1DB52C6F2C9400639968 /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3A9B1DAC2C6F1E4000639968 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
+		};
+		3A9B1DB82C6F2F8C00639968 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3A9B1DB72C6F2F8C00639968 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

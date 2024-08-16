@@ -1,5 +1,7 @@
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
+source 'https://github.com/CocoaPods/Specs.git'
+source 'https://github.com/navermaps/NMapsMapLegacySpecs.git'
 
 target 'KoreaOil' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -13,9 +15,7 @@ target 'KoreaOil' do
   pod 'RxCocoa'
   pod 'RxGesture'
   pod 'ReactorKit'
-  pod 'NMapsMap'
-  pod 'FirebaseAnalytics'
-  pod 'Google-Mobile-Ads-SDK'
+  pod 'NMapsMap-Legacy'
 
   pod 'KakaoSDKUser'
   pod 'KakaoSDKNavi'  # 카카오내비 
