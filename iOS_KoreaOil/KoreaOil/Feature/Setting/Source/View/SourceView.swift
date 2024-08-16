@@ -21,7 +21,7 @@ class SourceView: BaseView {
     }
     
     lazy var opiIconImg = UIImageView().then {
-        $0.image = UIImage(named: "OpinetIcon")
+        $0.image = UIImage(resource: .opinetIcon)
     }
     
     lazy var descLb = UILabel().then {
