@@ -61,16 +61,15 @@ enum StationType: String, CaseIterable {
     
     var image: UIImage? {
         switch self {
-        case .skEnergy: UIImage(named: "logo_sk")
-        case .gsCaltex: UIImage(named: "logo_gs")
-        case .hdOilBank: UIImage(named: "logo_hd")
-        case .sOil: UIImage(named: "logo_soil")
-        case .thrifty: UIImage(named: "logo_rte")
-        case .ex: UIImage(named: "logo_rtx")
-        case .nhThrifty: UIImage(named: "logo_nh")
-        case .etc: UIImage(named: "logo_station")
-        case .e1: UIImage(named: "logo_e1")
-        case .skGas: UIImage(named: "logo_sk")
+        case .skEnergy, .skGas: UIImage(resource: .logoSk)
+        case .gsCaltex: UIImage(resource: .logoGs)
+        case .hdOilBank: UIImage(resource: .logoHd)
+        case .sOil: UIImage(resource: .logoSoil)
+        case .thrifty: UIImage(resource: .logoRte)
+        case .ex: UIImage(resource: .logoRtx)
+        case .nhThrifty: UIImage(resource: .logoNh)
+        case .etc: UIImage(resource: .logoStation)
+        case .e1: UIImage(resource: .logoE1)
         }
     }
 }

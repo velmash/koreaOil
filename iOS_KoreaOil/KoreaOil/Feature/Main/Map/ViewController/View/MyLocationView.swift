@@ -18,7 +18,7 @@ class MyLocationView: BaseView {
         $0.layer.masksToBounds = true
     }
     lazy var baloonView = UIImageView().then {
-        $0.image = UIImage(named: "Baloon")
+        $0.image = UIImage(resource: .baloon)
         $0.tintColor = .blue
     }
     

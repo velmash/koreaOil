@@ -23,7 +23,7 @@ class BottomSheetTableViewCell: UITableViewCell {
     }
     
     private lazy var checkedImg = UIImageView().then {
-        $0.image = UIImage(named: "CheckImg")
+        $0.image = UIImage(resource: .checkImg)
         $0.contentMode = .scaleAspectFit
         $0.tintColor = .gray
     }
@@ -38,13 +38,13 @@ class BottomSheetTableViewCell: UITableViewCell {
         checkedImg.isHidden = !userDefaultsValues.contains(title)
         
         if title == "네이버지도" {
-            appIcon.image = UIImage(named: "NaverMap")
+            appIcon.image = UIImage(resource: .naverMap)
         } else if title == "카카오내비" {
-            appIcon.image = UIImage(named: "KakaoNavi")
+            appIcon.image = UIImage(resource: .kakaoNavi)
         } else if title == "티맵" {
-            appIcon.image = UIImage(named: "Tmap")
+            appIcon.image = UIImage(resource: .tmap)
         } else if title == "애플지도" {
-            appIcon.image = UIImage(named: "logo_apple")
+            appIcon.image = UIImage(resource: .logoApple)
         } else if title == "0.1" || title == "0.5" {
             let num = Int(Double(title)! * 1000)
             titleLabel.text! = "\(num) m"
